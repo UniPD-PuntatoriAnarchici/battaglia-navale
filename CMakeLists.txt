@@ -6,10 +6,10 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "../bin/")
 
 include_directories(include)
 
-#add_library(${PROJECT_NAME} src/isbn.cpp src/date.cpp src/book.cpp)
+add_library(${PROJECT_NAME} src/Nave.cpp)
 
 add_executable(main
         src/main.cpp
         )
 
-#target_link_libraries(main ${PROJECT_NAME})
+target_link_libraries(main ${PROJECT_NAME})
