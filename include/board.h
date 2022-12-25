@@ -6,7 +6,7 @@
 
 #include "coordinate.h"
 class board {
-    virtual coordinate get_all();
+    virtual Coordinate get_all() = 0;
 };
 #define BOARD_H
 

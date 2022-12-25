@@ -34,6 +34,7 @@
 # dirs
 bin
 cmake-build-debug
+cmake-build-debug-event-trace
 cmake-conf
 conf
 .DS_Store
