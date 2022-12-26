@@ -6,9 +6,9 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "../bin/")
 
 include_directories(include)
 
-add_library(ship src/ship/ship.cpp src/ship/battleship.cpp)
+add_library(ship src/ship/ship.cpp src/ship/battleship.cpp src/ship/repairship.cpp src/ship/submarine.cpp)
 add_library(board src/board/board.cpp src/board/attackboard.cpp src/board/defenseboard.cpp)
-add_library(coordinate src/coordinate.cpp)
+add_library(coordinate src/coordinate/coordinate.cpp)
 
 add_executable(battaglia_navale
         src/main.cpp

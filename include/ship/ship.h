@@ -6,7 +6,7 @@
 #define SHIP_H
 
 #include <vector>
-#include "coordinate.h"
+#include "./../coordinate/coordinate.h"
 
 class Ship {
 public:

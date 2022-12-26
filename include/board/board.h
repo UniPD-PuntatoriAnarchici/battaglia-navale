@@ -4,7 +4,7 @@
 
 #ifndef BOARD_H
 
-#include "coordinate.h"
+#include "./../coordinate/coordinate.h"
 class Board {
    public:
     virtual Coordinate get_all() = 0;
