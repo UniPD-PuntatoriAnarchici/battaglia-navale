@@ -1,1 +1,1 @@
-cmake . -B cmake-conf && cmake --build cmake-conf
+cmake . -B cmake-conf && cmake --build cmake-conf && ./bin/battaglia_navale
