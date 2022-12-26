@@ -6,7 +6,9 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "../bin/")
 
 include_directories(include)
 
-add_library(${PROJECT_NAME} src/ship.cpp src/coordinate.cpp src/battleship.cpp)
+add_library(ship src/ship/ship.cpp src/ship/battleship.cpp)
+add_library(board src/board/board.cpp src/board/attackboard.cpp src/board/defenseboard.cpp)
+add_library(coordinate src/coordinate.cpp)
 
 add_executable(battaglia_navale
         src/main.cpp
@@ -16,5 +18,5 @@ add_executable(replay
         src/replay.cpp
         )
 
-target_link_libraries(battaglia_navale ${PROJECT_NAME})
-target_link_libraries(replay ${PROJECT_NAME})
+target_link_libraries(battaglia_navale ship board coordinate)
+target_link_libraries(replay ship board coordinate)

@@ -1,7 +1,7 @@
 //
 // Created by Filippo Tiberio on 24/12/2022.
 //
-#include "ship.h"
+#include "./../../include/ship/ship.h"
 
 int Ship::get_life() const {
     int counter = 0;

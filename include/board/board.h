@@ -5,8 +5,12 @@
 #ifndef BOARD_H
 
 #include "coordinate.h"
-class board {
+class Board {
+   public:
     virtual Coordinate get_all() = 0;
+    static constexpr int dim = 12;
+
+   private:
 };
 #define BOARD_H
 
