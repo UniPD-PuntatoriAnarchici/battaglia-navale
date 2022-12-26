@@ -8,6 +8,7 @@ include_directories(include)
 
 add_library(ship src/ship/ship.cpp src/ship/battleship.cpp src/ship/repairship.cpp src/ship/submarine.cpp)
 add_library(board src/board/board.cpp src/board/attackboard.cpp src/board/defenseboard.cpp)
+add_library(player src/player/player.cpp src/player/cpuplayer.cpp src/player/humanplayer.cpp)
 add_library(coordinate src/coordinate/coordinate.cpp)
 
 add_executable(battaglia_navale
@@ -18,5 +19,5 @@ add_executable(replay
         src/replay.cpp
         )
 
-target_link_libraries(battaglia_navale ship board coordinate)
-target_link_libraries(replay ship board coordinate)
+target_link_libraries(battaglia_navale ship board player coordinate)
+target_link_libraries(replay ship board player coordinate)
