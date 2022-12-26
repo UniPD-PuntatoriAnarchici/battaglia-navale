@@ -23,15 +23,15 @@ public:
         return true;
     };
 
-    static char getCharacter() {
+    static char character() {
         return character_;
     }
 
-    static int getLength() {
+    static int length() {
         return length_;
     }
 
-    const std::vector<bool> &getCells() const {
+    const std::vector<bool> &get_cells() const {
         return cells_;
     }
 
