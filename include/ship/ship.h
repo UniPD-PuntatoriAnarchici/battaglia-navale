@@ -2,25 +2,21 @@
 // Created by Filippo Tiberio on 24/12/2022.
 //
 
-#ifndef SHIP_H 
+#ifndef SHIP_H
 #define SHIP_H
 
-//#include "./../board/attackboard.h"
-//#include "./../board/defenseboard.h"
+#include <vector>
 
 #include "./../coordinate/coordinate.h"
-#include <vector>
 
 class Attackboard;
 class Defenseboard;
 
 class Ship {
-public:
-    enum class Directions {
-        HORIZONTAL, VERTICAL
-    };
+   public:
+    enum class Directions { HORIZONTAL, VERTICAL };
 
-protected:
+   protected:
     static constexpr char character_ = ' ';
     static constexpr int length_ = 0;
 
@@ -28,12 +24,10 @@ protected:
     Directions direction_;
     std::vector<bool> cells_;
 
-    virtual bool action(Coordinate dest, Defenseboard & avversario, Attackboard & self) = 0;
+    virtual bool action(Coordinate dest, Defenseboard& avversario,
+                        Attackboard& self) = 0;
 
-
-
-private:
+   private:
     int get_life() const;
-
 };
-#endif //SHIP_H
+#endif  // SHIP_H

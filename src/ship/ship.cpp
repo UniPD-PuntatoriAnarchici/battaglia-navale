@@ -5,9 +5,8 @@
 
 int Ship::get_life() const {
     int counter = 0;
-    for (bool cell: cells_) {
-        if (cell)
-            counter++;
+    for (bool cell : cells_) {
+        if (cell) counter++;
     }
 
     return counter;

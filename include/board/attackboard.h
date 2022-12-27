@@ -10,9 +10,7 @@ class Attackboard : public Board {
 public:
     Attackboard();
 
-    std::vector<Coordinate> get_all() override {
-        return std::vector<Coordinate>(1);
-    }
+    std::vector<Coordinate> get_all();
 
 private:
 };

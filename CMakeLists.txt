@@ -11,8 +11,6 @@ add_library(board src/board/board.cpp src/board/attackboard.cpp src/board/defens
 add_library(player src/player/player.cpp src/player/cpuplayer.cpp src/player/humanplayer.cpp)
 add_library(coordinate src/coordinate/coordinate.cpp)
 
-#add_library(lib src/coordinate/coordinate.cpp src/player/player.cpp src/player/cpuplayer.cpp src/player/humanplayer.cpp src/board/board.cpp src/board/attackboard.cpp src/board/defenseboard.cpp src/ship/ship.cpp src/ship/battleship.cpp src/ship/repairship.cpp src/ship/submarine.cpp)
-
 add_executable(battaglia_navale
         src/main.cpp
         )
