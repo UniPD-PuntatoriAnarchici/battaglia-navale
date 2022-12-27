@@ -19,9 +19,9 @@ public:
     }
 
 public:
-    bool action() override {
+    bool action(Coordinate dest, Defenseboard & avversario, Attackboard & self) override {
         return true;
-    };
+    }
 
     static char character() {
         return character_;
@@ -38,7 +38,7 @@ public:
     void reset_cells() {
         for (int i = 0; i < length_; i++)
             cells_[i] = true;
-    };
+    }
 
 };
 

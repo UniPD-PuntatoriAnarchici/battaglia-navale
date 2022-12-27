@@ -5,8 +5,14 @@
 #ifndef SHIP_H 
 #define SHIP_H
 
-#include <vector>
+//#include "./../board/attackboard.h"
+//#include "./../board/defenseboard.h"
+
 #include "./../coordinate/coordinate.h"
+#include <vector>
+
+class Attackboard;
+class Defenseboard;
 
 class Ship {
 public:
@@ -22,7 +28,7 @@ protected:
     Directions direction_;
     std::vector<bool> cells_;
 
-    virtual bool action() = 0;
+    virtual bool action(Coordinate dest, Defenseboard & avversario, Attackboard & self) = 0;
 
 
 
@@ -30,4 +36,4 @@ private:
     int get_life() const;
 
 };
-#endif // SHIP_H
+#endif //SHIP_H
