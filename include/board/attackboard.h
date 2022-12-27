@@ -5,12 +5,16 @@
 
 #include "board.h"
 
+class Battleship; //TODO others
 class Attackboard : public Board {
-   public:
+public:
     Attackboard();
-    virtual std::vector<Coordinate> get_all();
 
-   private:
+    std::vector<Coordinate> get_all() override {
+        return std::vector<Coordinate>(1);
+    }
+
+private:
 };
 
 #endif
