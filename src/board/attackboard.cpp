@@ -7,7 +7,6 @@ Attackboard::Attackboard() {
     Battleship battleship3;
 }
 
-//std::vector<Coordinate> Attackboard::get_all() {
-//    std::vector<Coordinate> positions;
-//    return positions;
-//}
+std::vector<Coordinate> Attackboard::get_all() {
+    return std::vector<Coordinate>(1);
+}

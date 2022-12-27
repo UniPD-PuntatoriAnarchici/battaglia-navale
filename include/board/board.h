@@ -12,7 +12,7 @@
 
 #include "./../coordinate/coordinate.h"
 #include "./../ship/battleship.h"
-
+// TODO: include other ships
 
 class Board {
 public:
