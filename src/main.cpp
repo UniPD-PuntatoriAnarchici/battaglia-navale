@@ -11,6 +11,8 @@ void test_dev_matteo_galiazzo() {
 
 void test_dev_filippo_tiberio() {
     cout << endl << "=== dev-filippo-tiberio ===" << endl;
+
+    //region Coordinate
     Coordinate c1{};
     cout << c1;
 
@@ -50,6 +52,18 @@ void test_dev_filippo_tiberio() {
 
     Coordinate c8{"N12"};
     cout << c8;
+
+    //endregion
+
+    cout << endl << "----------------" << endl;
+
+    Battleship b1{};
+    cout << b1 << endl;
+
+    Battleship b2{Coordinate{3,3}, Ship::Directions::VERTICAL};
+    cout << b2 << endl;
+
+
 }
 
 void test_dev_matteo_rampin() { cout << "=== dev-matteo-rampin ===" << endl; }

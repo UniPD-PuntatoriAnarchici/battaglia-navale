@@ -16,6 +16,6 @@ std::ostream &operator<<(std::ostream &os, const Coordinate &coordinate) {
     std::pair<char, int> customCoord = Coordinate::indexes_to_coordinates(coordinate);
 
     os << "Coordinate: (" << customCoord.first << ", " << customCoord.second << "), [" << coordinate.row() << ", "
-       << coordinate.col() << "] " << std::endl;
+       << coordinate.col() << "] ";
     return os;
 }
