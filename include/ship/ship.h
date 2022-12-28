@@ -76,7 +76,7 @@ protected:
     int armor_;
 
 protected:
-    virtual bool action(Coordinate dest, Defenseboard &avversario,
+    virtual bool action(Coordinate dest, Defenseboard &opponent,
                         Attackboard &self) = 0;
 
 private:

@@ -21,7 +21,7 @@ public:
         reset_cells();
     }
 
-    bool action(Coordinate dest, Defenseboard &avversario, Attackboard &self) override {
+    bool action(Coordinate dest, Defenseboard &opponent, Attackboard &self) override {
         return true;
     }
 

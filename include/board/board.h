@@ -12,10 +12,11 @@
 
 #include "./../coordinate/coordinate.h"
 #include "./../ship/battleship.h"
+#include "./../ship/submarine.h"
 // TODO: include other ships
 
 class Board {
-public:
+   public:
     virtual std::vector<Coordinate> get_all() = 0;
 
     bool is_valid(Coordinate &c);
@@ -24,10 +25,10 @@ public:
 
     static constexpr int side_length = 12;
 
-private:
+   private:
     // declaring array of smart pointers (ships) with 7 ships:
     // battle (3) repair (3) and submarine (2)
     std::array<std::unique_ptr<Ship>, 7> ships;
 };
 
-#endif //BOARD_H
+#endif  // BOARD_H

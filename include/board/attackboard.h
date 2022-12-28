@@ -5,14 +5,16 @@
 
 #include "board.h"
 
-class Battleship; //TODO others
+class Battleship;  // TODO others
+class Submarine;
+
 class Attackboard : public Board {
-public:
+   public:
     Attackboard();
 
     std::vector<Coordinate> get_all();
 
-private:
+   private:
 };
 
 #endif
