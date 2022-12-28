@@ -6,6 +6,13 @@ using namespace std;
 
 void test_dev_matteo_galiazzo() {
     cout << "=== dev-matteo-galiazzo ===" << endl;
+
+    Submarine s1{};
+    cout << s1 << endl;
+
+    Submarine s2{Coordinate{3,3}, Ship::Directions::VERTICAL};
+    cout << s2 << endl;
+    
     Attackboard ab;
 }
 
