@@ -32,10 +32,6 @@ public:
      */
     virtual ~Ship() = default;
 
-    static const int length() {
-        return length_;
-    }
-
     const Coordinate &center() const {
         return center_;
     }
@@ -52,17 +48,34 @@ public:
         direction_ = direction;
     }
 
-    int get_life() const;
+    const std::vector<bool> &cells() const {
+        return cells_;
+    }
 
+    void reset_cells() {
+        for (auto &&cell: cells_) {
+            cell = true;
+        }
+    }
+
+    int armor() const {
+        return armor_;
+    }
+
+    void set_armor(int armor) {
+        armor_ = armor;
+    }
 
 protected:
-    static constexpr char character_ = ' ';
-    static constexpr int length_ = 0;
+    static constexpr char CHARACTER = ' ';
+    static constexpr int LENGTH = 0;
 
     Coordinate center_;
     Directions direction_;
     std::vector<bool> cells_;
+    int armor_;
 
+protected:
     virtual bool action(Coordinate dest, Defenseboard &avversario,
                         Attackboard &self) = 0;
 
