@@ -4,14 +4,14 @@
 #include "./../../include/ship/battleship.h"
 
 std::ostream &operator<<(std::ostream &os, const Battleship &battleship) {
-    std::vector<bool> cells = battleship.get_cells();
+    std::vector<bool> cells = battleship.cells();
 
     os << "Battleship with center in " << battleship.center() << "and direction: " << battleship.direction()
-       << ", has " << battleship.get_life() << "/"
-       << Battleship::length() << " armor: [";
+       << ", has " << battleship.armor() << "/"
+       << Battleship::LENGTH << " armor: [";
 
     for (bool cell: cells) {
-        os << (cell ? Battleship::character() : (char) (Battleship::character() + 32));
+        os << (cell ? Battleship::CHARACTER : (char) (Battleship::CHARACTER + 32));
     }
 
     os << "]";
