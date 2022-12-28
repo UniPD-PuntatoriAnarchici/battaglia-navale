@@ -57,7 +57,13 @@ public:
     }
 
     void set_row(int row) {
+        int oldRow = row_;
         row_ = row;
+
+        if (!is_valid()) {
+            row_ = oldRow;
+            throw INVALID_COORDINATE{};
+        }
     }
 
     int col() const {
@@ -65,7 +71,13 @@ public:
     }
 
     void set_col(int col) {
+        int oldCol = col_;
         col_ = col;
+
+        if (!is_valid()) {
+            col_ = oldCol;
+            throw INVALID_COORDINATE{};
+        }
     }
 
     static std::pair<int, int> coordinates_to_indexes(Coordinate c);

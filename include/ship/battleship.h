@@ -5,21 +5,23 @@
 #ifndef BATTLESHIP_H
 #define BATTLESHIP_H
 
+#include <ostream>
 #include "ship.h"
 
 class Battleship : public Ship {
     static constexpr char character_ = 'C';
     static constexpr int length_ = 5;
-    std::vector<bool> cells_;
 
 public:
-    Battleship() {
+    explicit Battleship(Coordinate center = Coordinate{}, Ship::Directions direction = Ship::Directions::HORIZONTAL) {
         cells_ = std::vector<bool>(length_);
         reset_cells();
+        center_ = center;
+        direction_ = direction;
     }
 
 public:
-    bool action(Coordinate dest, Defenseboard & avversario, Attackboard & self) override {
+    bool action(Coordinate dest, Defenseboard &avversario, Attackboard &self) override {
         return true;
     }
 
@@ -41,5 +43,7 @@ public:
     }
 
 };
+
+std::ostream &operator<<(std::ostream &os, const Battleship &battleship);
 
 #endif //BATTLESHIP_H

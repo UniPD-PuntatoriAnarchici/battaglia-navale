@@ -6,17 +6,56 @@
 #define SHIP_H
 
 #include <vector>
+#include <ostream>
 
 #include "./../coordinate/coordinate.h"
 
 class Attackboard;
+
 class Defenseboard;
 
 class Ship {
-   public:
-    enum class Directions { HORIZONTAL, VERTICAL };
+public:
+    enum class Directions {
+        HORIZONTAL, VERTICAL
+    };
 
-   protected:
+    friend std::ostream &operator<<(std::ostream &os, const Ship::Directions &direction) {
+        os << (((int) direction) == 0 ? "HORIZONTAL" : "VERTICAL");
+        return os;
+    }
+
+    bool is_alive() const;
+
+    /**
+     * Virtual!
+     */
+    virtual ~Ship() = default;
+
+    static const int length() {
+        return length_;
+    }
+
+    const Coordinate &center() const {
+        return center_;
+    }
+
+    void set_center(const Coordinate &center) {
+        center_ = center;
+    }
+
+    Directions direction() const {
+        return direction_;
+    }
+
+    void set_direction(Directions direction) {
+        direction_ = direction;
+    }
+
+    int get_life() const;
+
+
+protected:
     static constexpr char character_ = ' ';
     static constexpr int length_ = 0;
 
@@ -24,10 +63,12 @@ class Ship {
     Directions direction_;
     std::vector<bool> cells_;
 
-    virtual bool action(Coordinate dest, Defenseboard& avversario,
-                        Attackboard& self) = 0;
+    virtual bool action(Coordinate dest, Defenseboard &avversario,
+                        Attackboard &self) = 0;
 
-   private:
-    int get_life() const;
+private:
+
 };
+
+
 #endif  // SHIP_H
