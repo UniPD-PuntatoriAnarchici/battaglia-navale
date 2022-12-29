@@ -66,6 +66,24 @@ public:
         armor_ = armor;
     }
 
+    std::vector<Coordinate> positions() const {
+        std::vector<Coordinate> positions;
+
+        int length = (int) cells().size();
+
+        std::pair<int, int> center = Coordinate::coordinates_to_indexes(center_);
+
+        for (int i = 0; i < length; i++) {
+            if (direction_ == Directions::HORIZONTAL) {
+                positions.emplace_back(center.first, center.second - (length / 2) + i);
+            } else {
+                positions.emplace_back(center.first - (length / 2) + i, center.second);
+            }
+        }
+
+        return positions;
+    }
+
 protected:
     static constexpr char CHARACTER = ' ';
     static constexpr int LENGTH = 0;
@@ -75,7 +93,6 @@ protected:
     std::vector<bool> cells_;
     int armor_;
 
-protected:
     virtual bool action(Coordinate dest, Defenseboard &opponent,
                         Attackboard &self) = 0;
 

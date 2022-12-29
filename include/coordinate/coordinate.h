@@ -84,6 +84,13 @@ public:
 
     static std::pair<char, int> indexes_to_coordinates(Coordinate c);
 
+    bool operator<(const Coordinate &b) const;
+
+    bool equals(int r, int c) const;
+
+    bool operator==(const Coordinate &b) const;
+
+
 private:
     int row_{};
     int col_;
@@ -132,4 +139,9 @@ private:
 
 std::ostream &operator<<(std::ostream &os, const Coordinate &coordinate);
 
+
+
+
 #endif
+
+

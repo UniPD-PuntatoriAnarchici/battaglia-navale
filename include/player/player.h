@@ -3,18 +3,19 @@
 
 #include <vector>
 #include <string>
-#include "./../board/defenseboard.h";
-#include "./../board/attackboard.h";
+#include "./../board/defenseboard.h"
+#include "./../board/attackboard.h"
 
-class Player{
-   public:
-    virtual void turn()=0;
+class Player {
+public:
+    virtual void turn() = 0;
 
-    std::vector<std::string>history();
+    std::vector<std::string> history();
 
-   private:
-   Defenseboard DefenseBoard;
+private:
+    Defenseboard DefenseBoard;
 
-   Attackboard AttackBoard;
+    Attackboard AttackBoard;
 };
-#endif
+
+#endif //PLAYER_H
