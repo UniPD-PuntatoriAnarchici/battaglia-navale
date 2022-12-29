@@ -15,6 +15,8 @@ class Attackboard : public Board {
     std::vector<Coordinate> get_all();
 
    private:
+      std::vector<Battleship> place_battleships();
+      std::vector<Coordinate> split(const std::string &s);
 };
 
 #endif
