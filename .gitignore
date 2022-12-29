@@ -30,8 +30,6 @@
 *.exe
 *.out
 *.app
-*.sh
-test_game.txt
 
 # dirs
 bin
