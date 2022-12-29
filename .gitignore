@@ -30,7 +30,8 @@
 *.exe
 *.out
 *.app
-build.sh
+*.sh
+test_game.txt
 
 # dirs
 bin

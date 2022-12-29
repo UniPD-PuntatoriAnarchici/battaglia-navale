@@ -1,1 +1,1 @@
-cmake . -B cmake-conf && cmake --build cmake-conf && ./bin/battaglia_navale
+cmake . -B cmake-conf && cmake --build cmake-conf && ./bin/battaglia_navale < test_game.txt
