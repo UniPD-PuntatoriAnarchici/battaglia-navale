@@ -12,6 +12,27 @@ std::pair<char, int> Coordinate::indexes_to_coordinates(Coordinate c) {
     return std::make_pair(customRow_to_char(c.row()), c.col());
 }
 
+bool Coordinate::operator<(const Coordinate &b) const {
+    if (row_ < b.row_)
+        return true;
+    if (b.row_ < row_)
+        return false;
+    return col_ < b.col_;
+
+}
+
+bool Coordinate::equals(int r, int c) const {
+    if (row_ == r && col_ == c)
+        return true;
+
+    return false;
+}
+
+bool Coordinate::operator==(const Coordinate &b) const {
+    return row_ == b.row_ &&
+           col_ == b.col_;
+}
+
 std::ostream &operator<<(std::ostream &os, const Coordinate &coordinate) {
     std::pair<char, int> customCoord = Coordinate::indexes_to_coordinates(coordinate);
 
