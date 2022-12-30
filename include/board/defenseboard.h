@@ -13,6 +13,8 @@ public:
         return std::vector<Coordinate>(1);
     }
 
+    bool is_lost();
+
 private:
 };
 

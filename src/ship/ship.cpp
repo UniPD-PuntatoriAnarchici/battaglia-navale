@@ -4,6 +4,6 @@
 #include "./../../include/ship/ship.h"
 
 bool Ship::is_alive() const {
-    return armor_ == 0;
+    return armor_ != 0;
 }
 
