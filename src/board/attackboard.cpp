@@ -10,7 +10,7 @@ Attackboard::Attackboard() {
     for (auto battleship : battleships) {
         std::cout << battleship << std::endl;
     }
-
+    std::vector<Submarine> submarines = place_submarines();
     // Submarine submarine1;
     // Submarine submarine2;
 }
@@ -22,8 +22,7 @@ std::vector<Battleship> Attackboard::place_battleships() {
     for (int i = 0; i < 3; i++) {
         bool valid_input = false;
         while (!valid_input) {
-            std::cout << "Quali sono le coordinate per la corazzata " << i + 1
-                      << "?" << std::endl;
+            std::cout << "Quali sono le coordinate per la corazzata " << i + 1 << "?" << std::endl;
             // get and split coordinates
             std::getline(std::cin, input);
             std::vector<Coordinate> coordinates = split(input);
@@ -40,41 +39,25 @@ std::vector<Battleship> Attackboard::place_battleships() {
             if (coordinates.at(0).col() == coordinates.at(1).col()) {
                 // same column -> vertical
                 direction = Ship::Directions::VERTICAL;
-                // if vertical center is y2-y1
-                int y2 = coordinates.at(1).row();
-                int y1 = coordinates.at(0).row();
-                // if y1 is bigger i switch the positions
-                if (y1 > y2) {
-                    int temp = y2;
-                    y2 = y1;
-                    y1 = temp;
-                }
+                // if vertical center is on the same column (y2-y1)
                 // check that delta is valid
-                if (y2 - y1 != Battleship::LENGTH - 1) {
-                    std::cout << "La lunghezza di una corazzata e': "
-                              << Battleship::LENGTH << "!" << std::endl;
+                int delta = ship_length(coordinates.at(1).row(), coordinates.at(0).row());
+                if (delta != Battleship::LENGTH - 1) {
+                    std::cout << "La lunghezza di una corazzata e': " << Battleship::LENGTH << "!" << std::endl;
                     continue;
                 }
-                center = Coordinate(coordinates.at(0).col(), y2 - y1);
+                center = Coordinate(coordinates.at(0).col(), delta);
             } else {
                 // same row -> horizontal
                 direction = Ship::Directions::HORIZONTAL;
-                // if horizontal center is x2-x1
-                int x2 = coordinates.at(1).col();
-                int x1 = coordinates.at(0).col();
-                // if x1 is bigger i switch the positions
-                if (x1 > x2) {
-                    int temp = x2;
-                    x2 = x1;
-                    x1 = temp;
-                }
+                // // if horizontal center is on the same row (x2-x1)
                 // check that delta is valid
-                if (x2 - x1 != Battleship::LENGTH - 1) {
-                    std::cout << "La lunghezza di una corazzata e': "
-                              << Battleship::LENGTH << "!" << std::endl;
+                int delta = ship_length(coordinates.at(1).col(), coordinates.at(0).col());
+                if (delta != Battleship::LENGTH - 1) {
+                    std::cout << "La lunghezza di una corazzata e': " << Battleship::LENGTH << "!" << std::endl;
                     continue;
                 }
-                center = Coordinate(x2 - x1, coordinates.at(0).row());
+                center = Coordinate(delta, coordinates.at(0).row());
             }
 
             // push Battleship(center, direction)
@@ -87,6 +70,20 @@ std::vector<Battleship> Attackboard::place_battleships() {
     return battleships;
 }
 
+std::vector<Submarine> Attackboard::place_submarines() {
+    std::vector<Submarine> submarines;
+    return submarines;
+}
+
+int Attackboard::ship_length(int n1, int n2) {
+    if (n1 > n2) {
+        int temp = n2;
+        n2 = n1;
+        n1 = temp;
+    }
+    return n2 - n1;
+}
+
 std::vector<Coordinate> Attackboard::split(const std::string &s) {
     std::vector<Coordinate> coordinates;
     std::istringstream iss(s);
@@ -97,6 +94,4 @@ std::vector<Coordinate> Attackboard::split(const std::string &s) {
     return coordinates;
 }
 
-std::vector<Coordinate> Attackboard::get_all() {
-    return std::vector<Coordinate>(1);
-}
+std::vector<Coordinate> Attackboard::get_all() { return std::vector<Coordinate>(1); }
