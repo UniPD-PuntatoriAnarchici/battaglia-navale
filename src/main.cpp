@@ -18,18 +18,41 @@ using namespace std;
 void test_dev_matteo_galiazzo() {
     cout << "=== dev-matteo-galiazzo ===" << endl;
 
+    vector<Coordinate> occupied_positions;
     Submarine s1{};
     cout << s1 << endl;
+    cout << "S1 occupies: ";
+    occupied_positions = s1.positions();
+    for (Coordinate c : occupied_positions) {
+        cout << c;
+    }
+    cout << endl;
 
     Submarine s2{Coordinate{3, 3}, Ship::Directions::VERTICAL};
     cout << s2 << endl;
+    cout << "S2 occupies: ";
+    occupied_positions = s2.positions();
+    for (Coordinate c : occupied_positions) {
+        cout << c;
+    }
+    cout << endl;
+
+    Battleship b1{Coordinate{3, 8}, Ship::Directions::VERTICAL};
+    cout << b1 << endl;
+    cout << "B1 occupies: ";
+    occupied_positions = b1.positions();
+    for (Coordinate c : occupied_positions) {
+        cout << c;
+    }
+    cout << endl;
 
     Defenseboard db;
-    std::cout << db.place_ship(s1) << std::endl;
-    std::cout << db.place_ship(s2) << std::endl;
+    cout << db.place_ship(s1) << endl;
+    cout << db.place_ship(s2) << endl;
 
     Humanplayer hp;
     hp.place_ships();
+    hp.print_defense_board();
 }
 
 void test_dev_filippo_tiberio() {
