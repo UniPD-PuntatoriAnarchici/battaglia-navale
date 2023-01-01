@@ -1,4 +1,3 @@
 #include "./../../include/board/attackboard.h"
 
-Attackboard::Attackboard() {
-}
+Attackboard::Attackboard() {}

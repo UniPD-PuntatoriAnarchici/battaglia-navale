@@ -2,11 +2,12 @@
 #define DEFENSEBOARD_H
 
 #include <memory>
+#include <queue>
 
 #include "./../ship/battleship.h"
 #include "./../ship/submarine.h"
 #include "board.h"
-// TODO: include other ships
+// TODO: include other ships_
 
 class Defenseboard : public Board {
    public:
@@ -18,16 +19,16 @@ class Defenseboard : public Board {
 
     Defenseboard() {}
 
-    std::vector<Coordinate> get_all() override { return std::vector<Coordinate>(1); }
+    std::vector<Coordinate> get_all() override;
 
     bool is_lost();
 
     bool place_ship(const Ship &ship);
 
    private:
-    // declaring array of smart pointers (ships) with 7 ships:
+    // declaring array of smart pointers (ships_) with 7 ships_:
     // battle (3) repair (3) and submarine (2)
-    std::vector<std::unique_ptr<Ship>> ships;
+    std::vector<std::unique_ptr<Ship>> ships_;
 };
 
 #endif  // DEFENSEBOARD_H

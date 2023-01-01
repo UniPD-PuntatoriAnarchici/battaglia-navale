@@ -11,13 +11,13 @@ class Humanplayer : public Player {
     bool place_ships();
     void turn();
     std::vector<Submarine> place_submarines();
-    int ship_length(int n1, int n2);
+    bool check_delta(int n1, int n2);
     std::vector<Coordinate> split(const std::string &s);
 
    private:
 };
 
 // bool place_ships(); + overload
-// place ships con le stringhe
+// place ships_ con le stringhe
 
 #endif

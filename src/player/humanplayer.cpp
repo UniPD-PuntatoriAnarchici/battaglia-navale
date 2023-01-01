@@ -28,26 +28,24 @@ bool Humanplayer::place_ships() {
                 // same column -> vertical
                 direction = Ship::Directions::VERTICAL;
                 // if vertical center is on the same column (y2-y1)
-                // check that delta is valid
-                int delta = ship_length(coordinates.at(1).row(), coordinates.at(0).row());
-                if (delta != Battleship::LENGTH - 1) {
+                if (!check_delta(coordinates.at(1).row(), coordinates.at(0).row())) {
                     std::cout << "La lunghezza di una corazzata e': " << Battleship::LENGTH << "!"
                               << std::endl;
                     continue;
                 }
-                center = Coordinate(coordinates.at(0).col(), delta);
+                center = Coordinate(coordinates.at(0).row() + (Battleship::LENGTH / 2),
+                                    coordinates.at(0).col());
             } else {
                 // same row -> horizontal
                 direction = Ship::Directions::HORIZONTAL;
-                // // if horizontal center is on the same row (x2-x1)
-                // check that delta is valid
-                int delta = ship_length(coordinates.at(1).col(), coordinates.at(0).col());
-                if (delta != Battleship::LENGTH - 1) {
+                // if horizontal center is on the same row (x2-x1)
+                if (!check_delta(coordinates.at(1).col(), coordinates.at(0).col())) {
                     std::cout << "La lunghezza di una corazzata e': " << Battleship::LENGTH << "!"
                               << std::endl;
                     continue;
                 }
-                center = Coordinate(delta, coordinates.at(0).row());
+                center = Coordinate(coordinates.at(0).row(),
+                                    coordinates.at(0).col() + (Battleship::LENGTH / 2));
             }
 
             // push Battleship(center, direction)
@@ -64,13 +62,14 @@ std::vector<Submarine> Humanplayer::place_submarines() {
     return submarines;
 }
 
-int Humanplayer::ship_length(int n1, int n2) {
+// true -> delta ok, false -> delta wrong, insert again
+bool Humanplayer::check_delta(int n1, int n2) {
     if (n1 > n2) {
         int temp = n2;
         n2 = n1;
         n1 = temp;
     }
-    return n2 - n1;
+    return (n2 - n1 + 1) == Battleship::LENGTH;
 }
 
 std::vector<Coordinate> Humanplayer::split(const std::string &s) {
