@@ -6,14 +6,16 @@
 #define BATTLESHIP_H
 
 #include <ostream>
+
 #include "ship.h"
 
 class Battleship : public Ship {
-public:
+   public:
     static constexpr char CHARACTER = 'C';
     static constexpr int LENGTH = 5;
 
-    explicit Battleship(Coordinate center = Coordinate{}, Ship::Directions direction = Ship::Directions::HORIZONTAL) {
+    explicit Battleship(Coordinate center = Coordinate{},
+                        Ship::Directions direction = Ship::Directions::HORIZONTAL) {
         cells_ = std::vector<bool>(LENGTH);
         center_ = center;
         direction_ = direction;
@@ -25,8 +27,9 @@ public:
         return true;
     }
 
+    Ship *clone() const { return new Battleship{*this}; }
 };
 
 std::ostream &operator<<(std::ostream &os, const Battleship &battleship);
 
-#endif //BATTLESHIP_H
+#endif  // BATTLESHIP_H

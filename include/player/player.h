@@ -1,21 +1,23 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include <vector>
 #include <string>
-#include "./../board/defenseboard.h"
+#include <vector>
+
 #include "./../board/attackboard.h"
+#include "./../board/defenseboard.h"
 
 class Player {
-public:
+   public:
     virtual void turn() = 0;
-
+    virtual bool place_ships() = 0;
     std::vector<std::string> history();
 
-private:
-    Defenseboard DefenseBoard;
+   protected:
+    Defenseboard defense_board_;
+    Attackboard attack_board_;
 
-    Attackboard AttackBoard;
+   private:
 };
 
-#endif //PLAYER_H
+#endif  // PLAYER_H

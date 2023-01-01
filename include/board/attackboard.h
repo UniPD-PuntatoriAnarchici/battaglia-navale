@@ -5,18 +5,13 @@
 
 #include "board.h"
 
-class Battleship;  // TODO others
-class Submarine;
-
 class Attackboard : public Board {
    public:
     Attackboard();
 
-    std::vector<Coordinate> get_all();
+    std::vector<Coordinate> get_all() override { return std::vector<Coordinate>(1); }
 
    private:
-      std::vector<Battleship> place_battleships();
-      std::vector<Coordinate> split(const std::string &s);
 };
 
 #endif

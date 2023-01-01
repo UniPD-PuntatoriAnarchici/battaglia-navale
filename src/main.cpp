@@ -2,10 +2,10 @@
 #include <queue>
 
 #include "./../include/board/attackboard.h"
+#include "./../include/board/defenseboard.h"
+#include "./../include/player/humanplayer.h"
 
-#ifdef __linux__
-
-#elif __APPLE__
+#if defined(__linux__) || defined(__APPLE__)
 
 #else
 
@@ -24,20 +24,22 @@ void test_dev_matteo_galiazzo() {
     Submarine s2{Coordinate{3, 3}, Ship::Directions::VERTICAL};
     cout << s2 << endl;
 
-    Attackboard ab;
+    Defenseboard db;
+    std::cout << db.place_ship(s1) << std::endl;
+    std::cout << db.place_ship(s2) << std::endl;
+
+    Humanplayer hp;
+    hp.place_ships();
 }
 
 void test_dev_filippo_tiberio() {
-#ifdef __linux__
-
-#elif __APPLE__
+#if defined(__linux__) || defined(__APPLE__)
 
 #else
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 #endif
 
-    cout << endl
-         << "=== dev-filippo-tiberio ===" << endl;
+    cout << endl << "=== dev-filippo-tiberio ===" << endl;
 
     // region Coordinate
     Coordinate c1{};
@@ -82,8 +84,7 @@ void test_dev_filippo_tiberio() {
 
     // endregion
 
-    cout << endl
-         << "----------------" << endl;
+    cout << endl << "----------------" << endl;
 
     Battleship b1{};
     cout << b1 << endl;
@@ -123,15 +124,12 @@ void test_dev_filippo_tiberio() {
         char toPrint{' '};
         bool isCenter{false};
 
-        explicit minpQElements(const Coordinate &c, char toPrint = ' ',
-                               bool isCenter = true)
+        explicit minpQElements(const Coordinate &c, char toPrint = ' ', bool isCenter = true)
             : c(c), toPrint(toPrint), isCenter(isCenter) {}
     };
 
     auto lambda = [](minpQElements a, minpQElements b) { return !(a.c < b.c); };
-    std::priority_queue<minpQElements, std::vector<minpQElements>,
-                        decltype(lambda)>
-        pQ(lambda);
+    std::priority_queue<minpQElements, std::vector<minpQElements>, decltype(lambda)> pQ(lambda);
 
     for (auto p : positions2) {
         if (p == b2.center()) {

@@ -5,15 +5,10 @@
 #ifndef BOARD_H
 #define BOARD_H
 
-#include <array>
 #include <iostream>
-#include <memory>
 #include <vector>
 
 #include "./../coordinate/coordinate.h"
-#include "./../ship/battleship.h"
-#include "./../ship/submarine.h"
-// TODO: include other ships
 
 class Board {
    public:
@@ -25,10 +20,6 @@ class Board {
 
     static constexpr int side_length = 12;
 
-   private:
-    // declaring array of smart pointers (ships) with 7 ships:
-    // battle (3) repair (3) and submarine (2)
-    std::array<std::unique_ptr<Ship>, 7> ships;
 };
 
 #endif  // BOARD_H
