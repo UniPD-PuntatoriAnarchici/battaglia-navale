@@ -2,6 +2,8 @@
 #include <queue>
 
 #include "./../include/board/attackboard.h"
+#include "./../include/board/defenseboard.h"
+#include "./../include/player/humanplayer.h"
 
 #if defined(__linux__) || defined(__APPLE__)
 
@@ -22,7 +24,12 @@ void test_dev_matteo_galiazzo() {
     Submarine s2{Coordinate{3, 3}, Ship::Directions::VERTICAL};
     cout << s2 << endl;
 
-    Attackboard ab;
+    Defenseboard db;
+    std::cout << db.place_ship(s1) << std::endl;
+    std::cout << db.place_ship(s2) << std::endl;
+
+    Humanplayer hp;
+    hp.place_ships();
 }
 
 void test_dev_filippo_tiberio() {

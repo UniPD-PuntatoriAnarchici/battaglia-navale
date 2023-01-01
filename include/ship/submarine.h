@@ -10,9 +10,8 @@ class Submarine : public Ship {
     static constexpr char CHARACTER = 'E';
     static constexpr int LENGTH = 1;
 
-    explicit Submarine(
-        Coordinate center = Coordinate{},
-        Ship::Directions direction = Ship::Directions::HORIZONTAL) {
+    explicit Submarine(Coordinate center = Coordinate{},
+                       Ship::Directions direction = Ship::Directions::HORIZONTAL) {
         cells_ = std::vector<bool>(LENGTH);
         center_ = center;
         direction_ = direction;
@@ -20,10 +19,11 @@ class Submarine : public Ship {
         reset_cells();
     }
 
-    bool action(Coordinate dest, Defenseboard &opponent,
-                Attackboard &self) override {
+    bool action(Coordinate dest, Defenseboard &opponent, Attackboard &self) override {
         return true;
     }
+
+    Ship *clone() const { return new Submarine{*this}; }
 };
 
 std::ostream &operator<<(std::ostream &os, const Submarine &submarine);
