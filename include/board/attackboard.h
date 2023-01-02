@@ -2,16 +2,36 @@
 #define ATTACKBOARD_H
 
 #include <vector>
+#include <map>
 
 #include "board.h"
 
 class Attackboard : public Board {
-   public:
+public:
+
     Attackboard();
 
-    std::vector<Coordinate> get_all() override { return std::vector<Coordinate>(1); }
+    std::vector<std::pair<Coordinate,char>> get_all() override;
 
-   private:
+    void clear_board() {
+        cells_.clear();
+    }
+
+    int num_elements() const;
+
+    void hit(Coordinate c);
+    void miss(Coordinate c);
+    void reveal(Coordinate c);
+
+    void clear_hits();
+    void clear_misses();
+    void clear_reveals();
+
+private:
+    std::map<Coordinate, char> cells_;
+
 };
+
+
 
 #endif

@@ -23,7 +23,7 @@ void test_dev_matteo_galiazzo() {
     cout << s1 << endl;
     cout << "S1 occupies: ";
     occupied_positions = s1.positions();
-    for (Coordinate c : occupied_positions) {
+    for (Coordinate c: occupied_positions) {
         cout << c;
     }
     cout << endl;
@@ -32,7 +32,7 @@ void test_dev_matteo_galiazzo() {
     cout << s2 << endl;
     cout << "S2 occupies: ";
     occupied_positions = s2.positions();
-    for (Coordinate c : occupied_positions) {
+    for (Coordinate c: occupied_positions) {
         cout << c;
     }
     cout << endl;
@@ -41,7 +41,7 @@ void test_dev_matteo_galiazzo() {
     cout << b1 << endl;
     cout << "B1 occupies: ";
     occupied_positions = b1.positions();
-    for (Coordinate c : occupied_positions) {
+    for (Coordinate c: occupied_positions) {
         cout << c;
     }
     cout << endl;
@@ -102,6 +102,8 @@ void test_dev_filippo_tiberio() {
     Coordinate c7{"C7"};
     cout << c7;
 
+    cout << (c1 < c2);
+
     Coordinate c8{"N12"};
     cout << c8;
 
@@ -114,7 +116,7 @@ void test_dev_filippo_tiberio() {
     cout << "Battleship b1 positions: ";
     try {
         std::vector<Coordinate> positions1 = b1.positions();
-        for (auto p : positions1) {
+        for (auto p: positions1) {
             cout << p << " ";
         }
     } catch (const std::exception &e) {
@@ -127,7 +129,7 @@ void test_dev_filippo_tiberio() {
 
     cout << "Battleship b2 positions: ";
     std::vector<Coordinate> positions2 = b2.positions();
-    for (auto p : positions2) {
+    for (auto p: positions2) {
         cout << p << " ";
     }
     cout << endl;
@@ -137,7 +139,7 @@ void test_dev_filippo_tiberio() {
 
     cout << "Battleship b3 positions: ";
     std::vector<Coordinate> positions3 = b3.positions();
-    for (auto p : positions3) {
+    for (auto p: positions3) {
         cout << p << " ";
     }
     cout << endl;
@@ -148,13 +150,13 @@ void test_dev_filippo_tiberio() {
         bool isCenter{false};
 
         explicit minpQElements(const Coordinate &c, char toPrint = ' ', bool isCenter = true)
-            : c(c), toPrint(toPrint), isCenter(isCenter) {}
+                : c(c), toPrint(toPrint), isCenter(isCenter) {}
     };
 
     auto lambda = [](minpQElements a, minpQElements b) { return !(a.c < b.c); };
     std::priority_queue<minpQElements, std::vector<minpQElements>, decltype(lambda)> pQ(lambda);
 
-    for (auto p : positions2) {
+    for (auto p: positions2) {
         if (p == b2.center()) {
             pQ.push(minpQElements{p, 'a', true});
         } else {
@@ -162,17 +164,17 @@ void test_dev_filippo_tiberio() {
         }
     }
 
-    for (auto p : positions3) {
+    for (auto p: positions3) {
         if (p == b3.center()) {
-            pQ.push(minpQElements{p, 'a', true});
+            pQ.push(minpQElements{p, 'b', true});
         } else {
-            pQ.push(minpQElements{p, 'a', false});
+            pQ.push(minpQElements{p, 'b', false});
         }
     }
 
     minpQElements el = pQ.top();
     for (int i = 1; i <= 12; i++) {
-        cout << (char)(i < 10 ? '@' + i : '@' + i + 2) << " |";
+        cout << (char) (i < 10 ? '@' + i : '@' + i + 2) << " |";
         for (int j = 1; j <= 12; j++) {
             if (el.c.equals(i, j)) {
                 if (el.isCenter) {
@@ -206,13 +208,32 @@ void test_dev_filippo_tiberio() {
         }
     }
     cout << endl;
+
+
+    Attackboard board1{};
+    board1.hit(c7);
+    board1.hit(c1);
+    board1.miss(c1);
+
+    board1.hit(Coordinate{4, 4});
+    board1.hit(Coordinate{4, 5});
+    board1.hit(Coordinate{4, 6});
+
+//    int sizeBefore = board1.num_elements();
+//    board1.clear_hits();
+//    int sizeAfter = board1.num_elements();
+//    board1.clear_misses();
+//    int sizeAfterAfter = board1.num_elements();
+
+
+
 }
 
 void test_dev_matteo_rampin() { cout << "=== dev-matteo-rampin ===" << endl; }
 
 int main() {
     std::cout << "MAIN" << std::endl;
-    test_dev_matteo_galiazzo();
+//    test_dev_matteo_galiazzo();
     test_dev_filippo_tiberio();
     return 0;
 }
