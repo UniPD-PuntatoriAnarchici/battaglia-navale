@@ -18,13 +18,13 @@ using namespace std;
 void test_dev_matteo_galiazzo() {
     cout << "=== dev-matteo-galiazzo ===" << endl;
 
-    vector<Coordinate> occupied_positions;
+    vector<pair<Coordinate,char>> occupied_positions;
     Submarine s1{};
     cout << s1 << endl;
     cout << "S1 occupies: ";
     occupied_positions = s1.positions();
-    for (Coordinate c: occupied_positions) {
-        cout << c;
+    for (auto c: occupied_positions) {
+        cout << c.first;
     }
     cout << endl;
 
@@ -32,8 +32,8 @@ void test_dev_matteo_galiazzo() {
     cout << s2 << endl;
     cout << "S2 occupies: ";
     occupied_positions = s2.positions();
-    for (Coordinate c: occupied_positions) {
-        cout << c;
+    for (auto c: occupied_positions) {
+        cout << c.first;
     }
     cout << endl;
 
@@ -41,8 +41,8 @@ void test_dev_matteo_galiazzo() {
     cout << b1 << endl;
     cout << "B1 occupies: ";
     occupied_positions = b1.positions();
-    for (Coordinate c: occupied_positions) {
-        cout << c;
+    for (auto c: occupied_positions) {
+        cout << c.first;
     }
     cout << endl;
 
@@ -115,9 +115,9 @@ void test_dev_filippo_tiberio() {
     cout << b1 << endl;
     cout << "Battleship b1 positions: ";
     try {
-        std::vector<Coordinate> positions1 = b1.positions();
+        auto positions1 = b1.positions();
         for (auto p: positions1) {
-            cout << p << " ";
+            cout << p.first << " ";
         }
     } catch (const std::exception &e) {
         cout << e.what() << endl;
@@ -128,9 +128,9 @@ void test_dev_filippo_tiberio() {
     cout << b2 << endl;
 
     cout << "Battleship b2 positions: ";
-    std::vector<Coordinate> positions2 = b2.positions();
+    auto positions2 = b2.positions();
     for (auto p: positions2) {
-        cout << p << " ";
+        cout << p.first << " ";
     }
     cout << endl;
 
@@ -138,9 +138,9 @@ void test_dev_filippo_tiberio() {
     cout << b3 << endl;
 
     cout << "Battleship b3 positions: ";
-    std::vector<Coordinate> positions3 = b3.positions();
+    auto positions3 = b3.positions();
     for (auto p: positions3) {
-        cout << p << " ";
+        cout << p.first << " ";
     }
     cout << endl;
 
@@ -156,58 +156,58 @@ void test_dev_filippo_tiberio() {
     auto lambda = [](minpQElements a, minpQElements b) { return !(a.c < b.c); };
     std::priority_queue<minpQElements, std::vector<minpQElements>, decltype(lambda)> pQ(lambda);
 
-    for (auto p: positions2) {
-        if (p == b2.center()) {
-            pQ.push(minpQElements{p, 'a', true});
-        } else {
-            pQ.push(minpQElements{p, 'a', false});
-        }
-    }
-
-    for (auto p: positions3) {
-        if (p == b3.center()) {
-            pQ.push(minpQElements{p, 'b', true});
-        } else {
-            pQ.push(minpQElements{p, 'b', false});
-        }
-    }
-
-    minpQElements el = pQ.top();
-    for (int i = 1; i <= 12; i++) {
-        cout << (char) (i < 10 ? '@' + i : '@' + i + 2) << " |";
-        for (int j = 1; j <= 12; j++) {
-            if (el.c.equals(i, j)) {
-                if (el.isCenter) {
-#if defined(__linux__) || defined(__APPLE__)
-                    cout << " \033[1;34m" << el.toPrint << "\033[0m |";
-#else
-                    SetConsoleTextAttribute(hConsole, 12);
-                    cout << " " << el.toPrint;
-                    SetConsoleTextAttribute(hConsole, 7);
-                    cout << " |";
-#endif
-
-                } else {
-                    cout << " " << el.toPrint << " |";
-                }
-
-                pQ.pop();
-                el = pQ.top();
-            } else {
-                cout << "   |";
-            }
-        }
-        cout << endl;
-    }
-    cout << "-> ";
-    for (int j = 1; j <= 12; j++) {
-        if (j < 10) {
-            cout << "  " << j << " ";
-        } else {
-            cout << " " << j << " ";
-        }
-    }
-    cout << endl;
+//    for (auto p: positions2) {
+//        if (p == b2.center()) {
+//            pQ.push(minpQElements{p, 'a', true});
+//        } else {
+//            pQ.push(minpQElements{p, 'a', false});
+//        }
+//    }
+//
+//    for (auto p: positions3) {
+//        if (p == b3.center()) {
+//            pQ.push(minpQElements{p, 'b', true});
+//        } else {
+//            pQ.push(minpQElements{p, 'b', false});
+//        }
+//    }
+//
+//    minpQElements el = pQ.top();
+//    for (int i = 1; i <= 12; i++) {
+//        cout << (char) (i < 10 ? '@' + i : '@' + i + 2) << " |";
+//        for (int j = 1; j <= 12; j++) {
+//            if (el.c.equals(i, j)) {
+//                if (el.isCenter) {
+//#if defined(__linux__) || defined(__APPLE__)
+//                    cout << " \033[1;34m" << el.toPrint << "\033[0m |";
+//#else
+//                    SetConsoleTextAttribute(hConsole, 12);
+//                    cout << " " << el.toPrint;
+//                    SetConsoleTextAttribute(hConsole, 7);
+//                    cout << " |";
+//#endif
+//
+//                } else {
+//                    cout << " " << el.toPrint << " |";
+//                }
+//
+//                pQ.pop();
+//                el = pQ.top();
+//            } else {
+//                cout << "   |";
+//            }
+//        }
+//        cout << endl;
+//    }
+//    cout << "-> ";
+//    for (int j = 1; j <= 12; j++) {
+//        if (j < 10) {
+//            cout << "  " << j << " ";
+//        } else {
+//            cout << " " << j << " ";
+//        }
+//    }
+//    cout << endl;
 
 
     Attackboard board1{};
@@ -218,6 +218,8 @@ void test_dev_filippo_tiberio() {
     board1.hit(Coordinate{4, 4});
     board1.hit(Coordinate{4, 5});
     board1.hit(Coordinate{4, 6});
+    Defenseboard board2{};
+    board2.get_all();
 
 //    int sizeBefore = board1.num_elements();
 //    board1.clear_hits();
