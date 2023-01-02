@@ -10,22 +10,22 @@
 // TODO: include other ships_
 
 class Defenseboard : public Board {
-   public:
+public:
     class FULL_BOARD_EXCEPTION : public std::exception {
         const char *what() const noexcept override {
             return "Board is full, you can't add more ships";
         }
     };
 
-    Defenseboard() {}
+    Defenseboard() = default;
 
-    std::vector<std::pair<Coordinate,char>>  get_all() override;
+    std::vector<std::pair<Coordinate, char>> get_all() override;
 
     bool is_lost();
 
     bool place_ship(const Ship &ship);
 
-   private:
+private:
     // declaring array of smart pointers (ships_) with 7 ships_:
     // battle (3) repair (3) and submarine (2)
     std::vector<std::unique_ptr<Ship>> ships_;

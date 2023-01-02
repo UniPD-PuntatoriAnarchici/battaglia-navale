@@ -15,11 +15,13 @@ class Attackboard;
 class Defenseboard;
 
 class Ship {
-   public:
-    enum class Directions { HORIZONTAL, VERTICAL };
+public:
+    enum class Directions {
+        HORIZONTAL, VERTICAL
+    };
 
     friend std::ostream &operator<<(std::ostream &os, const Ship::Directions &direction) {
-        os << (((int)direction) == 0 ? "HORIZONTAL" : "VERTICAL");
+        os << (((int) direction) == 0 ? "HORIZONTAL" : "VERTICAL");
         return os;
     }
 
@@ -41,7 +43,7 @@ class Ship {
     const std::vector<bool> &cells() const { return cells_; }
 
     void reset_cells() {
-        for (auto &&cell : cells_) {
+        for (auto &&cell: cells_) {
             cell = true;
         }
     }
@@ -50,18 +52,18 @@ class Ship {
 
     void set_armor(int armor) { armor_ = armor; }
 
-    std::vector<Coordinate> positions() const {
-        std::vector<Coordinate> positions;
+    std::vector<std::pair<Coordinate, char>> positions() const {
+        std::vector<std::pair<Coordinate, char>> positions;
 
-        int length = (int)cells().size();
+        int length = (int) cells().size();
 
         std::pair<int, int> center = Coordinate::coordinates_to_indexes(center_);
 
         for (int i = 0; i < length; i++) {
             if (direction_ == Directions::HORIZONTAL) {
-                positions.emplace_back(center.first, center.second - (length / 2) + i);
+                positions.emplace_back(Coordinate{center.first, center.second - (length / 2) + i}, 'c');
             } else {
-                positions.emplace_back(center.first - (length / 2) + i, center.second);
+                positions.emplace_back(Coordinate{center.first - (length / 2) + i, center.second}, 'c');
             }
         }
 
@@ -70,7 +72,7 @@ class Ship {
 
     virtual Ship *clone() const = 0;
 
-   protected:
+protected:
     static constexpr char CHARACTER = ' ';
     static constexpr int LENGTH = 0;
 
@@ -81,7 +83,7 @@ class Ship {
 
     virtual bool action(Coordinate dest, Defenseboard &opponent, Attackboard &self) = 0;
 
-   private:
+private:
 };
 
 #endif  // SHIP_H
