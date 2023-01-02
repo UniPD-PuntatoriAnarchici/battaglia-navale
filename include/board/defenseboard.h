@@ -19,7 +19,7 @@ class Defenseboard : public Board {
 
     Defenseboard() {}
 
-    std::vector<Coordinate> get_all() override;
+    std::vector<std::pair<Coordinate,char>>  get_all() override;
 
     bool is_lost();
 

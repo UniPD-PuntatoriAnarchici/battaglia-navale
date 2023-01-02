@@ -6,9 +6,9 @@ bool Defenseboard::place_ship(const Ship &ship) {
     return true;
 }
 
-std::vector<Coordinate> Defenseboard::get_all() {
+std::vector<std::pair<Coordinate, char>> Defenseboard::get_all() {
     // ships_.at(0)->positions();
-    std::vector<Coordinate> occupied_positions;
+    std::vector<std::pair<Coordinate, char>> occupied_positions;
 
     return occupied_positions;
 }

@@ -90,13 +90,6 @@ public:
 
     bool operator==(const Coordinate &b) const;
 
-
-private:
-    int row_{};
-    int col_;
-    static constexpr char row_letters_[] = {'A', 'B', 'C', 'D', 'E', 'F',
-                                            'G', 'H', 'I', 'L', 'M', 'N'};
-
     bool is_valid() const {
         if (row_ < 1 || row_ > 12)
             return false;
@@ -107,6 +100,11 @@ private:
         return true;
     }
 
+private:
+    int row_{};
+    int col_{};
+    static constexpr char row_letters_[] = {'A', 'B', 'C', 'D', 'E', 'F',
+                                            'G', 'H', 'I', 'L', 'M', 'N'};
 
 private:
 

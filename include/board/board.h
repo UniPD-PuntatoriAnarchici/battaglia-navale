@@ -16,12 +16,12 @@ struct minpQElements {
     bool isCenter{false};
 
     explicit minpQElements(const Coordinate &c, char toPrint = ' ', bool isCenter = true)
-        : c(c), toPrint(toPrint), isCenter(isCenter) {}
+            : c(c), toPrint(toPrint), isCenter(isCenter) {}
 };
 
 class Board {
-   public:
-    virtual std::vector<Coordinate> get_all() = 0;
+public:
+    virtual std::vector<std::pair<Coordinate, char>> get_all() = 0;
 
     bool is_valid(Coordinate &c);
 
