@@ -4,7 +4,6 @@ void Humanplayer::turn() {}
 
 bool Humanplayer::place_ships() {
     // passo una ship e viene buttata dentro
-    std::vector<Battleship> battleships;
     std::string input;
 
     for (int i = 0; i < 3; i++) {

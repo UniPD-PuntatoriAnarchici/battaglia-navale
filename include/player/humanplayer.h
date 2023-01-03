@@ -1,5 +1,5 @@
-#ifndef HUMAN_PLAYER_H
-#define HUMAN_PLAYER_H
+#ifndef HUMANPLAYER_H
+#define HUMANPLAYER_H
 
 #include <sstream>
 
@@ -20,4 +20,4 @@ class Humanplayer : public Player {
 // bool place_ships(); + overload
 // place ships_ con le stringhe
 
-#endif
+#endif  // HUMANPLAYER_H
