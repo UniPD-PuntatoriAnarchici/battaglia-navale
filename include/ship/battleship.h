@@ -13,6 +13,7 @@ class Battleship : public Ship {
    public:
     static constexpr char CHARACTER = 'C';
     static constexpr int LENGTH = 5;
+    static constexpr Type TYPE = Type::BATTLESHIP;
 
     explicit Battleship(Coordinate center = Coordinate{},
                         Ship::Directions direction = Ship::Directions::HORIZONTAL) {
@@ -27,7 +28,7 @@ class Battleship : public Ship {
         return true;
     }
 
-    Ship *clone() const { return new Battleship{*this}; }
+    Ship *clone() const override { return new Battleship{*this}; }
 };
 
 std::ostream &operator<<(std::ostream &os, const Battleship &battleship);

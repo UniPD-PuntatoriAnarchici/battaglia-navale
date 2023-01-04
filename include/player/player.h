@@ -11,7 +11,7 @@
 class Player {
    public:
     virtual void turn() = 0;
-    virtual bool place_ships() = 0;
+    virtual bool place_ship(const Ship::Type ship_type) = 0;
     std::vector<std::string> history();
     void print_defense_board();
 

@@ -1,5 +1,5 @@
-#ifndef HUMAN_PLAYER_H
-#define HUMAN_PLAYER_H
+#ifndef HUMANPLAYER_H
+#define HUMANPLAYER_H
 
 #include <sstream>
 
@@ -8,10 +8,9 @@
 class Humanplayer : public Player {
    public:
     Humanplayer() {}
-    bool place_ships();
+    bool place_ship(const Ship::Type ship_type);
     void turn();
-    std::vector<Submarine> place_submarines();
-    bool check_delta(int n1, int n2);
+    bool check_delta(int n1, int n2, const Ship::Type ship_type);
     std::vector<Coordinate> split(const std::string &s);
 
    private:
@@ -20,4 +19,4 @@ class Humanplayer : public Player {
 // bool place_ships(); + overload
 // place ships_ con le stringhe
 
-#endif
+#endif  // HUMANPLAYER_H
