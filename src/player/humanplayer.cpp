@@ -37,25 +37,21 @@ bool Humanplayer::place_ship(const Ship::Type ship_type) {
         if (coordinates.at(0).col() == coordinates.at(1).col()) {
             // same column -> vertical
             direction = Ship::Directions::VERTICAL;
-            // if vertical center is on the same column (y2-y1)
-            if (!check_delta(coordinates.at(1).row(), coordinates.at(0).row(), ship_type)) {
+            // if vertical length is in the column (y2-y1)
+            if (!check_ship_length(coordinates.at(1).row(), coordinates.at(0).row(), ship_type)) {
                 std::cout << "La lunghezza e il tipo di nave non corrispondono" << std::endl;
                 continue;
             }
-            // TODO: get ship center specifico
-            center = Coordinate(coordinates.at(0).row() + (Battleship::LENGTH / 2),
-                                coordinates.at(0).col());
+            center = get_ship_center(coordinates.at(0).row(), coordinates.at(0).col(), direction, ship_type);
         } else {
             // same row -> horizontal
             direction = Ship::Directions::HORIZONTAL;
-            // if horizontal center is on the same row (x2-x1)
-            if (!check_delta(coordinates.at(1).col(), coordinates.at(0).col(), ship_type)) {
+            // if horizontal length is in the row (x2-x1)
+            if (!check_ship_length(coordinates.at(1).col(), coordinates.at(0).col(), ship_type)) {
                 std::cout << "La lunghezza e il tipo di nave non corrispondono" << std::endl;
                 continue;
             }
-            // TODO: get ship center specifico
-            center = Coordinate(coordinates.at(0).row(),
-                                coordinates.at(0).col() + (Battleship::LENGTH / 2));
+            center = get_ship_center(coordinates.at(0).row(), coordinates.at(0).col(), direction, ship_type);
         }
 
         // push Battleship(center, direction)
@@ -74,8 +70,24 @@ bool Humanplayer::place_ship(const Ship::Type ship_type) {
     return true;
 }
 
+Coordinate Humanplayer::get_ship_center(int row, int col, Ship::Directions direction, Ship::Type ship_type) {
+    int ship_center_distance = 0;
+    if (ship_type == Ship::Type::BATTLESHIP)
+        ship_center_distance = Battleship::LENGTH / 2;
+    else if (ship_type == Ship::Type::REPAIRSHIP)
+        ship_center_distance = Repairship::LENGTH / 2;
+    else if (ship_type == Ship::Type::SUBMARINE)
+        ship_center_distance = Submarine::LENGTH / 2;
+
+    // if vertical center is on the same column (y2-y1), if horizontal on the same row (x2-x1)
+    if (direction == Ship::Directions::VERTICAL)
+        return Coordinate(row + ship_center_distance, col);
+    else
+        return Coordinate(row, col + ship_center_distance);
+}
+
 // true -> delta ok, false -> delta wrong, insert again
-bool Humanplayer::check_delta(int n1, int n2, const Ship::Type ship_type) {
+bool Humanplayer::check_ship_length(int n1, int n2, const Ship::Type ship_type) {
     if (n1 > n2) {
         int temp = n2;
         n2 = n1;
