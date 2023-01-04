@@ -9,6 +9,7 @@ class Repairship : public Ship{
     public:
     static constexpr char CHARACTER = 'S';
     static constexpr int LENGTH = 3;
+    static constexpr Type TYPE = Type::REPAIRSHIP;
 
     explicit Repairship(Coordinate center = Coordinate{},Ship::Directions direction = Ship::Directions::HORIZONTAL){
       cells_ = std::vector<bool>(LENGTH);
@@ -21,6 +22,8 @@ class Repairship : public Ship{
     bool action(Coordinate dest, Defenseboard &opponent, Attackboard &self) override {
         return true;
     }
+    
+    Ship *clone() const override{ return new Repairship{*this}; }
 };
 
 std::ostream &operator<<(std::ostream &os, const Repairship &battleship);

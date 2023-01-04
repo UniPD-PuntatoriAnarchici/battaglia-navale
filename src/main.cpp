@@ -51,7 +51,9 @@ void test_dev_matteo_galiazzo() {
     cout << db.place_ship(s2) << endl;
 
     Humanplayer hp;
-    hp.place_ships();
+    hp.place_ship(Ship::Type::BATTLESHIP);
+    hp.place_ship(Ship::Type::BATTLESHIP);
+    hp.place_ship(Ship::Type::BATTLESHIP);
     hp.print_defense_board();
 }
 

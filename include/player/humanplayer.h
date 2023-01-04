@@ -8,10 +8,9 @@
 class Humanplayer : public Player {
    public:
     Humanplayer() {}
-    bool place_ships();
+    bool place_ship(const Ship::Type ship_type);
     void turn();
-    std::vector<Submarine> place_submarines();
-    bool check_delta(int n1, int n2);
+    bool check_delta(int n1, int n2, const Ship::Type ship_type);
     std::vector<Coordinate> split(const std::string &s);
 
    private:

@@ -15,15 +15,15 @@ class Attackboard;
 class Defenseboard;
 
 class Ship {
-public:
-    enum class Directions {
-        HORIZONTAL, VERTICAL
-    };
+   public:
+    enum class Directions { HORIZONTAL, VERTICAL };
 
     friend std::ostream &operator<<(std::ostream &os, const Ship::Directions &direction) {
-        os << (((int) direction) == 0 ? "HORIZONTAL" : "VERTICAL");
+        os << (((int)direction) == 0 ? "HORIZONTAL" : "VERTICAL");
         return os;
     }
+
+    enum class Type { BATTLESHIP, REPAIRSHIP, SUBMARINE };
 
     bool is_alive() const;
 
@@ -43,7 +43,7 @@ public:
     const std::vector<bool> &cells() const { return cells_; }
 
     void reset_cells() {
-        for (auto &&cell: cells_) {
+        for (auto &&cell : cells_) {
             cell = true;
         }
     }
@@ -55,7 +55,7 @@ public:
     std::vector<std::pair<Coordinate, char>> positions() const {
         std::vector<std::pair<Coordinate, char>> positions;
 
-        int length = (int) cells().size();
+        int length = (int)cells().size();
 
         std::pair<int, int> center = Coordinate::coordinates_to_indexes(center_);
 
@@ -72,9 +72,10 @@ public:
 
     virtual Ship *clone() const = 0;
 
-protected:
+   protected:
     static constexpr char CHARACTER = ' ';
     static constexpr int LENGTH = 0;
+    static constexpr Type TYPE = Type::BATTLESHIP;
 
     Coordinate center_;
     Directions direction_;
@@ -83,7 +84,7 @@ protected:
 
     virtual bool action(Coordinate dest, Defenseboard &opponent, Attackboard &self) = 0;
 
-private:
+   private:
 };
 
 #endif  // SHIP_H
