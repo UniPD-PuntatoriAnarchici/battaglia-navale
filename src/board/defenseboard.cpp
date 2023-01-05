@@ -19,7 +19,7 @@ std::vector<std::pair<Coordinate, char>> Defenseboard::get_all() {
     //    tmp = b2.positions();
     //    occupied_positions.insert(occupied_positions.end(), tmp.begin(), tmp.end());
 
-    for (auto &ship : ships_) {
+    for (auto &ship: ships_) {
         auto tmp = ship->positions();
         occupied_positions.insert(occupied_positions.end(), tmp.begin(), tmp.end());
     }
@@ -33,3 +33,19 @@ std::vector<std::pair<Coordinate, char>> Defenseboard::get_all() {
 }
 
 bool Defenseboard::is_lost() { return false; }
+
+std::vector<Coordinate> Defenseboard::get_all_raw() {
+    std::vector<Coordinate> occupied_positions;
+
+    for (auto &ship: ships_) {
+        auto tmp = ship->raw_positions();
+        occupied_positions.insert(occupied_positions.end(), tmp.begin(), tmp.end());
+    }
+
+    std::sort(occupied_positions.begin(), occupied_positions.end(),
+              [](Coordinate a, Coordinate b) {
+                  return (a < b);
+              });
+
+    return occupied_positions;
+}

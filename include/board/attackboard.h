@@ -27,6 +27,8 @@ public:
     void clear_misses();
     void clear_reveals();
 
+    std::vector<Coordinate> get_all_raw() override;
+
 private:
     std::map<Coordinate, char> cells_;
 

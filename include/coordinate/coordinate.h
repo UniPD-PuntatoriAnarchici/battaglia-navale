@@ -103,8 +103,8 @@ public:
 private:
     int row_{};
     int col_{};
-    static constexpr char row_letters_[] = {'A', 'B', 'C', 'D', 'E', 'F',
-                                            'G', 'H', 'I', 'L', 'M', 'N'};
+//    static constexpr char row_letters_[] = {'A', 'B', 'C', 'D', 'E', 'F',
+//                                            'G', 'H', 'I', 'L', 'M', 'N'};
 
 private:
 

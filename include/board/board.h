@@ -22,10 +22,10 @@ struct minpQElements {
 class Board {
 public:
     virtual std::vector<std::pair<Coordinate, char>> get_all() = 0;
+    virtual std::vector<Coordinate> get_all_raw() = 0;
 
     bool is_valid(Coordinate &c);
 
-    bool is_occupied(Coordinate &c);
 
     static constexpr int side_length = 12;
 };

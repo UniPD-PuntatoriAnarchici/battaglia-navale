@@ -9,7 +9,6 @@ class Repairship : public Ship {
    public:
     static constexpr char CHARACTER = 'S';
     static constexpr int LENGTH = 3;
-    static constexpr Type TYPE = Type::REPAIRSHIP;
 
     explicit Repairship(Coordinate center = Coordinate{},
                         Ship::Directions direction = Ship::Directions::HORIZONTAL) {
@@ -17,6 +16,7 @@ class Repairship : public Ship {
         center_ = center;
         direction_ = direction;
         armor_ = LENGTH;
+        type_ = Type::REPAIRSHIP;
         reset_cells();
     }
 
