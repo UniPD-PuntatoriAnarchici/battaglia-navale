@@ -6,10 +6,10 @@
 #include "ship.h"
 
 class Submarine : public Ship {
-   public:
+public:
     static constexpr char CHARACTER = 'E';
     static constexpr int LENGTH = 1;
-    static constexpr Type TYPE = Type::SUBMARINE;
+
 
     explicit Submarine(Coordinate center = Coordinate{},
                        Ship::Directions direction = Ship::Directions::HORIZONTAL) {
@@ -17,6 +17,7 @@ class Submarine : public Ship {
         center_ = center;
         direction_ = direction;
         armor_ = LENGTH;
+        type_ = Type::SUBMARINE;
         reset_cells();
     }
 
@@ -24,7 +25,7 @@ class Submarine : public Ship {
         return true;
     }
 
-    Ship *clone() const override{ return new Submarine{*this}; }
+    Ship *clone() const override { return new Submarine{*this}; }
 };
 
 std::ostream &operator<<(std::ostream &os, const Submarine &submarine);

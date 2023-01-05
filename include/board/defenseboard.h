@@ -10,7 +10,7 @@
 #include "board.h"
 
 class Defenseboard : public Board {
-   public:
+public:
     class FULL_BOARD_EXCEPTION : public std::exception {
         const char *what() const noexcept override {
             return "Board is full, you can't add more ships";
@@ -21,11 +21,37 @@ class Defenseboard : public Board {
 
     std::vector<std::pair<Coordinate, char>> get_all() override;
 
+    std::vector<Coordinate> get_all_raw() override;
+
     bool is_lost();
 
     bool place_ship(const Ship &ship);
 
-   private:
+
+    bool is_occupied(Coordinate &c) {
+        std::vector<Coordinate> opponent_postions = get_all_raw();
+        auto found = std::find(opponent_postions.begin(), opponent_postions.end(), c);
+
+        return found != opponent_postions.end();
+    }
+
+    bool hit(Coordinate &c) {
+
+        if (!is_occupied(c))
+            return false;
+
+        for (auto &ship: ships_) {
+            std::vector<Coordinate> positions = ship->raw_positions();
+            auto cell = std::find(positions.begin(), positions.end(), c);
+            if (!(cell == positions.end())) {
+                ship->hit(c);
+                return true;
+            }
+        }
+        return false;
+    }
+
+private:
     // declaring array of smart pointers (ships_) with 7 ships_:
     // battle (3) repair (3) and submarine (2)
     std::vector<std::unique_ptr<Ship>> ships_;

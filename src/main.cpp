@@ -23,7 +23,7 @@ void test_dev_matteo_galiazzo() {
     cout << s1 << endl;
     cout << "S1 occupies: ";
     occupied_positions = s1.positions();
-    for (auto c : occupied_positions) {
+    for (auto c: occupied_positions) {
         cout << c.first;
     }
     cout << endl;
@@ -32,7 +32,7 @@ void test_dev_matteo_galiazzo() {
     cout << s2 << endl;
     cout << "S2 occupies: ";
     occupied_positions = s2.positions();
-    for (auto c : occupied_positions) {
+    for (auto c: occupied_positions) {
         cout << c.first;
     }
     cout << endl;
@@ -41,7 +41,7 @@ void test_dev_matteo_galiazzo() {
     cout << b1 << endl;
     cout << "B1 occupies: ";
     occupied_positions = b1.positions();
-    for (auto c : occupied_positions) {
+    for (auto c: occupied_positions) {
         cout << c.first;
     }
     cout << endl;
@@ -73,85 +73,113 @@ void test_dev_filippo_tiberio() {
 
     cout << endl << "=== dev-filippo-tiberio ===" << endl;
 
-    // region Coordinate
-    Coordinate c1{};
-    cout << c1;
-
-    Coordinate c2{"B4"};
-    cout << c2;
-
-    //    try {
-    //        Coordinate c3{"J4"};
-    //        cout << c3;
-    //    } catch (const std::exception &e) {
-    //        cerr << e.what() << endl;
-    //    }
-    //
-    //    try {
-    //        Coordinate c4{"Z4"};
-    //        cout << c4;
-    //    } catch (const std::exception &e) {
-    //        cerr << e.what() << endl;
-    //    }
-    //
-    //    try {
-    //        Coordinate c5{"4"};
-    //        cout << c5;
-    //    } catch (const std::exception &e) {
-    //        cerr << e.what() << endl;
-    //    }
-    //
-    //    try {
-    //        Coordinate c6{"B14"};
-    //        cout << c6;
-    //    } catch (const std::exception &e) {
-    //        cerr << e.what() << endl;
-    //    }
-
-    Coordinate c7{"C7"};
-    cout << c7;
-
-    cout << (c1 < c2);
-
-    Coordinate c8{"N12"};
-    cout << c8;
-
-    // endregion
-
-    cout << endl << "----------------" << endl;
-
-    Battleship b1{};
-    cout << b1 << endl;
-    cout << "Battleship b1 positions: ";
-    try {
-        auto positions1 = b1.positions();
-        for (auto p : positions1) {
-            cout << p.first << " ";
-        }
-    } catch (const std::exception &e) {
-        cout << e.what() << endl;
-    }
-    cout << endl;
-
-    Battleship b2{Coordinate{3, 3}, Ship::Directions::VERTICAL};
-    cout << b2 << endl;
-
-    cout << "Battleship b2 positions: ";
-    auto positions2 = b2.positions();
-    for (auto p : positions2) {
-        cout << p.first << " ";
-    }
-    cout << endl;
+//    // region Coordinate
+//    Coordinate c1{};
+//    cout << c1;
+//
+//    Coordinate c2{"B4"};
+//    cout << c2;
+//
+//    //    try {
+//    //        Coordinate c3{"J4"};
+//    //        cout << c3;
+//    //    } catch (const std::exception &e) {
+//    //        cerr << e.what() << endl;
+//    //    }
+//    //
+//    //    try {
+//    //        Coordinate c4{"Z4"};
+//    //        cout << c4;
+//    //    } catch (const std::exception &e) {
+//    //        cerr << e.what() << endl;
+//    //    }
+//    //
+//    //    try {
+//    //        Coordinate c5{"4"};
+//    //        cout << c5;
+//    //    } catch (const std::exception &e) {
+//    //        cerr << e.what() << endl;
+//    //    }
+//    //
+//    //    try {
+//    //        Coordinate c6{"B14"};
+//    //        cout << c6;
+//    //    } catch (const std::exception &e) {
+//    //        cerr << e.what() << endl;
+//    //    }
+//
+//    Coordinate c7{"C7"};
+//    cout << c7;
+//
+//    cout << (c1 < c2);
+//
+//    Coordinate c8{"N12"};
+//    cout << c8;
+//
+//    // endregion
+//
+//    cout << endl << "----------------" << endl;
+//
+//    Battleship b1{};
+//    cout << b1 << endl;
+//    cout << "Battleship b1 positions: ";
+//    try {
+//        auto positions1 = b1.positions();
+//        for (auto p: positions1) {
+//            cout << p.first << " ";
+//        }
+//    } catch (const std::exception &e) {
+//        cout << e.what() << endl;
+//    }
+//    cout << endl;
+//
+//    Battleship b2{Coordinate{3, 3}, Ship::Directions::VERTICAL};
+//    cout << b2 << endl;
+//
+//    cout << "Battleship b2 positions: ";
+//    auto positions2 = b2.positions();
+//    for (auto p: positions2) {
+//        cout << p.first << " ";
+//    }
+//    cout << endl;
 
     Battleship b3{Coordinate{9, 4}, Ship::Directions::HORIZONTAL};
     cout << b3 << endl;
 
-    cout << "Battleship b3 positions: ";
-    auto positions3 = b3.positions();
-    for (auto p : positions3) {
-        cout << p.first << " ";
-    }
-    cout << endl;
+    Battleship b4{Coordinate{9, 4}, Ship::Directions::HORIZONTAL};
+    cout << b4 << endl;
+
+    Attackboard ab{};
+    Defenseboard db{};
+
+    int b = ab.num_elements();
+
+    db.place_ship(b3);
+
+    b4.action(Coordinate{9, 4}, db, ab);
+
+    int a = ab.num_elements();
+
+//    b3.hit(Coordinate{9, 4});
+//    cout << b3 << endl;
+//
+////    b3.hit(Coordinate{11, 4});
+////    cout << b3 << endl;
+//
+//    b3.hit(Coordinate{9, 6});
+//    cout << b3 << endl;
+//
+//    b3.heal(Coordinate{9, 4});
+//    cout << b3 << endl;
+
+//    cout << "Battleship b3 positions: ";
+//    auto positions3 = b3.positions();
+//    for (auto p: positions3) {
+//        cout << p.first << "- " << p.second << " ;";
+//    }
+//    cout << endl;
+
+
 
     struct minpQElements {
         Coordinate c;
@@ -159,7 +187,7 @@ void test_dev_filippo_tiberio() {
         bool isCenter{false};
 
         explicit minpQElements(const Coordinate &c, char toPrint = ' ', bool isCenter = true)
-            : c(c), toPrint(toPrint), isCenter(isCenter) {}
+                : c(c), toPrint(toPrint), isCenter(isCenter) {}
     };
 
     auto lambda = [](minpQElements a, minpQElements b) { return !(a.c < b.c); };
@@ -217,17 +245,19 @@ void test_dev_filippo_tiberio() {
     //        }
     //    }
     //    cout << endl;
+//
+//    Attackboard board1{};
+//    board1.hit(c7);
+//    board1.hit(c1);
+//    board1.miss(c1);
+//
+//    board1.hit(Coordinate{4, 4});
+//    board1.hit(Coordinate{4, 5});
+//    board1.hit(Coordinate{4, 6});
+//    Defenseboard board2{};
+//    board2.get_all();
 
-    Attackboard board1{};
-    board1.hit(c7);
-    board1.hit(c1);
-    board1.miss(c1);
 
-    board1.hit(Coordinate{4, 4});
-    board1.hit(Coordinate{4, 5});
-    board1.hit(Coordinate{4, 6});
-    Defenseboard board2{};
-    board2.get_all();
 
     //    int sizeBefore = board1.num_elements();
     //    board1.clear_hits();
@@ -240,7 +270,7 @@ void test_dev_matteo_rampin() { cout << "=== dev-matteo-rampin ===" << endl; }
 
 int main() {
     std::cout << "MAIN" << std::endl;
-    test_dev_matteo_galiazzo();
+//    test_dev_matteo_galiazzo();
     test_dev_filippo_tiberio();
     return 0;
 }

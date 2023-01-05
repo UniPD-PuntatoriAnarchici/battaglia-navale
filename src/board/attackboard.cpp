@@ -11,6 +11,15 @@ std::vector<std::pair<Coordinate, char>> Attackboard::get_all() {
     return vector;
 }
 
+std::vector<Coordinate> Attackboard::get_all_raw() {
+    std::vector<Coordinate> vector{};
+
+    for (auto el: cells_) {
+        vector.push_back(el.first);
+    }
+    return vector;
+}
+
 int Attackboard::num_elements() const {
     return static_cast<int>(cells_.size());
 }
@@ -65,5 +74,7 @@ void Attackboard::clear_reveals() {
         }
     }
 }
+
+
 
 
