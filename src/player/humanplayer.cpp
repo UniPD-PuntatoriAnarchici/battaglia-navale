@@ -1,6 +1,14 @@
 #include "./../../include/player/humanplayer.h"
 
-void Humanplayer::turn() {}
+// ritorna false se la partita e' persa
+bool Humanplayer::turn(Player &other) {
+    // if defenseboard.islost() return false
+    // loop di gioco
+    // chiedi input finche' coordinate non sono valide e che l'azione stia effettivamente partendo
+    //          da una nave e non dall'acqua
+    // processa input (anche i casi speciali di pulizia griglia)
+    // esegui azione ship->action(coordinate dest, other.get_defenseboard(), self.get_attackboard())
+}
 
 bool Humanplayer::place_ship(const Ship::Type ship_type) {
     if (ship_type != Ship::Type::BATTLESHIP && ship_type != Ship::Type::REPAIRSHIP &&

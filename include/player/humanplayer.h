@@ -9,7 +9,7 @@ class Humanplayer : public Player {
    public:
     Humanplayer() {}
     bool place_ship(const Ship::Type ship_type);
-    void turn();
+    bool turn(Player &other) override;
     bool check_ship_length(int n1, int n2, const Ship::Type ship_type);
     Coordinate get_ship_center(int row, int col, Ship::Directions direction, Ship::Type ship_type);
     std::vector<Coordinate> split(const std::string &s);
