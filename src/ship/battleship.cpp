@@ -31,7 +31,7 @@ bool Battleship::action(Coordinate dest, Defenseboard &opponent, Attackboard &se
 
     if (!opponent.is_occupied(dest)) {
         self.miss(dest);
-        return false; //MISS
+        return false; //MISS TODO: CHANGE TO TRUE
     }
 
     opponent.hit(dest);
