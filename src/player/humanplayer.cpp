@@ -4,17 +4,38 @@
 bool Humanplayer::turn(Player &other) {
     // check that the game is not lost
     if (defense_board_.is_lost()) return false;
-    // loop di gioco
     bool valid_turn = false;
     do {
         // chiedi input finche' coordinate non sono valide e che l'azione stia effettivamente partendo
-        //          da una nave e non dall'acqua
-        // processa input (anche i casi speciali di pulizia griglia)
-        // esegui azione ship->action(coordinate dest, other.get_defenseboard(), self.get_attackboard())
+        //     da una nave e non dall'acqua
+        bool valid_coordinate = false;
+        std::string input;
+        std::vector<std::string> splitted_input;
+        do {
+            std::cout << "Inserisci le coordinate dell'azione: " << std::endl;
+            std::cin.clear();
+            std::cin.sync();
+            std::getline(std::cin, input);
+            try {
+                splitted_input = split_string(input);
+                valid_coordinate = true;
+            } catch (const std::exception &e) {
+                std::cout << e.what() << std::endl;
+            }
+            // processa input (anche i casi speciali di pulizia griglia)
+        } while (splitted_input.size() != 2);
+
+        for (auto a : splitted_input) std::cout << a << " ";
+        std::cout << std::endl;
+
+        // if splitted_input is a coordinate i have an action
+        // execute action ship->action(coordinate dest, other.get_defenseboard(), self.get_attackboard())
+        // else i have a clear/something else
+
         valid_turn = true;
     } while (!valid_turn);
 
-    return valid_turn;  // se il turno va a buon fine, 0 altrimenti
+    return valid_turn;
 }
 
 bool Humanplayer::place_ship(const Ship::Type ship_type) {
@@ -36,11 +57,11 @@ bool Humanplayer::place_ship(const Ship::Type ship_type) {
         else if (ship_type == Ship::Type::SUBMARINE)
             std::cout << "il sottomarino" << std::endl;
 
-        // get and split coordinates
+        // get and split_coordinates coordinates
         std::cin.clear();
         std::cin.sync();
         std::getline(std::cin, input);
-        std::vector<Coordinate> coordinates = split(input);
+        std::vector<Coordinate> coordinates = split_coordinates(input);
 
         // if i don't have 2 coordinates i break out to get new coordinates
         if (coordinates.size() != 2) {
@@ -117,12 +138,18 @@ bool Humanplayer::check_ship_length(int n1, int n2, const Ship::Type ship_type) 
     return false;
 }
 
-std::vector<Coordinate> Humanplayer::split(const std::string &s) {
+std::vector<Coordinate> Humanplayer::split_coordinates(const std::string &s) {
     std::vector<Coordinate> coordinates;
     std::istringstream iss(s);
     std::string item;
-    while (std::getline(iss, item, ' ')) {
-        coordinates.emplace_back(item);
-    }
+    while (std::getline(iss, item, ' ')) coordinates.emplace_back(item);
     return coordinates;
+}
+
+std::vector<std::string> Humanplayer::split_string(const std::string &s) {
+    std::vector<std::string> strings;
+    std::istringstream iss(s);
+    std::string item;
+    while (std::getline(iss, item, ' ')) strings.push_back(item);
+    return strings;
 }

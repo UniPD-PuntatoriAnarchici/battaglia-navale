@@ -62,7 +62,10 @@ void test_dev_matteo_galiazzo() {
     hp.place_ship(Ship::Type::SUBMARINE);
     hp.place_ship(Ship::Type::SUBMARINE);
     hp.print_defense_board();
-    // hp.turn(avversario)
+
+    Humanplayer hp2;
+    hp.turn(hp2);
+    hp.turn(hp2);
 }
 
 void test_dev_filippo_tiberio() {
