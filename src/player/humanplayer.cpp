@@ -85,11 +85,11 @@ bool Humanplayer::place_ship(const Ship::Type ship_type) {
         else if (ship_type == Ship::Type::SUBMARINE)
             std::cout << "il sottomarino" << std::endl;
 
-        // get and split coordinates
+        // get and split_coordinates coordinates
         std::cin.clear();
         std::cin.sync();
         std::getline(std::cin, input);
-        std::vector<Coordinate> coordinates = split(input);
+        std::vector<Coordinate> coordinates = split_coordinates(input);
 
         // if i don't have 2 coordinates i break out to get new coordinates
         if (coordinates.size() != 2) {
@@ -166,12 +166,18 @@ bool Humanplayer::check_ship_length(int n1, int n2, const Ship::Type ship_type) 
     return false;
 }
 
-std::vector<Coordinate> Humanplayer::split(const std::string &s) {
+std::vector<Coordinate> Humanplayer::split_coordinates(const std::string &s) {
     std::vector<Coordinate> coordinates;
     std::istringstream iss(s);
     std::string item;
-    while (std::getline(iss, item, ' ')) {
-        coordinates.emplace_back(item);
-    }
+    while (std::getline(iss, item, ' ')) coordinates.emplace_back(item);
     return coordinates;
+}
+
+std::vector<std::string> Humanplayer::split_string(const std::string &s) {
+    std::vector<std::string> strings;
+    std::istringstream iss(s);
+    std::string item;
+    while (std::getline(iss, item, ' ')) strings.push_back(item);
+    return strings;
 }
