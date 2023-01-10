@@ -2,12 +2,19 @@
 
 // ritorna false se la partita e' persa
 bool Humanplayer::turn(Player &other) {
-    // if defenseboard.islost() return false
+    // check that the game is not lost
+    if (defense_board_.is_lost()) return false;
     // loop di gioco
-    // chiedi input finche' coordinate non sono valide e che l'azione stia effettivamente partendo
-    //          da una nave e non dall'acqua
-    // processa input (anche i casi speciali di pulizia griglia)
-    // esegui azione ship->action(coordinate dest, other.get_defenseboard(), self.get_attackboard())
+    bool valid_turn = false;
+    do {
+        // chiedi input finche' coordinate non sono valide e che l'azione stia effettivamente partendo
+        //          da una nave e non dall'acqua
+        // processa input (anche i casi speciali di pulizia griglia)
+        // esegui azione ship->action(coordinate dest, other.get_defenseboard(), self.get_attackboard())
+        valid_turn = true;
+    } while (!valid_turn);
+
+    return valid_turn;  // se il turno va a buon fine, 0 altrimenti
 }
 
 bool Humanplayer::place_ship(const Ship::Type ship_type) {
