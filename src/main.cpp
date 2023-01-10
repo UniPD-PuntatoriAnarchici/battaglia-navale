@@ -161,6 +161,19 @@ void test_dev_filippo_tiberio() {
 
     db.ship_at(Coordinate{9, 4})->action(Coordinate{9, 4}, db, ab);
 
+    Humanplayer hp;
+//    hp.print_defense_board();
+    hp.place_ship(Ship::Type::BATTLESHIP);
+    hp.print_defense_board();
+    hp.place_ship(Ship::Type::BATTLESHIP);
+    hp.print_defense_board();
+    hp.place_ship(Ship::Type::BATTLESHIP);
+    hp.print_defense_board();
+
+//    while (true) {
+//        hp.turn(hp);
+//        hp.print_defense_board();
+//    }
 
 
 

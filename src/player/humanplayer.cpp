@@ -12,16 +12,14 @@ bool Humanplayer::turn(Player &other) {
     bool customAction = false;
 
     do {
-        if (flag) {
+        if (customAction) {
+            std::cout << "Comando speciale eseguito!\n\n";
+        }else if (flag) {
             std::cout << "Coordinate non valide! Si prega di re-inserire.\n";
         }
 
         if (flag2) {
             std::cout << "Nessuna nave presente a queste coordinate! Si prega di re-inserire.\n";
-        }
-
-        if (customAction) {
-            std::cout << "Comando speciale eseguito!\n";
         }
 
         flag = true;
