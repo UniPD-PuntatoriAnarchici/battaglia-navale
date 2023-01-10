@@ -65,7 +65,6 @@ void test_dev_matteo_galiazzo() {
 
     Humanplayer hp2;
     hp.turn(hp2);
-    hp.turn(hp2);
 }
 
 void test_dev_filippo_tiberio() {
@@ -299,6 +298,6 @@ void test_dev_matteo_rampin() { cout << "=== dev-matteo-rampin ===" << endl; }
 int main() {
     std::cout << "MAIN" << std::endl;
     test_dev_matteo_galiazzo();
-    test_dev_filippo_tiberio();
+    // test_dev_filippo_tiberio();
     return 0;
 }
