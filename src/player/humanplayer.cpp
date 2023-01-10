@@ -2,8 +2,7 @@
 
 // ritorna false se la partita e' persa
 bool Humanplayer::turn(Player &other) {
-
-    //Check if lost!
+    // Check if lost!
 
     std::string buffer;
     std::vector<Coordinate> turn_coords;
@@ -14,7 +13,7 @@ bool Humanplayer::turn(Player &other) {
     do {
         if (customAction) {
             std::cout << "Comando speciale eseguito!\n\n";
-        }else if (flag) {
+        } else if (flag) {
             std::cout << "Coordinate non valide! Si prega di re-inserire.\n";
         }
 
@@ -24,14 +23,14 @@ bool Humanplayer::turn(Player &other) {
 
         flag = true;
         std::cout << "Inserisci le coordinate: XYOrigin XYTarget\n\tInserimento: ";
-//        std::cin >> buffer; //CAN USE  'CAUSE SPACE!
+        //        std::cin >> buffer; //CAN USE  'CAUSE SPACE!
         std::getline(std::cin, buffer);
 
         customAction = true;
         if (buffer == "AA AA") {
             attack_board_.clear_reveals();
         } else if (buffer == "XX XX") {
-            //print grids!
+            // print grids!
         } else if (buffer == "BB BB") {
             attack_board_.clear_hits();
         } else if (buffer == "CC CC") {
@@ -41,8 +40,7 @@ bool Humanplayer::turn(Player &other) {
         } else {
             customAction = false;
         }
-        if (customAction)
-            continue;
+        if (customAction) continue;
 
         turn_coords = split(buffer);
         if (!turn_coords[0].is_valid() || !turn_coords[1].is_valid()) {
@@ -51,10 +49,11 @@ bool Humanplayer::turn(Player &other) {
         flag = false;
         flag2 = false;
         try {
-            defense_board_.ship_at(turn_coords[0])->action(turn_coords[1], other.get_defense_board(), attack_board_);
+            defense_board_.ship_at(turn_coords[0])
+                ->action(turn_coords[1], other.get_defense_board(), attack_board_);
 
         } catch (const std::exception &ex) {
-            //intentionally muted
+            // intentionally muted
             flag2 = true;
         }
     } while (flag || flag2 || customAction);
@@ -65,8 +64,6 @@ bool Humanplayer::turn(Player &other) {
     //          da una nave e non dall'acqua
     // processa input (anche i casi speciali di pulizia griglia)
     // esegui azione ship->action(coordinate dest, other.get_defenseboard(), self.get_attackboard())
-
-    return true;
 }
 
 bool Humanplayer::place_ship(const Ship::Type ship_type) {
