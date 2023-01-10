@@ -1,37 +1,44 @@
 #include "./../../include/player/humanplayer.h"
 
-// ritorna false se la partita e' persa
-bool Humanplayer::turn(Player &other) {
+void colored_print(std::string &s);
 
-    //Check if lost!
+// returns false if game is lost
+bool Humanplayer::turn(Player &other) {
+    if (defense_board_.is_lost()) return false;
 
     std::string buffer;
     std::vector<Coordinate> turn_coords;
-    bool flag = false;
-    bool flag2 = false;
+    bool invalid_coordinates_flag = false;
+    bool invalid_ship_flag = false;
     bool customAction = false;
 
     do {
         if (customAction) {
-            std::cout << "Comando speciale eseguito!\n\n";
-        }else if (flag) {
+            // std::cout << "Comando speciale eseguito!\n";
+            std::string to_print = "Comando speciale eseguito!\n";
+            colored_print(to_print);
+        } else if (invalid_coordinates_flag) {
             std::cout << "Coordinate non valide! Si prega di re-inserire.\n";
         }
 
-        if (flag2) {
+        if (invalid_ship_flag) {
             std::cout << "Nessuna nave presente a queste coordinate! Si prega di re-inserire.\n";
         }
 
-        flag = true;
+        invalid_coordinates_flag = false;
+        invalid_ship_flag = false;
+
         std::cout << "Inserisci le coordinate: XYOrigin XYTarget\n\tInserimento: ";
-//        std::cin >> buffer; //CAN USE  'CAUSE SPACE!
+        std::cin.clear();
+        std::cin.sync();
         std::getline(std::cin, buffer);
+        std::cout << std::endl;
 
         customAction = true;
         if (buffer == "AA AA") {
             attack_board_.clear_reveals();
         } else if (buffer == "XX XX") {
-            //print grids!
+            // print grids!
         } else if (buffer == "BB BB") {
             attack_board_.clear_hits();
         } else if (buffer == "CC CC") {
@@ -41,31 +48,23 @@ bool Humanplayer::turn(Player &other) {
         } else {
             customAction = false;
         }
-        if (customAction)
-            continue;
+        if (customAction) continue;
 
-        turn_coords = split(buffer);
-        if (!turn_coords[0].is_valid() || !turn_coords[1].is_valid()) {
+        try {
+            turn_coords = split_coordinates(buffer);
+        } catch (const std::exception &e) {
+            invalid_coordinates_flag = true;
             continue;
         }
-        flag = false;
-        flag2 = false;
+
         try {
-            defense_board_.ship_at(turn_coords[0])->action(turn_coords[1], other.get_defense_board(), attack_board_);
+            defense_board_.ship_at(turn_coords[0])
+                ->action(turn_coords[1], other.get_defense_board(), attack_board_);
 
         } catch (const std::exception &ex) {
-            //intentionally muted
-            flag2 = true;
+            invalid_ship_flag = true;
         }
-    } while (flag || flag2 || customAction);
-
-    // if defenseboard.islost() return false
-    // loop di gioco
-    // chiedi input finche' coordinate non sono valide e che l'azione stia effettivamente partendo
-    //          da una nave e non dall'acqua
-    // processa input (anche i casi speciali di pulizia griglia)
-    // esegui azione ship->action(coordinate dest, other.get_defenseboard(), self.get_attackboard())
-
+    } while (invalid_coordinates_flag || invalid_ship_flag || customAction);
     return true;
 }
 
@@ -88,11 +87,11 @@ bool Humanplayer::place_ship(const Ship::Type ship_type) {
         else if (ship_type == Ship::Type::SUBMARINE)
             std::cout << "il sottomarino" << std::endl;
 
-        // get and split coordinates
+        // get and split_coordinates coordinates
         std::cin.clear();
         std::cin.sync();
         std::getline(std::cin, input);
-        std::vector<Coordinate> coordinates = split(input);
+        std::vector<Coordinate> coordinates = split_coordinates(input);
 
         // if i don't have 2 coordinates i break out to get new coordinates
         if (coordinates.size() != 2) {
@@ -169,12 +168,50 @@ bool Humanplayer::check_ship_length(int n1, int n2, const Ship::Type ship_type) 
     return false;
 }
 
-std::vector<Coordinate> Humanplayer::split(const std::string &s) {
+std::vector<Coordinate> Humanplayer::split_coordinates(const std::string &s) {
     std::vector<Coordinate> coordinates;
     std::istringstream iss(s);
     std::string item;
-    while (std::getline(iss, item, ' ')) {
-        coordinates.emplace_back(item);
-    }
+    while (std::getline(iss, item, ' ')) coordinates.emplace_back(item);
     return coordinates;
+}
+
+std::vector<std::string> Humanplayer::split_string(const std::string &s) {
+    std::vector<std::string> strings;
+    std::istringstream iss(s);
+    std::string item;
+    while (std::getline(iss, item, ' ')) strings.push_back(item);
+    return strings;
+}
+
+/*
+    from https://stackoverflow.com/questions/2616906/how-do-i-output-coloured-text-to-a-linux-terminal
+    from https://en.wikipedia.org/wiki/ANSI_escape_code#Colors
+
+            foreground background
+    black        30         40
+    red          31         41
+    green        32         42
+    yellow       33         43
+    blue         34         44
+    magenta      35         45
+    cyan         36         46
+    white        37         47
+
+    reset             0  (everything back to normal)
+    bold/bright       1  (often a brighter shade of the same colour)
+    underline         4
+    inverse           7  (swap foreground and background colours)
+    bold/bright off  21
+    underline off    24
+    inverse off      27
+*/
+void colored_print(std::string &s) {
+#if defined(__linux__) || defined(__APPLE__)
+    std::cout << "\033[1;93m" << s << "\033[0m";
+#else
+    SetConsoleTextAttribute(hConsole, 12);
+    std::cout << s;
+    SetConsoleTextAttribute(hConsole, 7);
+#endif
 }
