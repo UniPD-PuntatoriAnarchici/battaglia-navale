@@ -51,10 +51,22 @@ public:
         return false;
     }
 
+    //FT -> Da sistemare e discutere
+    const std::unique_ptr<Ship> &ship_at(Coordinate c) {
+        for (auto &ship: ships_) {
+            if (ship->center() == c) {
+                return ship;
+            }
+        }
+        throw std::exception{};
+        return NO_SHIP;
+    }
+
 private:
     // declaring array of smart pointers (ships_) with 7 ships_:
     // battle (3) repair (3) and submarine (2)
     std::vector<std::unique_ptr<Ship>> ships_;
+    const std::unique_ptr<Ship> NO_SHIP = nullptr;
 };
 
 #endif  // DEFENSEBOARD_H

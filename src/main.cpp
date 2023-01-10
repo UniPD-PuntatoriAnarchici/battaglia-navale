@@ -157,10 +157,21 @@ void test_dev_filippo_tiberio() {
 
     db.place_ship(b3);
 
-    b4.action(Coordinate{9, 4}, db, ab);
+    cout << b3.armor() << endl;
 
-    int a = ab.num_elements();
+    db.ship_at(Coordinate{9, 4})->action(Coordinate{9, 4}, db, ab);
 
+
+
+
+//    Humanplayer hp;
+
+//    b4.action(Coordinate{9, 4}, db, ab);
+
+//    int a = ab.num_elements();
+//    string test;
+//    getline(cin, test);
+//    auto i = 54;
 //    b3.hit(Coordinate{9, 4});
 //    cout << b3 << endl;
 //
@@ -182,17 +193,17 @@ void test_dev_filippo_tiberio() {
 
 
 
-    struct minpQElements {
-        Coordinate c;
-        char toPrint{' '};
-        bool isCenter{false};
-
-        explicit minpQElements(const Coordinate &c, char toPrint = ' ', bool isCenter = true)
-                : c(c), toPrint(toPrint), isCenter(isCenter) {}
-    };
-
-    auto lambda = [](minpQElements a, minpQElements b) { return !(a.c < b.c); };
-    std::priority_queue<minpQElements, std::vector<minpQElements>, decltype(lambda)> pQ(lambda);
+//    struct minpQElements {
+//        Coordinate c;
+//        char toPrint{' '};
+//        bool isCenter{false};
+//
+//        explicit minpQElements(const Coordinate &c, char toPrint = ' ', bool isCenter = true)
+//                : c(c), toPrint(toPrint), isCenter(isCenter) {}
+//    };
+//
+//    auto lambda = [](minpQElements a, minpQElements b) { return !(a.c < b.c); };
+//    std::priority_queue<minpQElements, std::vector<minpQElements>, decltype(lambda)> pQ(lambda);
 
     //    for (auto p: positions2) {
     //        if (p == b2.center()) {

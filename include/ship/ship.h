@@ -146,6 +146,8 @@ public:
 
     virtual Ship *clone() const = 0;
 
+    virtual bool action(Coordinate dest, Defenseboard &opponent, Attackboard &self) = 0;
+
 protected:
     static constexpr char CHARACTER = ' ';
     static constexpr int LENGTH = 0;
@@ -155,8 +157,6 @@ protected:
     std::vector<bool> cells_;
     int armor_;
     Type type_;
-
-    virtual bool action(Coordinate dest, Defenseboard &opponent, Attackboard &self) = 0;
 
 private:
 };

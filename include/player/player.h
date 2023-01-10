@@ -15,7 +15,8 @@ class Player {
     std::vector<std::string> history();
     void print_defense_board();
     void print_attack_board();
-    const Defenseboard &get_defense_board() { return defense_board_; }
+    void print_boards();
+    Defenseboard &get_defense_board() { return defense_board_; } //NON può essere const: devo colpirla.
 
    protected:
     Defenseboard defense_board_;

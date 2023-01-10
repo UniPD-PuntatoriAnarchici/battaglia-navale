@@ -2,12 +2,73 @@
 
 // ritorna false se la partita e' persa
 bool Humanplayer::turn(Player &other) {
+
+    //Check if lost!
+
+    std::string buffer;
+    std::vector<Coordinate> turn_coords;
+    bool flag = false;
+    bool flag2 = false;
+    bool customAction = false;
+
+    do {
+        if (flag) {
+            std::cout << "Coordinate non valide! Si prega di re-inserire.\n";
+        }
+
+        if (flag2) {
+            std::cout << "Nessuna nave presente a queste coordinate! Si prega di re-inserire.\n";
+        }
+
+        if (customAction) {
+            std::cout << "Comando speciale eseguito!\n";
+        }
+
+        flag = true;
+        std::cout << "Inserisci le coordinate: XYOrigin XYTarget\n\tInserimento: ";
+//        std::cin >> buffer; //CAN USE  'CAUSE SPACE!
+        std::getline(std::cin, buffer);
+
+        customAction = true;
+        if (buffer == "AA AA") {
+            attack_board_.clear_reveals();
+        } else if (buffer == "XX XX") {
+            //print grids!
+        } else if (buffer == "BB BB") {
+            attack_board_.clear_hits();
+        } else if (buffer == "CC CC") {
+            attack_board_.clear_misses();
+        } else if (buffer == "DD DD") {
+            attack_board_.clear_board();
+        } else {
+            customAction = false;
+        }
+        if (customAction)
+            continue;
+
+        turn_coords = split(buffer);
+        if (!turn_coords[0].is_valid() || !turn_coords[1].is_valid()) {
+            continue;
+        }
+        flag = false;
+        flag2 = false;
+        try {
+            defense_board_.ship_at(turn_coords[0])->action(turn_coords[1], other.get_defense_board(), attack_board_);
+
+        } catch (const std::exception &ex) {
+            //intentionally muted
+            flag2 = true;
+        }
+    } while (flag || flag2 || customAction);
+
     // if defenseboard.islost() return false
     // loop di gioco
     // chiedi input finche' coordinate non sono valide e che l'azione stia effettivamente partendo
     //          da una nave e non dall'acqua
     // processa input (anche i casi speciali di pulizia griglia)
     // esegui azione ship->action(coordinate dest, other.get_defenseboard(), self.get_attackboard())
+
+    return true;
 }
 
 bool Humanplayer::place_ship(const Ship::Type ship_type) {
