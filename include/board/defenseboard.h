@@ -62,6 +62,13 @@ public:
         return NO_SHIP;
     }
 
+    const std::unique_ptr<Ship> &ship_at_index(int i) {
+        if (i > 7)
+            throw std::invalid_argument("Only 8 ships!");
+
+        return ships_.at(i);
+    }
+
 private:
     // declaring array of smart pointers (ships_) with 7 ships_:
     // battle (3) repair (3) and submarine (2)

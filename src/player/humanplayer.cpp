@@ -1,5 +1,6 @@
 #include "./../../include/player/humanplayer.h"
 
+
 void colored_print(std::string &s);
 
 // returns false if game is lost
@@ -38,7 +39,6 @@ bool Humanplayer::turn(Player &other) {
         if (buffer == "AA AA") {
             attack_board_.clear_reveals();
         } else if (buffer == "XX XX") {
-            // print grids!
             this->print_boards_inline();
         } else if (buffer == "BB BB") {
             attack_board_.clear_hits();
@@ -60,12 +60,13 @@ bool Humanplayer::turn(Player &other) {
 
         try {
             defense_board_.ship_at(turn_coords[0])
-                ->action(turn_coords[1], other.get_defense_board(), attack_board_);
+                    ->action(turn_coords[1], other.get_defense_board(), attack_board_);
 
         } catch (const std::exception &ex) {
             invalid_ship_flag = true;
         }
     } while (invalid_coordinates_flag || invalid_ship_flag || customAction);
+    add_to_player_history(buffer);
     return true;
 }
 
@@ -211,6 +212,7 @@ void colored_print(std::string &s) {
 #if defined(__linux__) || defined(__APPLE__)
     std::cout << "\033[1;93m" << s << "\033[0m";
 #else
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     SetConsoleTextAttribute(hConsole, 12);
     std::cout << s;
     SetConsoleTextAttribute(hConsole, 7);

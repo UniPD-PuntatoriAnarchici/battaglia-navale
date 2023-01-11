@@ -17,6 +17,8 @@ class Defenseboard;
 
 class Ship {
 public:
+
+    //region directions
     enum class Directions {
         HORIZONTAL, VERTICAL
     };
@@ -25,6 +27,7 @@ public:
         os << (((int) direction) == 0 ? "HORIZONTAL" : "VERTICAL");
         return os;
     }
+    //endregion directions
 
     enum class Type {
         BATTLESHIP, REPAIRSHIP, SUBMARINE
@@ -47,102 +50,19 @@ public:
 
     const std::vector<bool> &cells() const { return cells_; }
 
-    void reset_cells() {
-        for (auto &&cell: cells_) {
-            cell = true;
-        }
-    }
+    void reset_cells();
 
     int armor() const { return armor_; }
 
     void set_armor(int armor) { armor_ = armor; }
 
-    virtual void hit(Coordinate c) {
-        if (!c.is_valid())
-            throw Coordinate::INVALID_COORDINATE{};
+    void hit(Coordinate c);
 
-        std::vector<Coordinate> ship_positions = raw_positions();
+    void heal(Coordinate c);
 
-        auto found = std::find(ship_positions.begin(), ship_positions.end(), c);
+    std::vector<std::pair<Coordinate, char>> positions() const;
 
-        if (found == ship_positions.end())
-            throw Coordinate::INVALID_COORDINATE{};
-
-        if (cells_[found - ship_positions.begin()])
-            armor_--;
-
-        cells_[found - ship_positions.begin()] = false;
-    }
-
-    virtual void heal(Coordinate c) {
-        if (!c.is_valid())
-            throw Coordinate::INVALID_COORDINATE{};
-
-        std::vector<Coordinate> ship_positions = raw_positions();
-
-        auto found = std::find(ship_positions.begin(), ship_positions.end(), c);
-
-        if (found == ship_positions.end())
-            throw Coordinate::INVALID_COORDINATE{};
-
-        if (!cells_[found - ship_positions.begin()])
-            armor_++;
-
-        cells_[found - ship_positions.begin()] = true;
-    }
-
-
-    virtual std::vector<std::pair<Coordinate, char>> positions() const {
-        std::vector<std::pair<Coordinate, char>> positions;
-
-        std::vector<bool> localCells = cells();
-        int length = static_cast<int>(localCells.size());//unsigned int to int.
-
-        std::pair<int, int> center = Coordinate::coordinates_to_indexes(center_);
-
-        for (int i = 0; i < length; i++) {
-            char c;
-            switch (type_) {
-                case Ship::Type::BATTLESHIP:
-                    c = localCells[i] ? 'C' : 'c';
-                    break;
-
-                case Ship::Type::SUBMARINE:
-                    c = localCells[i] ? 'E' : 'e';
-                    break;
-
-                case Ship::Type::REPAIRSHIP:
-                    c = localCells[i] ? 'S' : 's';
-                    break;
-            }
-
-            if (direction_ == Directions::HORIZONTAL) {
-                positions.emplace_back(Coordinate{center.first, center.second - (length / 2) + i}, c);
-            } else {
-                positions.emplace_back(Coordinate{center.first - (length / 2) + i, center.second}, c);
-            }
-        }
-
-        return positions;
-    }
-
-    virtual std::vector<Coordinate> raw_positions() const {
-        std::vector<Coordinate> positions;
-
-        int length = static_cast<int>(cells().size());//unsigned int to int.
-
-        std::pair<int, int> center = Coordinate::coordinates_to_indexes(center_);
-
-        for (int i = 0; i < length; i++) {
-            if (direction_ == Directions::HORIZONTAL) {
-                positions.emplace_back(center.first, center.second - (length / 2) + i);
-            } else {
-                positions.emplace_back(center.first - (length / 2) + i, center.second);
-            }
-        }
-
-        return positions;
-    }
+    std::vector<Coordinate> raw_positions() const;
 
     virtual Ship *clone() const = 0;
 
