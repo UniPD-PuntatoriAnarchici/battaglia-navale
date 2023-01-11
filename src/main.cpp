@@ -5,13 +5,6 @@
 #include "./../include/board/defenseboard.h"
 #include "./../include/player/humanplayer.h"
 
-#if defined(__linux__) || defined(__APPLE__)
-
-#else
-
-#include <windows.h>
-
-#endif
 
 using namespace std;
 
@@ -165,13 +158,16 @@ void test_dev_filippo_tiberio() {
     db.ship_at(Coordinate{9, 4})->action(Coordinate{9, 4}, db, ab);
 
     Humanplayer hp;
+
+    cout << Coordinate{4, 12}.to_string();
+
 //    hp.print_defense_board();
-    hp.place_ship(Ship::Type::BATTLESHIP);
-    hp.print_board(Board::Type::DEFENSEBOARD);
-    hp.place_ship(Ship::Type::BATTLESHIP);
-    hp.print_board(Board::Type::DEFENSEBOARD);
-    hp.place_ship(Ship::Type::BATTLESHIP);
-    hp.print_board(Board::Type::DEFENSEBOARD);
+//    hp.place_ship(Ship::Type::BATTLESHIP);
+//    hp.print_board(Board::Type::DEFENSEBOARD);
+//    hp.place_ship(Ship::Type::BATTLESHIP);
+//    hp.print_board(Board::Type::DEFENSEBOARD);
+//    hp.place_ship(Ship::Type::BATTLESHIP);
+//    hp.print_board(Board::Type::DEFENSEBOARD);
 
 //    while (true) {
 //        hp.turn(hp);
@@ -298,7 +294,7 @@ void test_dev_matteo_rampin() { cout << "=== dev-matteo-rampin ===" << endl; }
 
 int main() {
     std::cout << "MAIN" << std::endl;
-    test_dev_matteo_galiazzo();
-    // test_dev_filippo_tiberio();
+//    test_dev_matteo_galiazzo();
+     test_dev_filippo_tiberio();
     return 0;
 }
