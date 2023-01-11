@@ -61,9 +61,10 @@ void test_dev_matteo_galiazzo() {
 
     hp.place_ship(Ship::Type::SUBMARINE);
     hp.place_ship(Ship::Type::SUBMARINE);
-    hp.print_defense_board();
+    // hp.print_defense_board();
 
     Humanplayer hp2;
+    hp.turn(hp2);
     hp.turn(hp2);
 }
 
@@ -166,11 +167,11 @@ void test_dev_filippo_tiberio() {
     Humanplayer hp;
 //    hp.print_defense_board();
     hp.place_ship(Ship::Type::BATTLESHIP);
-    hp.print_defense_board();
+    hp.print_board(Board::Type::DEFENSEBOARD);
     hp.place_ship(Ship::Type::BATTLESHIP);
-    hp.print_defense_board();
+    hp.print_board(Board::Type::DEFENSEBOARD);
     hp.place_ship(Ship::Type::BATTLESHIP);
-    hp.print_defense_board();
+    hp.print_board(Board::Type::DEFENSEBOARD);
 
 //    while (true) {
 //        hp.turn(hp);

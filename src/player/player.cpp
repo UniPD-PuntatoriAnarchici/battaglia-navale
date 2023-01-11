@@ -6,17 +6,31 @@ std::vector<std::string> Player::history() {
     return std::vector<std::string>(1);
 }
 
-void Player::print_defense_board() {
-    std::cout << "Defense board" << std::endl;
-    std::vector<std::pair<Coordinate, char>> occupied_positions = defense_board_.get_all();
+void Player::print_boards() {
+    print_board(Board::Type::DEFENSEBOARD);
+    print_board(Board::Type::ATTACKBOARD);
+}
 
-    std::cout << "Occupied positions: " << std::endl;
-    for (auto c : occupied_positions) {
-        std::cout << c.first << std::endl;
+void Player::print_board(const Board::Type boardtype) {
+    int coordinate_counter = 0;
+    std::pair<Coordinate, char> to_print;
+    std::vector<std::pair<Coordinate, char>> occupied_positions;
+
+    if (boardtype == Board::Type::DEFENSEBOARD) {
+        std::cout << "DEFENSEBOARD" << std::endl;
+        occupied_positions = defense_board_.get_all();
+    } else {
+        std::cout << "ATTACKBOARD" << std::endl;
+        occupied_positions = attack_board_.get_all();
     }
 
-    int coordinate_counter = 0;
-    auto to_print = occupied_positions.at(coordinate_counter++);
+    if (occupied_positions.size() > 0)
+        to_print = occupied_positions.at(coordinate_counter++);
+    else {
+        // I have to print a dummy coordinate because i always check toprint.first
+        to_print = std::pair<Coordinate, char>(Coordinate(), ' ');
+        coordinate_counter++;
+    }
 
     for (int i = 1; i <= 12; i++) {
         std::cout << (char)(i < 10 ? '@' + i : '@' + i + 2) << " |";
