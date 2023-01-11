@@ -39,6 +39,7 @@ bool Humanplayer::turn(Player &other) {
             attack_board_.clear_reveals();
         } else if (buffer == "XX XX") {
             // print grids!
+            this->print_boards();
         } else if (buffer == "BB BB") {
             attack_board_.clear_hits();
         } else if (buffer == "CC CC") {

@@ -10,13 +10,13 @@
 
 class Player {
    public:
+
     virtual bool turn(Player &other) = 0;
     virtual bool place_ship(const Ship::Type ship_type) = 0;
     std::vector<std::string> history();
-    void print_defense_board();
-    void print_attack_board();
+    void print_board(const Board::Type boardtype);
     void print_boards();
-    Defenseboard &get_defense_board() { return defense_board_; } //NON può essere const: devo colpirla.
+    Defenseboard &get_defense_board() { return defense_board_; }  // NON può essere const: devo colpirla.
 
    protected:
     Defenseboard defense_board_;
