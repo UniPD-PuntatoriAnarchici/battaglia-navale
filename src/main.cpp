@@ -4,6 +4,7 @@
 #include "./../include/board/attackboard.h"
 #include "./../include/board/defenseboard.h"
 #include "./../include/player/humanplayer.h"
+#include "./../include/player/cpuplayer.h"
 
 
 using namespace std;
@@ -290,11 +291,20 @@ void test_dev_filippo_tiberio() {
     //    int sizeAfterAfter = board1.num_elements();
 }
 
-void test_dev_matteo_rampin() { cout << "=== dev-matteo-rampin ===" << endl; }
+void test_dev_matteo_rampin() { cout << "=== dev-matteo-rampin ===" << endl;
+Cpuplayer cp;
+    Humanplayer hp;
+    //hp.place_ship(Ship::Type::BATTLESHIP);
+   //hp.print_boards();
+    //hp.place_ship(Ship::Type::BATTLESHIP);
+    cp.place_ship(Ship::Type::BATTLESHIP);
+    //cp.place_ship(Ship::Type::BATTLESHIP);
+    // cp.place_ship(Ship::Type::BATTLESHIP);
+    cp.print_boards(); }
 
 int main() {
     std::cout << "MAIN" << std::endl;
 //    test_dev_matteo_galiazzo();
-     test_dev_filippo_tiberio();
+//     test_dev_filippo_tiberio();
     return 0;
 }
