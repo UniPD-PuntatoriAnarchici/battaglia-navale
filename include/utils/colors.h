@@ -22,7 +22,7 @@
 #define BOLDCYAN "\033[1m\033[36m"    /* Bold Cyan */
 #define BOLDWHITE "\033[1m\033[37m"   /* Bold White */
 
-enum class MESSAGE_TYPE { MSG_ERROR, MSG_INFO };
+enum class MESSAGE_TYPE { MSG_WARNING, MSG_ERROR, MSG_INFO, MSG_INFO_BOLD, MSG_SUCCESS };
 
 /*
     from https://stackoverflow.com/questions/2616906/how-do-i-output-coloured-text-to-a-linux-terminal
@@ -46,12 +46,19 @@ enum class MESSAGE_TYPE { MSG_ERROR, MSG_INFO };
     underline off    24
     inverse off      27
 */
-static std::ostream &colored_print(const std::string &str, MESSAGE_TYPE message_type, std::ostream &os = std::cout) {
+static std::ostream &colored_print(const std::string &str, MESSAGE_TYPE message_type,
+                                   std::ostream &os = std::cout) {
 #if defined(__linux__) || defined(__APPLE__)
-    if (message_type == MESSAGE_TYPE::MSG_INFO)
+    if (message_type == MESSAGE_TYPE::MSG_INFO_BOLD)
+        os << BOLDBLUE << str << RESET;
+    else if (message_type == MESSAGE_TYPE::MSG_INFO)
+        os << BLUE << str << RESET;
+    else if (message_type == MESSAGE_TYPE::MSG_WARNING)
         os << YELLOW << str << RESET;
     else if (message_type == MESSAGE_TYPE::MSG_ERROR)
         os << RED << str << RESET;
+    else if (message_type == MESSAGE_TYPE::MSG_SUCCESS)
+        os << GREEN << str << RESET;
     return os;
 #else
     return os << s;

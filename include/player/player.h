@@ -7,6 +7,7 @@
 
 #include "./../board/attackboard.h"
 #include "./../board/defenseboard.h"
+#include "./../utils/colors.h"
 
 class Player {
    public:

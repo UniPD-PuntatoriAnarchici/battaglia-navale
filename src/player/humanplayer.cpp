@@ -12,15 +12,13 @@ bool Humanplayer::turn(Player &other) {
 
     do {
         if (customAction) {
-            colored_print(std::string("Comando speciale eseguito!"), MESSAGE_TYPE::MSG_INFO);
-        } else if (invalid_coordinates_flag) {
-            colored_print(std::string("Coordinate non valide! Si prega di re-inserire."),
-                          MESSAGE_TYPE::MSG_ERROR);
-        }
+            colored_print(std::string("Comando speciale eseguito!"), MESSAGE_TYPE::MSG_INFO) << std::endl;
+        } else if (invalid_coordinates_flag)
+            colored_print(std::string("Coordinate non valide! Si prega di re-inserire."), MESSAGE_TYPE::MSG_ERROR) << std::endl;
 
         if (invalid_ship_flag) {
             colored_print(std::string("Nessuna nave presente a queste coordinate! Si prega di re-inserire."),
-                          MESSAGE_TYPE::MSG_ERROR);
+                          MESSAGE_TYPE::MSG_ERROR) << std::endl;
         }
 
         invalid_coordinates_flag = false;
@@ -72,7 +70,7 @@ bool Humanplayer::place_ship(const Ship::Type ship_type) {
         ship_type != Ship::Type::SUBMARINE)
         return 0;
     if (defense_board_.is_full()) {
-        colored_print("La griglia e' piena!", MESSAGE_TYPE::MSG_ERROR);
+        colored_print("La griglia e' piena!", MESSAGE_TYPE::MSG_ERROR) << std::endl;
         return 0;
     }
 
@@ -98,7 +96,7 @@ bool Humanplayer::place_ship(const Ship::Type ship_type) {
 
         // if i don't have 2 coordinates i break out to get new coordinates
         if (coordinates.size() != 2) {
-            colored_print("Devi inserire due coordinate!", MESSAGE_TYPE::MSG_ERROR);
+            colored_print("Devi inserire due coordinate!", MESSAGE_TYPE::MSG_ERROR) << std::endl;
             continue;
         }
 
@@ -108,7 +106,7 @@ bool Humanplayer::place_ship(const Ship::Type ship_type) {
             direction = Ship::Directions::VERTICAL;
             // if vertical length is in the column (y2-y1)
             if (!check_ship_length(coordinates.at(1).row(), coordinates.at(0).row(), ship_type)) {
-                colored_print("La lunghezza e il tipo di nave non corrispondono!", MESSAGE_TYPE::MSG_ERROR);
+                colored_print("La lunghezza e il tipo di nave non corrispondono!", MESSAGE_TYPE::MSG_ERROR) << std::endl;
                 continue;
             }
             center = get_ship_center(coordinates.at(0).row(), coordinates.at(0).col(), direction, ship_type);
@@ -117,7 +115,7 @@ bool Humanplayer::place_ship(const Ship::Type ship_type) {
             direction = Ship::Directions::HORIZONTAL;
             // if horizontal length is in the row (x2-x1)
             if (!check_ship_length(coordinates.at(1).col(), coordinates.at(0).col(), ship_type)) {
-                colored_print("La lunghezza e il tipo di nave non corrispondono!", MESSAGE_TYPE::MSG_ERROR);
+                colored_print("La lunghezza e il tipo di nave non corrispondono!", MESSAGE_TYPE::MSG_ERROR) << std::endl;
                 continue;
             }
             center = get_ship_center(coordinates.at(0).row(), coordinates.at(0).col(), direction, ship_type);
@@ -132,9 +130,9 @@ bool Humanplayer::place_ship(const Ship::Type ship_type) {
             valid_input = defense_board_.place_ship(Submarine(center, direction));
 
         if (valid_input)
-            colored_print("Nave inserita correttamente", MESSAGE_TYPE::MSG_INFO);
+            colored_print("Nave inserita correttamente", MESSAGE_TYPE::MSG_SUCCESS) << std::endl;
         else
-            colored_print("Errore nell'inserimento della nave!", MESSAGE_TYPE::MSG_ERROR);
+            colored_print("Errore nell'inserimento della nave!", MESSAGE_TYPE::MSG_ERROR) << std::endl;
     }
     return true;
 }

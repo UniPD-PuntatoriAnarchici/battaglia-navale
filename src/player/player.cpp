@@ -4,6 +4,7 @@ std::vector<std::string> Player::player_history() { return player_history_; }
 
 int Player::add_to_player_history(const std::string &action) {
     player_history_.push_back(action);
+    // conversion from size_t to int, can't overflow because we have a maximum number of moves lower than int
     return static_cast<int>(player_history_.size());
 }
 
@@ -53,7 +54,7 @@ void Player::print_boards_inline(std::ostream &os) {
         atk_buffer.push_back(line_buffer);
     }
 
-    os << "DEFENSE\t\t\t\t\t\t\tATTACK" << std::endl;
+    colored_print("DEFENSE\t\t\t\t\t\t\tATTACK", MESSAGE_TYPE::MSG_INFO_BOLD, os) << std::endl;
 
     for (int i = 1; i <= 12; i++) {
         os << (char)(i < 10 ? '@' + i : '@' + i + 2) << " |";

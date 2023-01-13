@@ -3,7 +3,6 @@
 
 #include <sstream>
 
-#include "./../utils/colors.h"
 #include "player.h"
 
 #if defined(__linux__) || defined(__APPLE__)
