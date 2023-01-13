@@ -40,6 +40,7 @@ bool Submarine::action(Coordinate dest, Defenseboard &opponent, Attackboard &sel
     for (int row = check_start_row; row <= check_end_row; row++) {
         for (int col = check_start_col; col <= check_end_col; col++) {
             Coordinate to_check(row, col);
+            self.clear(to_check);
             if (opponent.is_occupied(to_check)) self.reveal(to_check, opponent.is_alive(to_check));
         }
     }
