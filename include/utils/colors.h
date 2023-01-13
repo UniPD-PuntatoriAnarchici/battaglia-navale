@@ -61,7 +61,7 @@ static std::ostream &colored_print(const std::string &str, MESSAGE_TYPE message_
         os << GREEN << str << RESET;
     return os;
 #else
-    return os << s;
+    return os << str;//credo
 #endif
 }
 
