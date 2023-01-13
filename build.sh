@@ -1,1 +1,0 @@
-./main_build.sh && ./replay_build.sh
