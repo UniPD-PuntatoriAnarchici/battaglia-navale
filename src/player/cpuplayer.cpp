@@ -42,7 +42,7 @@ bool Cpuplayer::place_ship(const Ship::Type ship_type) {
     Ship::Directions direction;
     while (!valid_input) {
         Coordinate center{rand() % 12 + 1, rand() % 12 + 1};
-        std::cout << center;
+        //std::cout << center;
 
         int random = rand() % 2;
         // std::cout << random<<std::endl;
@@ -52,25 +52,39 @@ bool Cpuplayer::place_ship(const Ship::Type ship_type) {
         else
             direction = Ship::Directions::VERTICAL;
 
-        std::cout << direction << std::endl;
+        //std::cout << direction << std::endl;
 
         if (direction == Ship::Directions::HORIZONTAL) {
-            if ((center.col() + length / 2) > defense_board_.side_length || center.col() - length / 2 < 0) {
-                std::cout << (center.col() + (int)(length / 2)) << std::endl
-                          << center.col() - length / 2 << std::endl;
-                valid_input = false;
+            if ((center.col() + length / 2) > defense_board_.side_length || center.col() - length / 2 <= 0) {
+                //std::cout << (center.col() + (int)(length / 2)) << std::endl<< center.col() - length / 2 << std::endl;
+                
             } else {
-                valid_input = true;
+                for (int i = center.col() - length / 2; i <= center.col() + length / 2; i++){
+                   Coordinate coordinate_to_check=Coordinate(center.row(),i);
+                   if (defense_board_.is_occupied(coordinate_to_check)==true){
+                     break;
+                    }else{
+                     valid_input = true;
+                    }  
+                }   
             }
         } else {
-            if (center.row() + length / 2 > defense_board_.side_length || center.row() - length / 2 < 0) {
-                std::cout << center.row() + length / 2 << std::endl << center.row() - length / 2 << std::endl;
-                valid_input = false;
+            if (center.row() + length / 2 > defense_board_.side_length || center.row() - length / 2 <= 0) {
+                //std::cout <<"limite alto "<< center.row() + length / 2 << std::endl << "limite basso "<< center.row() - length / 2 << std::endl;   
             } else {
-                valid_input = true;
+                 //std::cout <<"limite alto "<< center.row() + length / 2 << std::endl <<"limite basso "<< center.row() - length / 2 << std::endl;
+                for (int i = center.row() - length / 2; i <= center.row() + length / 2; i++){
+                    Coordinate coordinate_to_check=Coordinate(i,center.col());
+                    if (defense_board_.is_occupied(coordinate_to_check)==true){ 
+                     break;
+                    }else{
+                     valid_input = true;
+                    } 
+                }
+                
             }
         }
-        // std::cout<<valid_input<<std::endl;
+        //std::cout<<valid_input<<std::endl;
         if (valid_input == true) {
             if (ship_type == Ship::Type::BATTLESHIP)
                 defense_board_.place_ship(Battleship(center, direction));
