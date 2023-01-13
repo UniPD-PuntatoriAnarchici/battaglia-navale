@@ -1,1 +1,0 @@
-cmake . -B cmake-conf -G "MinGW Makefiles" && cmake --build cmake-conf && ./bin/battaglia_navale < test_game.txt
