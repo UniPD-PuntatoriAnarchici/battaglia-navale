@@ -130,7 +130,7 @@ char Coordinate::customRow_to_char(int row) {
 
     tmpRow += row;
 
-    if (row >= 9)
+    if (row > 9)
         tmpRow += 2;
 
     return tmpRow;

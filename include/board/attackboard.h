@@ -21,7 +21,8 @@ public:
 
     void hit(Coordinate c);
     void miss(Coordinate c);
-    void reveal(Coordinate c);
+    void reveal(Coordinate c, bool is_alive);
+    void clear(Coordinate c);
 
     void clear_hits();
     void clear_misses();

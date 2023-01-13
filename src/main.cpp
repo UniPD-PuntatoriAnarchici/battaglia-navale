@@ -70,6 +70,8 @@ void test_dev_matteo_galiazzo() {
 
     hp.turn(hp2);
     hp.turn(hp2);
+    hp.turn(hp2);
+    hp.turn(hp2);
 }
 
 void test_dev_filippo_tiberio() {
