@@ -34,6 +34,8 @@ class Defenseboard : public Board {
         return found != opponent_postions.end();
     }
 
+    bool is_alive(Coordinate &c); 
+
     bool hit(Coordinate &c) {
         if (!is_occupied(c)) return false;
 

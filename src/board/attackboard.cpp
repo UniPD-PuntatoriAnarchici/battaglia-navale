@@ -5,7 +5,7 @@ Attackboard::Attackboard() = default;
 std::vector<std::pair<Coordinate, char>> Attackboard::get_all() {
     std::vector<std::pair<Coordinate, char>> vector{};
 
-    for (auto el: cells_) {
+    for (auto el : cells_) {
         vector.emplace_back(el.first, el.second);
     }
     return vector;
@@ -14,35 +14,34 @@ std::vector<std::pair<Coordinate, char>> Attackboard::get_all() {
 std::vector<Coordinate> Attackboard::get_all_raw() {
     std::vector<Coordinate> vector{};
 
-    for (auto el: cells_) {
+    for (auto el : cells_) {
         vector.push_back(el.first);
     }
     return vector;
 }
 
-int Attackboard::num_elements() const {
-    return static_cast<int>(cells_.size());
-}
+int Attackboard::num_elements() const { return static_cast<int>(cells_.size()); }
 
 void Attackboard::hit(Coordinate c) {
-    if (!c.is_valid())
-        throw Coordinate::INVALID_COORDINATE{};
+    if (!c.is_valid()) throw Coordinate::INVALID_COORDINATE{};
 
     cells_[c] = 'X';
 }
 
 void Attackboard::miss(Coordinate c) {
-    if (!c.is_valid())
-        throw Coordinate::INVALID_COORDINATE{};
+    if (!c.is_valid()) throw Coordinate::INVALID_COORDINATE{};
 
     cells_[c] = 'O';
 }
 
-void Attackboard::reveal(Coordinate c) {
-    if (!c.is_valid())
-        throw Coordinate::INVALID_COORDINATE{};
+void Attackboard::reveal(Coordinate c, bool is_alive) {
+    if (!c.is_valid()) throw Coordinate::INVALID_COORDINATE{};
+    cells_[c] = (is_alive) ? 'J' : 'X';
+}
 
-    cells_[c] = 'J';
+void Attackboard::clear(Coordinate c) {
+    if (!c.is_valid()) throw Coordinate::INVALID_COORDINATE{};
+    cells_.erase(c);
 }
 
 void Attackboard::clear_hits() {
@@ -74,7 +73,3 @@ void Attackboard::clear_reveals() {
         }
     }
 }
-
-
-
-
