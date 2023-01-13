@@ -3,13 +3,13 @@
 
 #include <sstream>
 
+#include "player.h"
+
 #if defined(__linux__) || defined(__APPLE__)
 
 #else
 #include <windows.h>
 #endif
-
-#include "player.h"
 
 class Humanplayer : public Player {
    public:

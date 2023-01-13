@@ -1,8 +1,5 @@
 #include "./../../include/player/humanplayer.h"
 
-
-void colored_print(std::string &s);
-
 // returns false if game is lost
 bool Humanplayer::turn(Player &other) {
     if (defense_board_.is_lost()) return false;
@@ -15,15 +12,13 @@ bool Humanplayer::turn(Player &other) {
 
     do {
         if (customAction) {
-            // std::cout << "Comando speciale eseguito!\n";
-            std::string to_print = "Comando speciale eseguito!\n";
-            colored_print(to_print);
-        } else if (invalid_coordinates_flag) {
-            std::cout << "Coordinate non valide! Si prega di re-inserire.\n";
-        }
+            colored_print(std::string("Comando speciale eseguito!"), MESSAGE_TYPE::MSG_INFO) << std::endl;
+        } else if (invalid_coordinates_flag)
+            colored_print(std::string("Coordinate non valide! Si prega di re-inserire."), MESSAGE_TYPE::MSG_ERROR) << std::endl;
 
         if (invalid_ship_flag) {
-            std::cout << "Nessuna nave presente a queste coordinate! Si prega di re-inserire.\n";
+            colored_print(std::string("Nessuna nave presente a queste coordinate! Si prega di re-inserire."),
+                          MESSAGE_TYPE::MSG_ERROR) << std::endl;
         }
 
         invalid_coordinates_flag = false;
@@ -60,7 +55,7 @@ bool Humanplayer::turn(Player &other) {
 
         try {
             defense_board_.ship_at(turn_coords[0])
-                    ->action(turn_coords[1], other.get_defense_board(), attack_board_);
+                ->action(turn_coords[1], other.get_defense_board(), attack_board_);
 
         } catch (const std::exception &ex) {
             invalid_ship_flag = true;
@@ -74,6 +69,10 @@ bool Humanplayer::place_ship(const Ship::Type ship_type) {
     if (ship_type != Ship::Type::BATTLESHIP && ship_type != Ship::Type::REPAIRSHIP &&
         ship_type != Ship::Type::SUBMARINE)
         return 0;
+    if (defense_board_.is_full()) {
+        colored_print("La griglia e' piena!", MESSAGE_TYPE::MSG_ERROR) << std::endl;
+        return 0;
+    }
 
     std::string input;
     bool valid_input = false;
@@ -97,7 +96,7 @@ bool Humanplayer::place_ship(const Ship::Type ship_type) {
 
         // if i don't have 2 coordinates i break out to get new coordinates
         if (coordinates.size() != 2) {
-            std::cout << "Devi inserire due coordinate!" << std::endl;
+            colored_print("Devi inserire due coordinate!", MESSAGE_TYPE::MSG_ERROR) << std::endl;
             continue;
         }
 
@@ -107,7 +106,7 @@ bool Humanplayer::place_ship(const Ship::Type ship_type) {
             direction = Ship::Directions::VERTICAL;
             // if vertical length is in the column (y2-y1)
             if (!check_ship_length(coordinates.at(1).row(), coordinates.at(0).row(), ship_type)) {
-                std::cout << "La lunghezza e il tipo di nave non corrispondono" << std::endl;
+                colored_print("La lunghezza e il tipo di nave non corrispondono!", MESSAGE_TYPE::MSG_ERROR) << std::endl;
                 continue;
             }
             center = get_ship_center(coordinates.at(0).row(), coordinates.at(0).col(), direction, ship_type);
@@ -116,7 +115,7 @@ bool Humanplayer::place_ship(const Ship::Type ship_type) {
             direction = Ship::Directions::HORIZONTAL;
             // if horizontal length is in the row (x2-x1)
             if (!check_ship_length(coordinates.at(1).col(), coordinates.at(0).col(), ship_type)) {
-                std::cout << "La lunghezza e il tipo di nave non corrispondono" << std::endl;
+                colored_print("La lunghezza e il tipo di nave non corrispondono!", MESSAGE_TYPE::MSG_ERROR) << std::endl;
                 continue;
             }
             center = get_ship_center(coordinates.at(0).row(), coordinates.at(0).col(), direction, ship_type);
@@ -131,9 +130,9 @@ bool Humanplayer::place_ship(const Ship::Type ship_type) {
             valid_input = defense_board_.place_ship(Submarine(center, direction));
 
         if (valid_input)
-            std::cout << "Nave inserita correttamente" << std::endl;
+            colored_print("Nave inserita correttamente", MESSAGE_TYPE::MSG_SUCCESS) << std::endl;
         else
-            std::cout << "Errore nell'inserimento della nave" << std::endl;
+            colored_print("Errore nell'inserimento della nave!", MESSAGE_TYPE::MSG_ERROR) << std::endl;
     }
     return true;
 }
@@ -184,37 +183,4 @@ std::vector<std::string> Humanplayer::split_string(const std::string &s) {
     std::string item;
     while (std::getline(iss, item, ' ')) strings.push_back(item);
     return strings;
-}
-
-/*
-    from https://stackoverflow.com/questions/2616906/how-do-i-output-coloured-text-to-a-linux-terminal
-    from https://en.wikipedia.org/wiki/ANSI_escape_code#Colors
-
-            foreground background
-    black        30         40
-    red          31         41
-    green        32         42
-    yellow       33         43
-    blue         34         44
-    magenta      35         45
-    cyan         36         46
-    white        37         47
-
-    reset             0  (everything back to normal)
-    bold/bright       1  (often a brighter shade of the same colour)
-    underline         4
-    inverse           7  (swap foreground and background colours)
-    bold/bright off  21
-    underline off    24
-    inverse off      27
-*/
-void colored_print(std::string &s) {
-#if defined(__linux__) || defined(__APPLE__)
-    std::cout << "\033[1;93m" << s << "\033[0m";
-#else
-    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-    SetConsoleTextAttribute(hConsole, 12);
-    std::cout << s;
-    SetConsoleTextAttribute(hConsole, 7);
-#endif
 }

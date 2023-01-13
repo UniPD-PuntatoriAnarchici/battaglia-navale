@@ -1,16 +1,14 @@
 #include "./../../include/player/player.h"
 
-std::vector<std::string> Player::player_history() {
-    return player_history_;
-}
+std::vector<std::string> Player::player_history() { return player_history_; }
 
 int Player::add_to_player_history(const std::string &action) {
     player_history_.push_back(action);
+    // conversion from size_t to int, can't overflow because we have a maximum number of moves lower than int
     return static_cast<int>(player_history_.size());
 }
 
-
-void Player::print_boards_inline() {
+void Player::print_boards_inline(std::ostream &os) {
     int atk_coordinate_counter = 0;
     int def_coordinate_counter = 0;
     std::pair<Coordinate, char> atk_element_to_print;
@@ -18,7 +16,7 @@ void Player::print_boards_inline() {
     std::vector<std::pair<Coordinate, char>> atk_occupied_positions = attack_board_.get_all();
     std::vector<std::pair<Coordinate, char>> def_occupied_positions = defense_board_.get_all();
 
-    if (!def_occupied_positions.empty())  //Changed to correct empty method
+    if (!def_occupied_positions.empty())  // Changed to correct empty method
         def_element_to_print = def_occupied_positions.at(def_coordinate_counter++);
     else {
         // I have to print a dummy coordinate because i always check toprint.first
@@ -26,7 +24,7 @@ void Player::print_boards_inline() {
         def_coordinate_counter++;
     }
 
-    if (!atk_occupied_positions.empty())  //Changed to correct empty method
+    if (!atk_occupied_positions.empty())  // Changed to correct empty method
         atk_element_to_print = atk_occupied_positions.at(atk_coordinate_counter++);
     else {
         // I have to print a dummy coordinate because i always check toprint.first
@@ -38,7 +36,7 @@ void Player::print_boards_inline() {
 
     for (int i = 1; i <= 12; i++) {
         std::string line_buffer;
-        line_buffer.push_back((char) (i < 10 ? '@' + i : '@' + i + 2));
+        line_buffer.push_back((char)(i < 10 ? '@' + i : '@' + i + 2));
         line_buffer += " |";
         for (int j = 1; j <= 12; j++) {
             // if position is occupied print
@@ -56,43 +54,42 @@ void Player::print_boards_inline() {
         atk_buffer.push_back(line_buffer);
     }
 
-    std::cout << "DEFENSE\t\t\t\t\t\t\tATTACK" << std::endl;
+    colored_print("DEFENSE\t\t\t\t\t\t\tATTACK", MESSAGE_TYPE::MSG_INFO_BOLD, os) << std::endl;
 
     for (int i = 1; i <= 12; i++) {
-        std::cout << (char) (i < 10 ? '@' + i : '@' + i + 2) << " |";
+        os << (char)(i < 10 ? '@' + i : '@' + i + 2) << " |";
         for (int j = 1; j <= 12; j++) {
             // if position is occupied print
             if (def_element_to_print.first == Coordinate(i, j)) {
-                std::cout << " " << def_element_to_print.second << " |";
+                os << " " << def_element_to_print.second << " |";
                 if (def_coordinate_counter < def_occupied_positions.size()) {
                     def_element_to_print = def_occupied_positions.at(def_coordinate_counter++);
                 }
             } else {
-                std::cout << "   |";
+                os << "   |";
             }
         }
-        std::cout << "\t" << atk_buffer.at(i - 1);
-        std::cout << std::endl;
+        os << "\t" << atk_buffer.at(i - 1);
+        os << std::endl;
     }
 
-    std::cout << "-> ";
+    os << "-> ";
     for (int j = 1; j <= 12; j++) {
         if (j < 10) {
-            std::cout << "  " << j << " ";
+            os << "  " << j << " ";
         } else {
-            std::cout << " " << j << " ";
+            os << " " << j << " ";
         }
     }
-    std::cout << "\t";
-    std::cout << "-> ";
+    os << "\t-> ";
     for (int j = 1; j <= 12; j++) {
         if (j < 10) {
-            std::cout << "  " << j << " ";
+            os << "  " << j << " ";
         } else {
-            std::cout << " " << j << " ";
+            os << " " << j << " ";
         }
     }
-    std::cout << std::endl;
+    os << std::endl;
 }
 
 void Player::print_boards() {
@@ -100,20 +97,20 @@ void Player::print_boards() {
     print_board(Board::Type::ATTACKBOARD);
 }
 
-void Player::print_board(const Board::Type boardtype) {
+void Player::print_board(const Board::Type boardtype, std::ostream &os) {
     int coordinate_counter = 0;
     std::pair<Coordinate, char> to_print;
     std::vector<std::pair<Coordinate, char>> occupied_positions;
 
     if (boardtype == Board::Type::DEFENSEBOARD) {
-        std::cout << "DEFENSEBOARD" << std::endl;
+        os << "DEFENSEBOARD" << std::endl;
         occupied_positions = defense_board_.get_all();
     } else {
-        std::cout << "ATTACKBOARD" << std::endl;
+        os << "ATTACKBOARD" << std::endl;
         occupied_positions = attack_board_.get_all();
     }
 
-    if (!occupied_positions.empty()) //Changed to correct empty method
+    if (!occupied_positions.empty())  // Changed to correct empty method
         to_print = occupied_positions.at(coordinate_counter++);
     else {
         // I have to print a dummy coordinate because i always check toprint.first
@@ -122,28 +119,27 @@ void Player::print_board(const Board::Type boardtype) {
     }
 
     for (int i = 1; i <= 12; i++) {
-        std::cout << (char) (i < 10 ? '@' + i : '@' + i + 2) << " |";
+        os << (char)(i < 10 ? '@' + i : '@' + i + 2) << " |";
         for (int j = 1; j <= 12; j++) {
             // if position is occupied print
             if (to_print.first == Coordinate(i, j)) {
-                std::cout << " " << to_print.second << " |";
+                os << " " << to_print.second << " |";
                 if (coordinate_counter < occupied_positions.size()) {
                     to_print = occupied_positions.at(coordinate_counter++);
                 }
             } else {
-                std::cout << "   |";
+                os << "   |";
             }
         }
-        std::cout << std::endl;
+        os << std::endl;
     }
-    std::cout << "-> ";
+    os << "-> ";
     for (int j = 1; j <= 12; j++) {
         if (j < 10) {
-            std::cout << "  " << j << " ";
+            os << "  " << j << " ";
         } else {
-            std::cout << " " << j << " ";
+            os << " " << j << " ";
         }
     }
-    std::cout << std::endl;
+    os << std::endl;
 }
-

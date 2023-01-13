@@ -7,9 +7,10 @@
 
 #include "./../board/attackboard.h"
 #include "./../board/defenseboard.h"
+#include "./../utils/colors.h"
 
 class Player {
-public:
+   public:
     virtual bool turn(Player &other) = 0;
 
     virtual bool place_ship(const Ship::Type ship_type) = 0;
@@ -18,21 +19,21 @@ public:
 
     int add_to_player_history(const std::string &action);
 
-    void print_board(const Board::Type boardtype);
+    void print_board(const Board::Type boardtype, std::ostream &os = std::cout);
 
     void print_boards();
 
-    void print_boards_inline();
+    void print_boards_inline(std::ostream &os = std::cout);
 
     Defenseboard &get_defense_board() { return defense_board_; }  // NON può essere const: devo colpirla.
 
-protected:
+   protected:
     Defenseboard defense_board_;
     Attackboard attack_board_;
 
     std::vector<std::string> player_history_;
 
-private:
+   private:
 };
 
 #endif  // PLAYER_H

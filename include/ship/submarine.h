@@ -6,10 +6,9 @@
 #include "ship.h"
 
 class Submarine : public Ship {
-public:
+   public:
     static constexpr char CHARACTER = 'E';
     static constexpr int LENGTH = 1;
-
 
     explicit Submarine(Coordinate center = Coordinate{},
                        Ship::Directions direction = Ship::Directions::HORIZONTAL) {
@@ -21,9 +20,7 @@ public:
         reset_cells();
     }
 
-    bool action(Coordinate dest, Defenseboard &opponent, Attackboard &self) override {
-        return true;
-    }
+    bool action(Coordinate dest, Defenseboard &opponent, Attackboard &self) override;
 
     Ship *clone() const override { return new Submarine{*this}; }
 };

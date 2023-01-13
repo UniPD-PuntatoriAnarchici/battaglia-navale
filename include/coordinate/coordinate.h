@@ -50,6 +50,7 @@ public:
 
     std::string to_string();
 
+    static char customRow_to_char(int row);
 private:
     int row_{};
     int col_{};
@@ -58,7 +59,6 @@ private:
 
     static int char_to_customRow(char row);
 
-    static char customRow_to_char(int row);
 };
 
 std::ostream &operator<<(std::ostream &os, const Coordinate &coordinate);
