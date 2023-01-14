@@ -1,6 +1,7 @@
 //
 // Created by Filippo Tiberio on 26/12/2022.
 //
+
 #include "./../../include/coordinate/coordinate.h"
 
 //region constructors
@@ -65,6 +66,14 @@ std::pair<int, int> Coordinate::coordinates_to_indexes(Coordinate c) {
 
 std::pair<char, int> Coordinate::indexes_to_coordinates(Coordinate c) {
     return std::make_pair(customRow_to_char(c.row()), c.col());
+}
+
+std::vector<Coordinate> Coordinate::split_coordinates(const std::string &s) {
+    std::vector<Coordinate> coordinates;
+    std::istringstream iss(s);
+    std::string item;
+    while (std::getline(iss, item, ' ')) coordinates.emplace_back(item);
+    return coordinates;
 }
 //endregion converters
 
