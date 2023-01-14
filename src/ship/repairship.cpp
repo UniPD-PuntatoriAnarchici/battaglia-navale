@@ -17,3 +17,7 @@ std::ostream &operator<<(std::ostream &os, const Repairship &battleship) {
     return os;
 
 }
+
+Repairship::~Repairship() {
+
+}

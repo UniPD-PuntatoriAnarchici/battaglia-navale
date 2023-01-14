@@ -19,5 +19,9 @@ add_executable(replay
         src/replay.cpp
         )
 
+target_link_libraries(ship board coordinate)
+target_link_libraries(board ship player coordinate)
+target_link_libraries(player board ship coordinate)
+
 target_link_libraries(battaglia_navale ship board player coordinate)
 target_link_libraries(replay ship board player coordinate)

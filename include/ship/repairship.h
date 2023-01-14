@@ -10,6 +10,8 @@ class Repairship : public Ship {
     static constexpr char CHARACTER = 'S';
     static constexpr int LENGTH = 3;
 
+    ~Repairship() override;
+
     explicit Repairship(Coordinate center = Coordinate{},
                         Ship::Directions direction = Ship::Directions::HORIZONTAL) {
         cells_ = std::vector<bool>(LENGTH);
