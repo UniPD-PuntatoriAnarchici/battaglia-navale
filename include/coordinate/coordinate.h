@@ -6,6 +6,8 @@
 
 #include <string>
 #include <ostream>
+#include <vector>
+#include <sstream>
 
 // coordinate can go from 1 to 12
 // letter can go from A to N (no J and K)
@@ -51,6 +53,8 @@ public:
     std::string to_string();
 
     static char customRow_to_char(int row);
+
+    static std::vector<Coordinate> split_coordinates(const std::string &s);
 private:
     int row_{};
     int col_{};
