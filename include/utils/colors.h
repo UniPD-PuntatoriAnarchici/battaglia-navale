@@ -21,9 +21,17 @@
 #define BOLDMAGENTA "\033[1m\033[35m" /* Bold Magenta */
 #define BOLDCYAN "\033[1m\033[36m"    /* Bold Cyan */
 #define BOLDWHITE "\033[1m\033[37m"   /* Bold White */
+#define BLACKONWHITE "\033[30;47m"
+#define BLACKONYELLOW "\033[30;43m"
 
 enum class MESSAGE_TYPE {
-    MSG_WARNING, MSG_ERROR, MSG_INFO, MSG_INFO_BOLD, MSG_SUCCESS
+    MSG_WARNING,
+    MSG_ERROR,
+    MSG_INFO,
+    MSG_INFO_BOLD,
+    MSG_SUCCESS,
+    MSG_PLAYER1,
+    MSG_PLAYER2
 };
 
 /*
@@ -51,8 +59,8 @@ enum class MESSAGE_TYPE {
 static std::ostream &colored_print(const std::string &str, MESSAGE_TYPE message_type,
                                    std::ostream &os = std::cout) {
 #if defined(__linux__) || defined(__APPLE__)
-    if(os != std::cout || os != std::cerr){
-        os << str
+    if (os.rdbuf() != std::cout.rdbuf() && os.rdbuf() != std::cerr.rdbuf()) {
+        os << str;
     } else if (message_type == MESSAGE_TYPE::MSG_INFO_BOLD)
         os << BOLDBLUE << str << RESET;
     else if (message_type == MESSAGE_TYPE::MSG_INFO)
@@ -63,10 +71,14 @@ static std::ostream &colored_print(const std::string &str, MESSAGE_TYPE message_
         os << RED << str << RESET;
     else if (message_type == MESSAGE_TYPE::MSG_SUCCESS)
         os << GREEN << str << RESET;
+    else if (message_type == MESSAGE_TYPE::MSG_PLAYER1)
+        os << BLACKONWHITE << str << RESET;
+    else if (message_type == MESSAGE_TYPE::MSG_PLAYER2)
+        os << BLACKONYELLOW << str << RESET;
     return os;
 #else
     os << str;
-    return os;//credo
+    return os;  // credo
 #endif
 }
 
