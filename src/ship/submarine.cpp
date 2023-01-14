@@ -47,3 +47,7 @@ bool Submarine::action(Coordinate dest, Defenseboard &opponent, Attackboard &sel
 
     return true;
 }
+
+Submarine::~Submarine() {
+
+}

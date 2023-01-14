@@ -39,3 +39,7 @@ bool Battleship::action(Coordinate dest, Defenseboard &opponent, Attackboard &se
 
     return true;
 }
+
+Battleship::~Battleship() {
+
+}

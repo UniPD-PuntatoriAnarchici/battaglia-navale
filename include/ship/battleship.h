@@ -14,6 +14,8 @@ class Battleship : public Ship {
     static constexpr char CHARACTER = 'C';
     static constexpr int LENGTH = 5;
 
+    ~Battleship() override;
+
     explicit Battleship(Coordinate center = Coordinate{},
                         Ship::Directions direction = Ship::Directions::HORIZONTAL) {
         cells_ = std::vector<bool>(LENGTH);

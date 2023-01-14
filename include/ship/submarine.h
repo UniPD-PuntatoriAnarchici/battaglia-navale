@@ -20,6 +20,8 @@ class Submarine : public Ship {
         reset_cells();
     }
 
+    ~Submarine() override;
+
     bool action(Coordinate dest, Defenseboard &opponent, Attackboard &self) override;
 
     Ship *clone() const override { return new Submarine{*this}; }

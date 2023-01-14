@@ -38,7 +38,7 @@ public:
     /**
      * Virtual!
      */
-    virtual ~Ship() = default;
+    virtual ~Ship() = 0;
 
     const Coordinate &center() const { return center_; }
 
@@ -80,5 +80,6 @@ protected:
 
 private:
 };
+
 
 #endif  // SHIP_H
