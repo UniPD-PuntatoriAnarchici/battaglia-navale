@@ -5,52 +5,118 @@
 #include <chrono>
 #include <thread>
 
+#include <string>
+
 std::vector<std::string> split_strings(const std::string &string, char delimiter = ' ');
 
 void fill_player(Cpuplayer &player, const std::string &ships);
 
-int main() {
-    std::cout << "REPLAY" << std::endl;
+class INVALID_FILE_FORMAT : public std::exception {
+private:
+    std::string message_;
+public:
+    explicit INVALID_FILE_FORMAT(const std::string &message) : message_{message} {};
+
+    const char *what() const noexcept override {
+        return message_.c_str();
+    }
+};
+
+int main(int argc, char *argv[]) {
+
+    bool to_file = false;
+    bool a_starts = true;
+    std::string buffer;
+
+    std::ofstream file_out_stream;
+    std::ifstream file_in_stream;
+
     Cpuplayer player1, player2;
 
-    std::string buffer;
-    std::ifstream file;
-    file.open("../test_log.txt");
+    if (argc < 3) {
+        throw std::invalid_argument("Insufficient arguments");
+    }
 
-    if (!file.is_open())
-        throw std::invalid_argument{"can't open file!"};
+    if (std::string{argv[1]} == "-f" || std::string{argv[1]} == "f")
+        to_file = true;
 
-    std::getline(file, buffer);
+    if (!to_file && (std::string{argv[1]} == "-v" && std::string{argv[1]} == "v"))
+        throw std::invalid_argument("Invalid arguments no f/-f or v/-v found!");
+
+    if (to_file && argc < 4)
+        throw std::invalid_argument(
+                "Insufficient arguments: file_in_stream argument need input and output file_in_stream names!");
+
+    if (to_file) {
+        file_out_stream.open(std::string{argv[3]});
+        if (!file_out_stream.is_open())
+            throw std::invalid_argument{"Can't open output file_in_stream!"};
+    }
+
+    file_in_stream.open(std::string{argv[2]});
+
+    if (!file_in_stream.is_open())
+        throw std::invalid_argument{"Can't open replay file_in_stream!"};
+
+    std::ostream *output_general_stream;
+    if (to_file) {
+        output_general_stream = &file_out_stream;
+    } else {
+        output_general_stream = &std::cout;
+    }
+
+    std::getline(file_in_stream, buffer);
     fill_player(player1, buffer);
 
-    std::getline(file, buffer);
+    std::getline(file_in_stream, buffer);
     fill_player(player2, buffer);
 
+    colored_print("Initial Player 1 boards:", MESSAGE_TYPE::MSG_SUCCESS, *output_general_stream) << std::endl;
+    player1.print_boards_inline(*output_general_stream);
+    *output_general_stream << std::endl;
 
-    std::cout << "Player 1:" << std::endl;
-    player1.print_boards_inline();
+    colored_print("Initial Player 2 boards:", MESSAGE_TYPE::MSG_SUCCESS, *output_general_stream) << std::endl;
+    player2.print_boards_inline(*output_general_stream);
 
-    std::cout << "Player 2:" << std::endl;
-    player2.print_boards_inline();
+    *output_general_stream
+            << "========================================================================================================"
+            << std::endl
+            << std::endl;
 
-    std::cout << "============================================================================" << std::endl
-              << std::endl;
+    std::getline(file_in_stream, buffer);
 
-    for (int i = 0; i < 150; i++) {
-        player1.turn(player2);
-        std::cout << "Player 1:" << std::endl;
-        player1.print_boards_inline();
+    if (buffer != "1" && buffer != "2")
+        throw INVALID_FILE_FORMAT{"Starting player not defined!"};
 
-        player2.turn(player1);
-        std::cout << "Player 2:" << std::endl;
-        player2.print_boards_inline();
+    a_starts = (buffer == "1");
 
+    if (!to_file)
+        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 
-        std::this_thread::sleep_for(std::chrono::seconds(1));
-
-        std::cout << "============================================================================" << std::endl
-                  << std::endl;
+    bool last_a = !a_starts;
+    while (!file_in_stream.eof()) {
+        std::getline(file_in_stream, buffer);
+        try {
+            if (!last_a) {
+                player1.replay_turn(player2, buffer);
+                last_a = true;
+                colored_print("Player 1 Turn:", MESSAGE_TYPE::MSG_SUCCESS, *output_general_stream) << std::endl;
+                player1.print_boards_inline(*output_general_stream);
+                *output_general_stream << std::endl;
+            } else {
+                player2.replay_turn(player1, buffer);
+                colored_print("Player 2 Turn:", MESSAGE_TYPE::MSG_INFO, *output_general_stream) << std::endl;
+                last_a = false;
+                player2.print_boards_inline(*output_general_stream);
+                *output_general_stream << std::endl;
+            }
+            if (!to_file)
+                std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+        } catch (const std::exception &e) {
+            //intentionally muted!
+        }
     }
+
 
     return 0;
 }
@@ -78,3 +144,4 @@ std::vector<std::string> split_strings(const std::string &string, char delimiter
     while (std::getline(iss, item, delimiter)) strings.push_back(item);
     return strings;
 }
+
