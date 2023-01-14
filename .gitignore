@@ -32,6 +32,9 @@
 *.app
 *.sh
 
+#logs
+test_correct_output.txt
+
 # dirs
 bin
 cmake-build-debug

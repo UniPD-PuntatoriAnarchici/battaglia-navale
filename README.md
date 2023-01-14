@@ -2,6 +2,23 @@
 
 #### *Puntatori anarchici*
 
+### 0. TODO
+- [ ] Submarine --> fix action
+- [ ] Repairship --> Everything in action
+- [ ] Ship/board --> manage dead boats (FT)
+- [ ] Cpu player --> turn
+- [ ] Game manager --> Manager, save log files
+
+Note: log file log-HC/CC-timestamp.txt con questo formato
+```
+HB8 HF10 VF2 HA3 HD7 HL7 HH11 HL2
+HB8 HF10 VF2 HA3 HD7 HL7 HH11 HL2
+2
+F2 L2
+L2 A1
+F2 F10
+```
+
 ### 1. How to Compile:
 
 **While you are in the main directory**
