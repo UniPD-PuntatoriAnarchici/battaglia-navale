@@ -301,28 +301,28 @@ void test_dev_matteo_rampin() {
     cout << "=== dev-matteo-rampin ===" << endl;
     Cpuplayer cp;
     Humanplayer hp;
-     //hp.place_ship(Ship::Type::BATTLESHIP);
-     //hp.print_boards();
-     //Coordinate a = Coordinate(1,1);   
-     //cout<<hp.get_defense_board().is_occupied(a);
     // hp.place_ship(Ship::Type::BATTLESHIP);
-    cp.place_ship(Ship::Type::BATTLESHIP); 
+    // hp.print_boards();
+    // Coordinate a = Coordinate(1,1);
+    // cout<<hp.get_defense_board().is_occupied(a);
+    // hp.place_ship(Ship::Type::BATTLESHIP);
     cp.place_ship(Ship::Type::BATTLESHIP);
     cp.place_ship(Ship::Type::BATTLESHIP);
-    cp.print_boards();
+    cp.place_ship(Ship::Type::BATTLESHIP);
+    cp.print_boards_inline();
     cp.place_ship(Ship::Type::REPAIRSHIP);
     cp.place_ship(Ship::Type::REPAIRSHIP);
     cp.place_ship(Ship::Type::REPAIRSHIP);
-    cp.print_boards();
+    cp.print_boards_inline();
     cp.place_ship(Ship::Type::SUBMARINE);
     cp.place_ship(Ship::Type::SUBMARINE);
-    cp.print_boards();
+    cp.print_boards_inline();
 }
 
 int main() {
     std::cout << "MAIN" << std::endl;
-    //test_dev_matteo_galiazzo();
-    // test_dev_filippo_tiberio();
+    test_dev_matteo_galiazzo();
+    test_dev_filippo_tiberio();
     test_dev_matteo_rampin();
     return 0;
 }
