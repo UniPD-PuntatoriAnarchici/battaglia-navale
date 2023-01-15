@@ -13,6 +13,8 @@
 
 class Humanplayer : public Player {
    public:
+    ~Humanplayer() override;
+
     Humanplayer() = default;
     bool place_ship(const Ship::Type ship_type) override;
     bool turn(Player &other) override;

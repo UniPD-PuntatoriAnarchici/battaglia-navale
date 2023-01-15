@@ -102,7 +102,7 @@ std::ostream &operator<<(std::ostream &os, const Coordinate &coordinate) {
 //endregion
 
 //region utilities
-std::string Coordinate::to_string() {
+std::string Coordinate::to_string() const{
     std::pair<char, int> customCoord = Coordinate::indexes_to_coordinates(*this);
     return std::string(1, customCoord.first) + std::to_string(customCoord.second);
 }

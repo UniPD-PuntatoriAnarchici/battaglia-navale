@@ -156,3 +156,7 @@ bool Cpuplayer::replay_turn(Player &other, const std::string &action) {
 
     return true;
 }
+
+Cpuplayer::~Cpuplayer() {
+
+}

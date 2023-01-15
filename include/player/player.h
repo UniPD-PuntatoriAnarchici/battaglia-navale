@@ -10,7 +10,11 @@
 #include "./../utils/colors.h"
 
 class Player {
-   public:
+public:
+    virtual ~Player() = 0;
+
+    void place_all_ships();
+
     virtual bool turn(Player &other) = 0;
 
     virtual bool place_ship(const Ship::Type ship_type) = 0;
@@ -25,15 +29,17 @@ class Player {
 
     void print_boards_inline(std::ostream &os = std::cout);
 
+    bool is_alive() const;
+
     Defenseboard &get_defense_board() { return defense_board_; }  // NON può essere const: devo colpirla.
 
-   protected:
+protected:
     Defenseboard defense_board_;
     Attackboard attack_board_;
 
     std::vector<std::string> player_history_;
 
-   private:
+private:
 };
 
 #endif  // PLAYER_H
