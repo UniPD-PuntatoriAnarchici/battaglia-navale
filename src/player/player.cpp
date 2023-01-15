@@ -36,7 +36,7 @@ void Player::print_boards_inline(std::ostream &os) {
 
     for (int i = 1; i <= 12; i++) {
         std::string line_buffer;
-        line_buffer.push_back((char)(i < 10 ? '@' + i : '@' + i + 2));
+        line_buffer.push_back((char) (i < 10 ? '@' + i : '@' + i + 2));
         line_buffer += " |";
         for (int j = 1; j <= 12; j++) {
             // if position is occupied print
@@ -57,7 +57,7 @@ void Player::print_boards_inline(std::ostream &os) {
     colored_print("DEFENSE\t\t\t\t\t\t\tATTACK", MESSAGE_TYPE::MSG_INFO_BOLD, os) << std::endl;
 
     for (int i = 1; i <= 12; i++) {
-        os << (char)(i < 10 ? '@' + i : '@' + i + 2) << " |";
+        os << (char) (i < 10 ? '@' + i : '@' + i + 2) << " |";
         for (int j = 1; j <= 12; j++) {
             // if position is occupied print
             if (def_element_to_print.first == Coordinate(i, j)) {
@@ -119,7 +119,7 @@ void Player::print_board(const Board::Type boardtype, std::ostream &os) {
     }
 
     for (int i = 1; i <= 12; i++) {
-        os << (char)(i < 10 ? '@' + i : '@' + i + 2) << " |";
+        os << (char) (i < 10 ? '@' + i : '@' + i + 2) << " |";
         for (int j = 1; j <= 12; j++) {
             // if position is occupied print
             if (to_print.first == Coordinate(i, j)) {
@@ -142,4 +142,25 @@ void Player::print_board(const Board::Type boardtype, std::ostream &os) {
         }
     }
     os << std::endl;
+}
+
+Player::~Player() {
+
+}
+
+bool Player::is_alive() const {
+    return !defense_board_.is_lost();
+}
+
+void Player::place_all_ships() {
+    place_ship(Ship::Type::BATTLESHIP);
+    place_ship(Ship::Type::BATTLESHIP);
+    place_ship(Ship::Type::BATTLESHIP);
+
+    place_ship(Ship::Type::REPAIRSHIP);
+    place_ship(Ship::Type::REPAIRSHIP);
+    place_ship(Ship::Type::REPAIRSHIP);
+
+    place_ship(Ship::Type::SUBMARINE);
+    place_ship(Ship::Type::SUBMARINE);
 }

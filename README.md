@@ -3,11 +3,11 @@
 #### *Puntatori anarchici*
 
 ### 0. TODO
-- [ ] Submarine --> fix action
+- [ ] Ships --> fix actions (is_alive)
 - [ ] Repairship --> Everything in action
-- [ ] Ship/board --> manage dead boats (FT)
+- [x] Ship/board --> manage dead boats (FT)
 - [ ] Cpu player --> turn
-- [ ] Game manager --> Manager, save log files
+- [x] Game manager --> Manager, save log files
 
 Note: log file log-HC/CC-timestamp.txt con questo formato
 ```

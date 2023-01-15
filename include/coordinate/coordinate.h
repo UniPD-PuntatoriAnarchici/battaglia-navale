@@ -50,7 +50,7 @@ public:
 
     bool is_valid() const;
 
-    std::string to_string();
+    std::string to_string() const;
 
     static char customRow_to_char(int row);
 

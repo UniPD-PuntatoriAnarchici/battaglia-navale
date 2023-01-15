@@ -10,7 +10,7 @@
 #include "board.h"
 
 class Defenseboard : public Board {
-   public:
+public:
     class FULL_BOARD_EXCEPTION : public std::exception {
         const char *what() const noexcept override { return "Board is full, you can't add more ships"; }
     };
@@ -21,7 +21,7 @@ class Defenseboard : public Board {
 
     std::vector<Coordinate> get_all_raw() override;
 
-    bool is_lost();
+    bool is_lost() const;
 
     bool place_ship(const Ship &ship);
 
@@ -34,12 +34,12 @@ class Defenseboard : public Board {
         return found != opponent_postions.end();
     }
 
-    bool is_alive(Coordinate &c); 
+    bool is_alive(Coordinate &c);
 
     bool hit(Coordinate &c) {
         if (!is_occupied(c)) return false;
 
-        for (auto &ship : ships_) {
+        for (auto &ship: ships_) {
             std::vector<Coordinate> positions = ship->raw_positions();
             auto cell = std::find(positions.begin(), positions.end(), c);
             if (!(cell == positions.end())) {
@@ -52,8 +52,8 @@ class Defenseboard : public Board {
 
     // FT -> Da sistemare e discutere
     const std::unique_ptr<Ship> &ship_at(Coordinate c) {
-        for (auto &ship : ships_) {
-            if (ship->center() == c) {
+        for (auto &ship: ships_) {
+            if (ship->center() == c && ship->is_alive()) {
                 return ship;
             }
         }
@@ -63,11 +63,15 @@ class Defenseboard : public Board {
 
     const std::unique_ptr<Ship> &ship_at_index(int i) {
         if (i > 7) throw std::invalid_argument("Only 8 ships!");
+        if (!ships_.at(i)->is_alive())
+            throw std::exception{};
 
         return ships_.at(i);
     }
 
-   private:
+    std::string to_log_format() const;
+
+private:
     // declaring array of smart pointers (ships_) with 7 ships_:
     // battle (3) repair (3) and submarine (2)
     std::vector<std::unique_ptr<Ship>> ships_;

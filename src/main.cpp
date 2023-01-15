@@ -6,6 +6,16 @@
 #include "./../include/player/cpuplayer.h"
 #include "./../include/player/humanplayer.h"
 
+#include <chrono>
+#include <thread>
+
+#include <random>
+#include <ctime>
+#include <iomanip>
+#include <fstream>
+
+#include <sstream>
+
 using namespace std;
 
 void test_dev_matteo_galiazzo() {
@@ -16,7 +26,7 @@ void test_dev_matteo_galiazzo() {
     cout << s1 << endl;
     cout << "S1 occupies: ";
     occupied_positions = s1.positions();
-    for (auto c : occupied_positions) {
+    for (auto c: occupied_positions) {
         cout << c.first;
     }
     cout << endl;
@@ -25,7 +35,7 @@ void test_dev_matteo_galiazzo() {
     cout << s2 << endl;
     cout << "S2 occupies: ";
     occupied_positions = s2.positions();
-    for (auto c : occupied_positions) {
+    for (auto c: occupied_positions) {
         cout << c.first;
     }
     cout << endl;
@@ -34,7 +44,7 @@ void test_dev_matteo_galiazzo() {
     cout << b1 << endl;
     cout << "B1 occupies: ";
     occupied_positions = b1.positions();
-    for (auto c : occupied_positions) {
+    for (auto c: occupied_positions) {
         cout << c.first;
     }
     cout << endl;
@@ -75,12 +85,6 @@ void test_dev_matteo_galiazzo() {
 }
 
 void test_dev_filippo_tiberio() {
-#if defined(__linux__) || defined(__APPLE__)
-
-#else
-    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-#endif
-
     cout << endl << "=== dev-filippo-tiberio ===" << endl;
 
     //    // region Coordinate
@@ -319,10 +323,148 @@ void test_dev_matteo_rampin() {
     cp.print_boards_inline();
 }
 
-int main() {
+int manager(int argc, char *argv[]) {
+    random_device random_device;
+    mt19937 random_engine(random_device());
+
+    bool human_computer_game = false;
+    int turn_counter = 0;
+    constexpr int MAX_TURNS = 1500;
+
+    uniform_int_distribution<int> starting_player_distribution(0, 1);
+
+    unique_ptr<Player> player1, player2;
+
+    if (argc < 2) {
+        throw std::invalid_argument("Insufficient arguments");
+    }
+
+    if (std::string{argv[1]} == "-pc" || std::string{argv[1]} == "pc") human_computer_game = true;
+
+    if (!human_computer_game && (std::string{argv[1]} != "-cc" && std::string{argv[1]} != "cc"))
+        throw std::invalid_argument("Invalid arguments no pc/-pc or cc/-cc found!");
+
+    const bool a_starts = starting_player_distribution(random_engine) == 0;
+
+    if (human_computer_game) {
+        player1.reset(new Humanplayer{});
+    } else {
+        player1.reset(new Cpuplayer{});
+    }
+    player2.reset(new Cpuplayer{});
+
+    player1->place_all_ships();
+    player2->place_all_ships();
+
+    bool last_a = !a_starts;
+    colored_print(a_starts ? "Player 1 starts" : "Player 2 starts", MESSAGE_TYPE::MSG_INFO_BOLD);
+    cout << endl;
+    while (player1->is_alive() && player2->is_alive() && turn_counter < MAX_TURNS) {
+        try {
+            if (!last_a) {
+//                if (!human_computer_game)
+//                    this_thread::sleep_for(chrono::milliseconds(500));
+                last_a = true;
+                colored_print("Player 1 Turn:", MESSAGE_TYPE::MSG_PLAYER1)
+                        << std::endl;
+                player1->turn(*player2);
+                player1->print_boards_inline();
+                cout << "======================================================================" << std::endl;
+            } else {
+//                this_thread::sleep_for(chrono::milliseconds(500));
+                last_a = false;
+                colored_print("Player 2 Turn:", MESSAGE_TYPE::MSG_PLAYER1)
+                        << std::endl;
+                player2->turn(*player1);
+                player2->print_boards_inline();
+                cout << "======================================================================" << std::endl;
+            }
+
+            turn_counter++;
+        } catch (const std::exception &e) {
+            std::cerr << e.what();
+        }
+    }
+
+    if (last_a && turn_counter < MAX_TURNS) {
+        colored_print("Player 1 WIN!", MESSAGE_TYPE::MSG_INFO_BOLD);
+    } else if (turn_counter < MAX_TURNS) {
+        colored_print("Player 2 WIN!", MESSAGE_TYPE::MSG_INFO_BOLD);
+    } else {
+        colored_print("DRAW!", MESSAGE_TYPE::MSG_INFO_BOLD);
+    }
+
+    //region save log!
+    /**
+     * Mandadory cStyle before c++ 17
+     */
+    auto t = std::time(nullptr);
+    auto tm = *std::localtime(&t);
+
+    stringstream s(string{});
+    s << put_time(&tm, "%Y%m%d_%H%M%S");
+    string date_string;
+    s >> date_string;
+
+    string file_name = string{"logs/log-"} + (human_computer_game ? "PC" : "CC") + "-" + date_string + string{".txt"};
+
+#if defined(__linux__) || defined(__APPLE__)
+    file_name.insert(0, "./");
+#else
+    file_name.insert(0, "../");
+#endif
+
+    ofstream file_out_stream;
+
+//    cout << file_name;
+    file_out_stream.open(file_name);
+
+    if (!file_out_stream.is_open()) {
+        throw std::invalid_argument{"Can't open output file_in_stream!"};
+    }
+    std::vector<std::string> player1_history = player1->player_history();
+    std::vector<std::string> player2_history = player2->player_history();
+
+    file_out_stream << player1->get_defense_board().to_log_format() << endl;
+    file_out_stream << player2->get_defense_board().to_log_format() << endl;
+
+    file_out_stream << (a_starts ? "1" : "2") << endl;
+
+    for (int i = 0; i < (player1_history.size() + player2_history.size()); i++) {
+        if (a_starts) {
+            if (i % 2 == 0) {
+                file_out_stream << player1_history[i / 2] << endl;
+            } else {
+                file_out_stream << player2_history[i / 2] << endl;
+            }
+        } else {
+            if (i % 2 == 0) {
+                file_out_stream << player2_history[i / 2] << endl;
+            } else {
+                file_out_stream << player1_history[i / 2] << endl;
+            }
+        }
+    }
+
+
+    file_out_stream.close();
+    //endregion
+
+    return 0;
+}
+
+int main(int argc, char *argv[]) {
     std::cout << "MAIN" << std::endl;
-    test_dev_matteo_galiazzo();
-    test_dev_filippo_tiberio();
-    test_dev_matteo_rampin();
+//    test_dev_matteo_galiazzo();
+//    test_dev_filippo_tiberio();
+//    test_dev_matteo_rampin();
+
+    try {
+        manager(argc, argv);
+    }
+    catch (const exception &ex) {
+        cerr << ex.what();
+    }
+
     return 0;
 }

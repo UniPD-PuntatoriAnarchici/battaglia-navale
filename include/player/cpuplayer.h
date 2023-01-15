@@ -20,6 +20,8 @@ public:
         }
     };
 
+    ~Cpuplayer() override;
+
     Cpuplayer() = default;
 
     bool place_ship(const Ship::Type ship_type) override;

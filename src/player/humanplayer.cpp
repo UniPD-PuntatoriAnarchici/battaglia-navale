@@ -184,3 +184,7 @@ std::vector<std::string> Humanplayer::split_string(const std::string &s) {
     while (std::getline(iss, item, ' ')) strings.push_back(item);
     return strings;
 }
+
+Humanplayer::~Humanplayer() {
+
+}
