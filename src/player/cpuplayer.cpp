@@ -13,10 +13,19 @@ bool Cpuplayer::turn(Player &other) {
     std::uniform_int_distribution<int> ship_distribution(0, 7);
 
     Coordinate destination{coordinate_distribution(random_engine), coordinate_distribution(random_engine)};
-    defense_board_.ship_at_index(ship_distribution(random_engine))->action(destination, other.get_defense_board(),
-                                                                           attack_board_);
+    int index = ship_distribution(random_engine);
+    while (true) {
+        try {
+            defense_board_.ship_at_index(index)->action(destination, other.get_defense_board(),
+                                                        attack_board_);
+            break;
+        } catch (...) {
+            index = ship_distribution(random_engine);
+        }
+    }
 
-    Coordinate source = defense_board_.ship_at_index(ship_distribution(random_engine))->center();
+
+    Coordinate source = defense_board_.ship_at_index(index)->center();
 
     std::string action = source.to_string() + " " + destination.to_string();
 
