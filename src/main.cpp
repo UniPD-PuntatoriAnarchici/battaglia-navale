@@ -303,14 +303,14 @@ void test_dev_filippo_tiberio() {
 
 void test_dev_matteo_rampin() {
     cout << "=== dev-matteo-rampin ===" << endl;
-    Cpuplayer cp;
-    Humanplayer hp;
+    //Cpuplayer cp;
+    //Humanplayer hp;
     // hp.place_ship(Ship::Type::BATTLESHIP);
     // hp.print_boards();
     // Coordinate a = Coordinate(1,1);
     // cout<<hp.get_defense_board().is_occupied(a);
     // hp.place_ship(Ship::Type::BATTLESHIP);
-    cp.place_ship(Ship::Type::BATTLESHIP);
+    /*cp.place_ship(Ship::Type::BATTLESHIP);
     cp.place_ship(Ship::Type::BATTLESHIP);
     cp.place_ship(Ship::Type::BATTLESHIP);
     cp.print_boards_inline();
@@ -320,7 +320,12 @@ void test_dev_matteo_rampin() {
     cp.print_boards_inline();
     cp.place_ship(Ship::Type::SUBMARINE);
     cp.place_ship(Ship::Type::SUBMARINE);
-    cp.print_boards_inline();
+    cp.print_boards_inline();*/
+    Humanplayer hp;
+    hp.place_ship(Ship::Type::BATTLESHIP);
+    hp.place_ship(Ship::Type::REPAIRSHIP);
+    // hp.print_defense_board();
+
 }
 
 int manager(int argc, char *argv[]) {

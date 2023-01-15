@@ -44,6 +44,19 @@ public:
         }
         return false;
     }
+    bool heal(Coordinate &c) {
+        if (!is_occupied(c)) return false;
+
+        for (auto &ship: ships_) {
+            std::vector<Coordinate> positions = ship->raw_positions();
+            auto cell = std::find(positions.begin(), positions.end(), c);
+            if (!(cell == positions.end())) {
+                ship->heal(c);
+                return true;
+            }
+        }
+        return false;
+    }
 
     // FT -> Da sistemare e discutere
     const std::unique_ptr<Ship> &ship_at(Coordinate c) const ;
