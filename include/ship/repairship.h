@@ -15,10 +15,8 @@ class Repairship : public Ship {
     explicit Repairship(Coordinate center = Coordinate{},
                         Ship::Directions direction = Ship::Directions::HORIZONTAL) ;
 
-    bool action(Coordinate dest, Defenseboard &opponent, Attackboard &self) override {
-        return true;
-    }
-
+    bool action(Coordinate dest, Defenseboard &opponent, Attackboard &self) override;
+        
     Ship *clone() const override { return new Repairship{*this}; }
 };
 
