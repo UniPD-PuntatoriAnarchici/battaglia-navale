@@ -10,21 +10,15 @@
 
 #include "./../coordinate/coordinate.h"
 
-struct minpQElements {
-    Coordinate c;
-    char toPrint{' '};
-    bool isCenter{false};
-
-    explicit minpQElements(const Coordinate &c, char toPrint = ' ', bool isCenter = true)
-        : c(c), toPrint(toPrint), isCenter(isCenter) {}
-};
-
 class Board {
-   public:
-    enum class Type { ATTACKBOARD, DEFENSEBOARD };
+public:
+    enum class Type {
+        ATTACKBOARD, DEFENSEBOARD
+    };
 
-    virtual std::vector<std::pair<Coordinate, char>> get_all() = 0;
-    virtual std::vector<Coordinate> get_all_raw() = 0;
+    virtual std::vector<std::pair<Coordinate, char>> get_all() const = 0;
+
+    virtual std::vector<Coordinate> get_all_raw() const = 0;
 
     bool is_valid(Coordinate &c);
 

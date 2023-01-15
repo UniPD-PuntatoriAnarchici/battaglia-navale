@@ -17,6 +17,12 @@ class Defenseboard;
 
 class Ship {
 public:
+    class DEAD_SHIP : public std::exception {
+        const char *what() const noexcept override {
+            return "Can't call an action on a dead ship!";
+        }
+    };
+
 
     //region directions
     enum class Directions {

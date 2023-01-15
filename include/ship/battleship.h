@@ -10,21 +10,14 @@
 #include "ship.h"
 
 class Battleship : public Ship {
-   public:
+public:
     static constexpr char CHARACTER = 'C';
     static constexpr int LENGTH = 5;
 
     ~Battleship() override;
 
     explicit Battleship(Coordinate center = Coordinate{},
-                        Ship::Directions direction = Ship::Directions::HORIZONTAL) {
-        cells_ = std::vector<bool>(LENGTH);
-        center_ = center;
-        direction_ = direction;
-        armor_ = LENGTH;
-        type_ = Type::BATTLESHIP;
-        reset_cells();
-    }
+                        Ship::Directions direction = Ship::Directions::HORIZONTAL);
 
     bool action(Coordinate dest, Defenseboard &opponent, Attackboard &self) override;
 

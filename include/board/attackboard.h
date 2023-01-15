@@ -11,7 +11,8 @@ public:
 
     Attackboard();
 
-    std::vector<std::pair<Coordinate,char>> get_all() override;
+    std::vector<std::pair<Coordinate,char>> get_all() const override;
+    std::vector<Coordinate> get_all_raw() const override;
 
     void clear_board() {
         cells_.clear();
@@ -28,7 +29,7 @@ public:
     void clear_misses();
     void clear_reveals();
 
-    std::vector<Coordinate> get_all_raw() override;
+
 
 private:
     std::map<Coordinate, char> cells_;

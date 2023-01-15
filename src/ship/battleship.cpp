@@ -25,13 +25,16 @@ std::ostream &operator<<(std::ostream &os, const Battleship &battleship) {
 }
 
 bool Battleship::action(Coordinate dest, Defenseboard &opponent, Attackboard &self) {
+    if (!is_alive()) {
+        throw Ship::DEAD_SHIP{};
+    }
 
     if (!dest.is_valid())
         throw Coordinate::INVALID_COORDINATE{};
 
     if (!opponent.is_occupied(dest)) {
         self.miss(dest);
-        return false; //MISS TODO: CHANGE TO TRUE
+        return false;
     }
 
     opponent.hit(dest);
@@ -43,3 +46,13 @@ bool Battleship::action(Coordinate dest, Defenseboard &opponent, Attackboard &se
 Battleship::~Battleship() {
 
 }
+
+Battleship::Battleship(Coordinate center, Ship::Directions direction) {
+    cells_ = std::vector<bool>(LENGTH);
+    center_ = center;
+    direction_ = direction;
+    armor_ = LENGTH;
+    type_ = Type::BATTLESHIP;
+    reset_cells();
+}
+

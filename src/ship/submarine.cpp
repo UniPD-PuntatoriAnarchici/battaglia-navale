@@ -9,8 +9,8 @@ std::ostream &operator<<(std::ostream &os, const Submarine &battleship) {
     os << "Submarine with center in " << battleship.center() << "and direction: " << battleship.direction()
        << ", has " << battleship.armor() << "/" << Submarine::LENGTH << " armor: [";
 
-    for (bool cell : cells) {
-        os << (cell ? Submarine::CHARACTER : (char)(Submarine::CHARACTER + 32));
+    for (bool cell: cells) {
+        os << (cell ? Submarine::CHARACTER : (char) (Submarine::CHARACTER + 32));
     }
 
     os << "]";
@@ -50,4 +50,13 @@ bool Submarine::action(Coordinate dest, Defenseboard &opponent, Attackboard &sel
 
 Submarine::~Submarine() {
 
+}
+
+Submarine::Submarine(Coordinate center, Ship::Directions direction) {
+    cells_ = std::vector<bool>(LENGTH);
+    center_ = center;
+    direction_ = direction;
+    armor_ = LENGTH;
+    type_ = Type::SUBMARINE;
+    reset_cells();
 }

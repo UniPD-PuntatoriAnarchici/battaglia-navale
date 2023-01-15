@@ -11,14 +11,7 @@ class Submarine : public Ship {
     static constexpr int LENGTH = 1;
 
     explicit Submarine(Coordinate center = Coordinate{},
-                       Ship::Directions direction = Ship::Directions::HORIZONTAL) {
-        cells_ = std::vector<bool>(LENGTH);
-        center_ = center;
-        direction_ = direction;
-        armor_ = LENGTH;
-        type_ = Type::SUBMARINE;
-        reset_cells();
-    }
+                       Ship::Directions direction = Ship::Directions::HORIZONTAL);
 
     ~Submarine() override;
 
