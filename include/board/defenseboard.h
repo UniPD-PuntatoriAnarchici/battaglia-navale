@@ -17,24 +17,19 @@ public:
 
     Defenseboard() = default;
 
-    std::vector<std::pair<Coordinate, char>> get_all() override;
+    std::vector<std::pair<Coordinate, char>> get_all() const override;
 
-    std::vector<Coordinate> get_all_raw() override;
+    std::vector<Coordinate> get_all_raw() const override;
 
     bool is_lost() const;
 
     bool place_ship(const Ship &ship);
 
-    bool is_full() { return ships_.size() >= 8; }
+    bool is_full() const { return ships_.size() >= 8; }
 
-    bool is_occupied(Coordinate &c) {
-        std::vector<Coordinate> opponent_postions = get_all_raw();
-        auto found = std::find(opponent_postions.begin(), opponent_postions.end(), c);
+    bool is_occupied(Coordinate &c) const ;
 
-        return found != opponent_postions.end();
-    }
-
-    bool is_alive(Coordinate &c);
+    bool is_alive(Coordinate &c) const;
 
     bool hit(Coordinate &c) {
         if (!is_occupied(c)) return false;
@@ -51,23 +46,9 @@ public:
     }
 
     // FT -> Da sistemare e discutere
-    const std::unique_ptr<Ship> &ship_at(Coordinate c) {
-        for (auto &ship: ships_) {
-            if (ship->center() == c && ship->is_alive()) {
-                return ship;
-            }
-        }
-        throw std::exception{};
-        return NO_SHIP;
-    }
+    const std::unique_ptr<Ship> &ship_at(Coordinate c) const ;
 
-    const std::unique_ptr<Ship> &ship_at_index(int i) {
-        if (i > 7) throw std::invalid_argument("Only 8 ships!");
-        if (!ships_.at(i)->is_alive())
-            throw std::exception{};
-
-        return ships_.at(i);
-    }
+    const std::unique_ptr<Ship> &ship_at_index(int i) const ;
 
     std::string to_log_format() const;
 

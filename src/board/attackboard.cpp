@@ -2,7 +2,7 @@
 
 Attackboard::Attackboard() = default;
 
-std::vector<std::pair<Coordinate, char>> Attackboard::get_all() {
+std::vector<std::pair<Coordinate, char>> Attackboard::get_all() const {
     std::vector<std::pair<Coordinate, char>> vector{};
 
     for (auto el : cells_) {
@@ -11,7 +11,7 @@ std::vector<std::pair<Coordinate, char>> Attackboard::get_all() {
     return vector;
 }
 
-std::vector<Coordinate> Attackboard::get_all_raw() {
+std::vector<Coordinate> Attackboard::get_all_raw() const {
     std::vector<Coordinate> vector{};
 
     for (auto el : cells_) {
