@@ -324,7 +324,30 @@ void test_dev_matteo_rampin() {
     Humanplayer hp;
     hp.place_ship(Ship::Type::BATTLESHIP);
     hp.place_ship(Ship::Type::REPAIRSHIP);
-    // hp.print_defense_board();
+    hp.place_ship(Ship::Type::BATTLESHIP);
+    hp.print_boards_inline();
+    Coordinate a1 = Coordinate("A1");
+    Coordinate a2 = Coordinate("A2");
+    Coordinate a3 = Coordinate("H1");
+    hp.get_defense_board().hit(a1);
+    hp.get_defense_board().hit(a2);
+    hp.get_defense_board().hit(a3);
+    hp.print_boards_inline();
+    hp.get_defense_board().heal(a1);
+    hp.print_boards_inline();
+    
+    //hp.print_boards_inline();
+    
+    //cout<<c.at(1).to_string();
+    /*
+    for (auto i = c.begin(); i != c.end(); i++)
+    {
+        hp.get_defense_board().heal(*i);
+    }*/
+    
+    //hp.print_boards_inline();
+
+    
 
 }
 
@@ -462,14 +485,14 @@ int main(int argc, char *argv[]) {
     std::cout << "MAIN" << std::endl;
 //    test_dev_matteo_galiazzo();
 //    test_dev_filippo_tiberio();
-//    test_dev_matteo_rampin();
-
+    test_dev_matteo_rampin();
+/*
     try {
         manager(argc, argv);
     }
     catch (const exception &ex) {
         cerr << ex.what();
     }
-
+*/
     return 0;
 }

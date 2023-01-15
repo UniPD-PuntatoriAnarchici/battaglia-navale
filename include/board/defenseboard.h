@@ -51,7 +51,7 @@ public:
             std::vector<Coordinate> positions = ship->raw_positions();
             auto cell = std::find(positions.begin(), positions.end(), c);
             if (!(cell == positions.end())) {
-                ship->heal(c);
+                ship->reset_cells();
                 return true;
             }
         }
