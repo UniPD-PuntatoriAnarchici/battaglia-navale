@@ -41,6 +41,7 @@ cmake-build-debug
 cmake-build-debug-event-trace
 cmake-conf
 conf
+build
 .DS_Store
 .idea
 .vscode

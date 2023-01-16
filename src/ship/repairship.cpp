@@ -3,24 +3,26 @@
 std::ostream &operator<<(std::ostream &os, const Repairship &battleship) {
     std::vector<bool> cells = battleship.cells();
 
-    os << "Repairship with center in " << battleship.center()
-       << "and direction: " << battleship.direction()
-       << ", has " << battleship.armor() << "/"
-       << Repairship::LENGTH << " armor: [";
+    os << "Repairship with center in " << battleship.center() << "and direction: " << battleship.direction() << ", has "
+       << battleship.armor() << "/" << Repairship::LENGTH << " armor: [";
 
-    for (bool cell: cells) {
-        os << (cell ? Repairship::CHARACTER : (char) (Repairship::CHARACTER + 32));
+    for (bool cell : cells) {
+        os << (cell ? Repairship::CHARACTER : (char)(Repairship::CHARACTER + 32));
     }
 
     os << "]";
 
     return os;
-
 }
 
-Repairship::~Repairship() {
+bool Repairship::action(Coordinate dest, Defenseboard &opponent, Attackboard &self) {
+    if (!this->is_alive()) throw Ship::DEAD_SHIP{};
+    if (!dest.is_valid()) throw Coordinate::INVALID_COORDINATE{};
 
+    return true;
 }
+
+Repairship::~Repairship() {}
 
 Repairship::Repairship(Coordinate center, Ship::Directions direction) {
     cells_ = std::vector<bool>(LENGTH);

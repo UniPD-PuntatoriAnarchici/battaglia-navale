@@ -3,11 +3,12 @@
 #### *Puntatori anarchici*
 
 ### 0. TODO
-- [ ] Ships --> fix actions (is_alive)
-- [ ] Repairship --> Everything in action
+- [ ] Repairhip --> implement action
+- [ ] what if action destination (where to move) is occupied for a board?
 - [x] Ship/board --> manage dead boats (FT)
 - [ ] Cpu player --> turn
 - [x] Game manager --> Manager, save log files
+- [ ] Change log final folder
 
 Note: log file log-HC/CC-timestamp.txt con questo formato
 ```

@@ -2,21 +2,18 @@
 // Created by filip on 25/12/2022.
 //
 #include "./../../include/ship/battleship.h"
-/**
- * ?????????????
- */
-#include "./../../include/board/defenseboard.h"
+
 #include "./../../include/board/attackboard.h"
+#include "./../../include/board/defenseboard.h"
 
 std::ostream &operator<<(std::ostream &os, const Battleship &battleship) {
     std::vector<bool> cells = battleship.cells();
 
-    os << "Battleship with center in " << battleship.center() << "and direction: " << battleship.direction()
-       << ", has " << battleship.armor() << "/"
-       << Battleship::LENGTH << " armor: [";
+    os << "Battleship with center in " << battleship.center() << "and direction: " << battleship.direction() << ", has "
+       << battleship.armor() << "/" << Battleship::LENGTH << " armor: [";
 
-    for (bool cell: cells) {
-        os << (cell ? Battleship::CHARACTER : (char) (Battleship::CHARACTER + 32));
+    for (bool cell : cells) {
+        os << (cell ? Battleship::CHARACTER : (char)(Battleship::CHARACTER + 32));
     }
 
     os << "]";
@@ -25,12 +22,8 @@ std::ostream &operator<<(std::ostream &os, const Battleship &battleship) {
 }
 
 bool Battleship::action(Coordinate dest, Defenseboard &opponent, Attackboard &self) {
-    if (!is_alive()) {
-        throw Ship::DEAD_SHIP{};
-    }
-
-    if (!dest.is_valid())
-        throw Coordinate::INVALID_COORDINATE{};
+    if (!this->is_alive()) throw Ship::DEAD_SHIP{};
+    if (!dest.is_valid()) throw Coordinate::INVALID_COORDINATE{};
 
     if (!opponent.is_occupied(dest)) {
         self.miss(dest);
@@ -43,9 +36,7 @@ bool Battleship::action(Coordinate dest, Defenseboard &opponent, Attackboard &se
     return true;
 }
 
-Battleship::~Battleship() {
-
-}
+Battleship::~Battleship() {}
 
 Battleship::Battleship(Coordinate center, Ship::Directions direction) {
     cells_ = std::vector<bool>(LENGTH);
@@ -55,4 +46,3 @@ Battleship::Battleship(Coordinate center, Ship::Directions direction) {
     type_ = Type::BATTLESHIP;
     reset_cells();
 }
-

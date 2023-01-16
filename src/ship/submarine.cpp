@@ -1,16 +1,16 @@
 #include "./../../include/ship/submarine.h"
-// ???
+
 #include "./../../include/board/attackboard.h"
 #include "./../../include/board/defenseboard.h"
 
 std::ostream &operator<<(std::ostream &os, const Submarine &battleship) {
     std::vector<bool> cells = battleship.cells();
 
-    os << "Submarine with center in " << battleship.center() << "and direction: " << battleship.direction()
-       << ", has " << battleship.armor() << "/" << Submarine::LENGTH << " armor: [";
+    os << "Submarine with center in " << battleship.center() << "and direction: " << battleship.direction() << ", has "
+       << battleship.armor() << "/" << Submarine::LENGTH << " armor: [";
 
-    for (bool cell: cells) {
-        os << (cell ? Submarine::CHARACTER : (char) (Submarine::CHARACTER + 32));
+    for (bool cell : cells) {
+        os << (cell ? Submarine::CHARACTER : (char)(Submarine::CHARACTER + 32));
     }
 
     os << "]";
@@ -19,6 +19,7 @@ std::ostream &operator<<(std::ostream &os, const Submarine &battleship) {
 }
 
 bool Submarine::action(Coordinate dest, Defenseboard &opponent, Attackboard &self) {
+    if (!this->is_alive()) throw Ship::DEAD_SHIP{};
     if (!dest.is_valid()) throw Coordinate::INVALID_COORDINATE{};
 
     // set start row
@@ -45,12 +46,13 @@ bool Submarine::action(Coordinate dest, Defenseboard &opponent, Attackboard &sel
         }
     }
 
+    // move submarine to destination
+    this->center_ = dest;
+
     return true;
 }
 
-Submarine::~Submarine() {
-
-}
+Submarine::~Submarine() {}
 
 Submarine::Submarine(Coordinate center, Ship::Directions direction) {
     cells_ = std::vector<bool>(LENGTH);
