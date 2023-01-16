@@ -92,6 +92,10 @@ bool Coordinate::operator==(const Coordinate &b) const {
            col_ == b.col_;
 }
 
+bool Coordinate::operator!=(const Coordinate &b) const {
+    return !(b == *this);
+}
+
 std::ostream &operator<<(std::ostream &os, const Coordinate &coordinate) {
     std::pair<char, int> customCoord = Coordinate::indexes_to_coordinates(coordinate);
 
@@ -102,7 +106,7 @@ std::ostream &operator<<(std::ostream &os, const Coordinate &coordinate) {
 //endregion
 
 //region utilities
-std::string Coordinate::to_string() const{
+std::string Coordinate::to_string() const {
     std::pair<char, int> customCoord = Coordinate::indexes_to_coordinates(*this);
     return std::string(1, customCoord.first) + std::to_string(customCoord.second);
 }

@@ -92,3 +92,7 @@ std::vector<Coordinate> Ship::raw_positions() const {
 
     return positions;
 }
+
+Ship::Type Ship::type() const {
+    return type_;
+}

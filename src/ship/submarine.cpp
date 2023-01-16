@@ -9,8 +9,8 @@ std::ostream &operator<<(std::ostream &os, const Submarine &battleship) {
     os << "Submarine with center in " << battleship.center() << "and direction: " << battleship.direction() << ", has "
        << battleship.armor() << "/" << Submarine::LENGTH << " armor: [";
 
-    for (bool cell : cells) {
-        os << (cell ? Submarine::CHARACTER : (char)(Submarine::CHARACTER + 32));
+    for (bool cell: cells) {
+        os << (cell ? Submarine::CHARACTER : (char) (Submarine::CHARACTER + 32));
     }
 
     os << "]";
@@ -19,6 +19,7 @@ std::ostream &operator<<(std::ostream &os, const Submarine &battleship) {
 }
 
 bool Submarine::action(Coordinate dest, Defenseboard &opponent, Attackboard &self) {
+//    return true;
     if (!this->is_alive()) throw Ship::DEAD_SHIP{};
     if (!dest.is_valid()) throw Coordinate::INVALID_COORDINATE{};
 
@@ -38,12 +39,17 @@ bool Submarine::action(Coordinate dest, Defenseboard &opponent, Attackboard &sel
     int check_end_col = (check_start_col + 4 < 12) ? check_start_col + 4 : 12;
 
     // nested for loop on bounds with reveal
-    for (int row = check_start_row; row <= check_end_row; row++) {
-        for (int col = check_start_col; col <= check_end_col; col++) {
-            Coordinate to_check(row, col);
-            self.clear(to_check);
-            if (opponent.is_occupied(to_check)) self.reveal(to_check, opponent.is_alive(to_check));
+    try {
+        for (int row = check_start_row; row <= check_end_row; row++) {
+            for (int col = check_start_col; col <= check_end_col; col++) {
+                Coordinate to_check(row, col);
+                self.clear(to_check);
+                if (opponent.is_occupied(to_check)) self.reveal(to_check, opponent.is_alive(to_check));
+            }
         }
+    } catch (const std::exception &ex) {
+        std::cerr << "Sto throwando in submarine QUI!";
+        throw ex;
     }
 
     // move submarine to destination

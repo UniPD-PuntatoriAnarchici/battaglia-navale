@@ -20,6 +20,7 @@ public:
     std::vector<std::pair<Coordinate, char>> get_all() const override;
 
     std::vector<Coordinate> get_all_raw() const override;
+    std::vector<Coordinate> get_all_but_one_raw(Coordinate exluded_ship_center) const;
 
     bool is_lost() const;
 

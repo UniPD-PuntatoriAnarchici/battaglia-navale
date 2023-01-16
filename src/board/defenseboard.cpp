@@ -100,3 +100,19 @@ const std::unique_ptr<Ship> &Defenseboard::ship_at_index(int i) const {
 
     return ships_.at(i);
 }
+
+std::vector<Coordinate> Defenseboard::get_all_but_one_raw(Coordinate exluded_ship_center) const {
+    std::vector<Coordinate> occupied_positions;
+
+    for (auto &ship: ships_) {
+        auto tmp = ship->raw_positions();
+        if (ship->is_alive() && ship->center() != exluded_ship_center) {
+            occupied_positions.insert(occupied_positions.end(), tmp.begin(), tmp.end());
+        }
+    }
+
+    std::sort(occupied_positions.begin(), occupied_positions.end(),
+              [](Coordinate a, Coordinate b) { return (a < b); });
+
+    return occupied_positions;
+}

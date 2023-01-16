@@ -18,6 +18,7 @@ std::ostream &operator<<(std::ostream &os, const Repairship &battleship) {
 }
 //need to try
 bool Repairship::action(Coordinate dest, Defenseboard &opponent, Attackboard &self){
+    return true;
     if (!dest.is_valid()) throw Coordinate::INVALID_COORDINATE{};
     
     if (direction()==Ship::Directions::HORIZONTAL){
@@ -64,12 +65,12 @@ bool Repairship::action(Coordinate dest, Defenseboard &opponent, Attackboard &se
     return true;      
 }
 
-bool Repairship::action(Coordinate dest, Defenseboard &opponent, Attackboard &self) {
-    if (!this->is_alive()) throw Ship::DEAD_SHIP{};
-    if (!dest.is_valid()) throw Coordinate::INVALID_COORDINATE{};
-
-    return true;
-}
+//bool Repairship::action(Coordinate dest, Defenseboard &opponent, Attackboard &self) {
+//    if (!this->is_alive()) throw Ship::DEAD_SHIP{};
+//    if (!dest.is_valid()) throw Coordinate::INVALID_COORDINATE{};
+//
+//    return true;
+//}
 
 Repairship::~Repairship() {}
 
