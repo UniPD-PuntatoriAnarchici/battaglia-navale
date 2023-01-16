@@ -20,6 +20,7 @@ bool Cpuplayer::turn(Player &other) {
 //            std::cout << "Extracted " << defense_board_.ship_at_index(index)->center().to_string() << "->"
 //                      << destination.to_string() << std::endl;
 
+//          TODO: FIX THIS! WORKING BUT BRUTTO
             if (defense_board_.ship_at_index(index)->type() == Ship::Type::SUBMARINE) {
                 if (defense_board_.is_occupied(destination))
                     throw std::invalid_argument("\"submarine error\"");
@@ -29,7 +30,7 @@ bool Cpuplayer::turn(Player &other) {
                 std::vector<Coordinate> current_grid = defense_board_.get_all_but_one_raw(
                         defense_board_.ship_at_index(index)->center());
 
-                Repairship tmp{defense_board_.ship_at_index(index)->center(),
+                Repairship tmp{destination,
                                defense_board_.ship_at_index(index)->direction()};
 
                 for (auto position: tmp.raw_positions()) {
