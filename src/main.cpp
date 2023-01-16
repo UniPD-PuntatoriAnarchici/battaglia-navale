@@ -321,6 +321,7 @@ void test_dev_matteo_rampin() {
     cp.place_ship(Ship::Type::SUBMARINE);
     cp.place_ship(Ship::Type::SUBMARINE);
     cp.print_boards_inline();*/
+    /*
     Humanplayer hp;
     hp.place_ship(Ship::Type::BATTLESHIP);
     hp.place_ship(Ship::Type::REPAIRSHIP);
@@ -334,21 +335,41 @@ void test_dev_matteo_rampin() {
     hp.get_defense_board().hit(a3);
     hp.print_boards_inline();
     hp.get_defense_board().heal(a1);
-    hp.print_boards_inline();
+    hp.print_boards_inline();*/
 
-    //hp.print_boards_inline();
-
-    //cout<<c.at(1).to_string();
-    /*
-    for (auto i = c.begin(); i != c.end(); i++)
+    Defenseboard db {};
+    Attackboard ab {};
+    Repairship b4{Coordinate{9, 4}, Ship::Directions::HORIZONTAL};
+    Battleship b3{Coordinate{8, 4}, Ship::Directions::HORIZONTAL};
+    db.place_ship(b4);
+    db.place_ship(b3);
+    Coordinate c {8,4};
+    db.hit(c);
+    std::vector<bool>a = db.ship_at(Coordinate{8, 4})->cells();
+    for (auto i = a.begin(); i != a.end(); i++)
     {
-        hp.get_defense_board().heal(*i);
-    }*/
-
-    //hp.print_boards_inline();
-
-
-
+        cout<<*i;
+    }
+    cout<<endl;
+    db.ship_at(Coordinate{9, 4})->action(Coordinate{2, 4}, db, ab);
+    std::vector<Coordinate> coordinate = db.ship_at(Coordinate{2, 4})->raw_positions();
+    for (auto i = coordinate.begin(); i != coordinate.end(); i++)
+    {
+        cout<<i->to_string()<<" ";
+    }
+    cout<<endl;
+    db.ship_at(Coordinate{2, 4})->action(Coordinate{9, 4}, db, ab);
+    std::vector<bool>b = db.ship_at(Coordinate{8, 4})->cells();
+    for (auto i = b.begin(); i != b.end(); i++)
+    {
+        cout<<*i;
+    }
+    cout<<endl;
+    std::vector<Coordinate> coordinate2 = db.ship_at(Coordinate{9, 4})->raw_positions();
+    for (auto i = coordinate2.begin(); i != coordinate2.end(); i++)
+    {
+        cout<<i->to_string()<<" ";
+    }
 }
 
 int manager(int argc, char *argv[]) {
