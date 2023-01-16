@@ -83,6 +83,8 @@ protected:
     std::vector<bool> cells_;
     int armor_;
     Type type_;
+public:
+    Type type() const;
 
 private:
 };

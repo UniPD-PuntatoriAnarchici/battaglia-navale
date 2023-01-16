@@ -335,19 +335,19 @@ void test_dev_matteo_rampin() {
     hp.print_boards_inline();
     hp.get_defense_board().heal(a1);
     hp.print_boards_inline();
-    
+
     //hp.print_boards_inline();
-    
+
     //cout<<c.at(1).to_string();
     /*
     for (auto i = c.begin(); i != c.end(); i++)
     {
         hp.get_defense_board().heal(*i);
     }*/
-    
+
     //hp.print_boards_inline();
 
-    
+
 
 }
 
@@ -384,8 +384,16 @@ int manager(int argc, char *argv[]) {
     player1->place_all_ships();
     player2->place_all_ships();
 
+    std::string player1_initial_board = {player1->get_defense_board().to_log_format()};
+    std::string player2_initial_board = {player2->get_defense_board().to_log_format()};
+
+    //TODO: delete!
+    cout << player1_initial_board << endl;
+    cout << player2_initial_board << endl;
+
+
     bool last_a = !a_starts;
-    colored_print(a_starts ? "Player 1 starts" : "Player 2 starts", MESSAGE_TYPE::MSG_INFO_BOLD);
+    colored_print(a_starts ? "Player 1 starts\n\n" : "Player 2 starts\n\n", MESSAGE_TYPE::MSG_INFO_BOLD);
     cout << endl;
     while (player1->is_alive() && player2->is_alive() && turn_counter < MAX_TURNS) {
         try {
@@ -397,7 +405,7 @@ int manager(int argc, char *argv[]) {
                         << std::endl;
                 player1->turn(*player2);
                 player1->print_boards_inline();
-                cout << "======================================================================" << std::endl;
+                cout << "==============================================================================================================" << std::endl;
             } else {
 //                this_thread::sleep_for(chrono::milliseconds(500));
                 last_a = false;
@@ -405,7 +413,7 @@ int manager(int argc, char *argv[]) {
                         << std::endl;
                 player2->turn(*player1);
                 player2->print_boards_inline();
-                cout << "======================================================================" << std::endl;
+                cout << "==============================================================================================================" << std::endl;
             }
 
             turn_counter++;
@@ -453,8 +461,8 @@ int manager(int argc, char *argv[]) {
     std::vector<std::string> player1_history = player1->player_history();
     std::vector<std::string> player2_history = player2->player_history();
 
-    file_out_stream << player1->get_defense_board().to_log_format() << endl;
-    file_out_stream << player2->get_defense_board().to_log_format() << endl;
+    file_out_stream << player1_initial_board << endl;
+    file_out_stream << player2_initial_board << endl;
 
     file_out_stream << (a_starts ? "1" : "2") << endl;
 
@@ -485,14 +493,14 @@ int main(int argc, char *argv[]) {
     std::cout << "MAIN" << std::endl;
 //    test_dev_matteo_galiazzo();
 //    test_dev_filippo_tiberio();
-    test_dev_matteo_rampin();
-/*
+//    test_dev_matteo_rampin();
+
     try {
         manager(argc, argv);
     }
     catch (const exception &ex) {
         cerr << ex.what();
     }
-*/
+
     return 0;
 }

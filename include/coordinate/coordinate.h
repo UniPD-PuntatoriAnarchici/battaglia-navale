@@ -111,6 +111,8 @@ public:
      * @return boolean this equals b
      */
     bool operator==(const Coordinate &b) const;
+    bool operator!=(const Coordinate &b) const;
+
 
     /**
      * Check coordinate validity
@@ -143,6 +145,8 @@ public:
      */
     static std::vector<Coordinate> split_coordinates(const std::string &s);
 
+
+
 private:
     int row_{};
     int col_{};
@@ -156,6 +160,8 @@ private:
  * @return stream reference
  */
 std::ostream &operator<<(std::ostream &os, const Coordinate &coordinate);
+
+
 
 
 #endif

@@ -12,22 +12,51 @@ bool Cpuplayer::turn(Player &other) {
     std::uniform_int_distribution<int> coordinate_distribution(1, 12);
     std::uniform_int_distribution<int> ship_distribution(0, 7);
 
+    Coordinate source;
     Coordinate destination{coordinate_distribution(random_engine), coordinate_distribution(random_engine)};
     int index = ship_distribution(random_engine);
     while (true) {
         try {
+//            std::cout << "Extracted " << defense_board_.ship_at_index(index)->center().to_string() << "->"
+//                      << destination.to_string() << std::endl;
+
+            if (defense_board_.ship_at_index(index)->type() == Ship::Type::SUBMARINE) {
+                if (defense_board_.is_occupied(destination))
+                    throw std::invalid_argument("\"submarine error\"");
+            }
+
+            if (defense_board_.ship_at_index(index)->type() == Ship::Type::REPAIRSHIP) {
+                std::vector<Coordinate> current_grid = defense_board_.get_all_but_one_raw(
+                        defense_board_.ship_at_index(index)->center());
+
+                Repairship tmp{defense_board_.ship_at_index(index)->center(),
+                               defense_board_.ship_at_index(index)->direction()};
+
+                for (auto position: tmp.raw_positions()) {
+                    if (!defense_board_.is_valid(position))
+                        throw std::invalid_argument("\"repairship position error\"");
+                    if (std::find(current_grid.begin(), current_grid.end(), position) != current_grid.end())
+                        throw std::invalid_argument("\"repairship error\"");
+                }
+            }
+
+
+            source = defense_board_.ship_at_index(index)->center();
+
             defense_board_.ship_at_index(index)->action(destination, other.get_defense_board(),
                                                         attack_board_);
+
             break;
-        } catch (...) {
+        } catch (const std::exception &e) {
+            std::cout << e.what();
             index = ship_distribution(random_engine);
+            destination = Coordinate{coordinate_distribution(random_engine), coordinate_distribution(random_engine)};
         }
     }
 
-
-    Coordinate source = defense_board_.ship_at_index(index)->center();
-
     std::string action = source.to_string() + " " + destination.to_string();
+
+//    std::cout << "Executed " << action << "==========" << std::endl << std::endl;
 
     add_to_player_history(action);
     return true;

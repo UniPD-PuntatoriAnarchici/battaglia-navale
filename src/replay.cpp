@@ -66,10 +66,12 @@ int main(int argc, char *argv[]) {
     fill_player(player2, buffer);
 
     colored_print("Initial Player 1 boards:", MESSAGE_TYPE::MSG_SUCCESS, *output_general_stream) << std::endl;
+//    player1.print_boards_inline(std::cout);
     player1.print_boards_inline(*output_general_stream);
     *output_general_stream << std::endl;
 
     colored_print("Initial Player 2 boards:", MESSAGE_TYPE::MSG_SUCCESS, *output_general_stream) << std::endl;
+//    player2.print_boards_inline(std::cout);
     player2.print_boards_inline(*output_general_stream);
 
     for (int i = 0; i < 110; i++) *output_general_stream << "=";
@@ -86,8 +88,16 @@ int main(int argc, char *argv[]) {
     bool last_a = !a_starts;
     while (!file_in_stream.eof()) {
         std::getline(file_in_stream, buffer);
+        if (buffer.empty())
+            break;
+
         try {
+//            std::cout << buffer << std::endl;
             if (!last_a) {
+//                for (Coordinate pos: player1.get_defense_board().get_all_raw()) {
+//                    std::cout << pos.to_string() << " ";
+//                }
+//                std::cout << "===========" << std::endl << std::endl;
                 player1.replay_turn(player2, buffer);
                 last_a = true;
                 colored_print("Player 1 Turn:", MESSAGE_TYPE::MSG_PLAYER1, *output_general_stream)
@@ -95,6 +105,10 @@ int main(int argc, char *argv[]) {
                 player1.print_boards_inline(*output_general_stream);
                 *output_general_stream << std::endl;
             } else {
+//                for (Coordinate pos: player2.get_defense_board().get_all_raw()) {
+//                    std::cout << pos.to_string() << " ";
+//                }
+//                std::cout << "===========" << std::endl << std::endl;
                 player2.replay_turn(player1, buffer);
                 colored_print("Player 2 Turn:", MESSAGE_TYPE::MSG_PLAYER2, *output_general_stream)
                         << std::endl;
@@ -102,9 +116,11 @@ int main(int argc, char *argv[]) {
                 player2.print_boards_inline(*output_general_stream);
                 *output_general_stream << std::endl;
             }
-           if (!to_file) std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+            if (!to_file) std::this_thread::sleep_for(std::chrono::milliseconds(1000));
         } catch (const std::exception &e) {
-            std::cerr << e.what();
+            std::cerr << "Buffer: " << buffer << e.what();
+            std::vector<Coordinate> coord = player1.get_defense_board().get_all_raw();
+            throw;
         }
     }
 
