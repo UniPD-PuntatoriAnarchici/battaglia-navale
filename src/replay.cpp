@@ -102,7 +102,7 @@ int main(int argc, char *argv[]) {
                 player2.print_boards_inline(*output_general_stream);
                 *output_general_stream << std::endl;
             }
-            if (!to_file) std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+           if (!to_file) std::this_thread::sleep_for(std::chrono::milliseconds(1000));
         } catch (const std::exception &e) {
             std::cerr << e.what();
         }
