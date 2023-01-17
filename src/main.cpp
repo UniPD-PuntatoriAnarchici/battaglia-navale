@@ -372,13 +372,14 @@ void test_dev_matteo_rampin() {
     // }
 }
 
+
 int manager(int argc, char *argv[]) {
     random_device random_device;
     mt19937 random_engine(random_device());
 
     bool human_computer_game = false;
     int turn_counter = 0;
-    constexpr int MAX_TURNS = 1000;
+    constexpr int MAX_TURNS = 1500;
 
     uniform_int_distribution<int> starting_player_distribution(0, 1);
 
