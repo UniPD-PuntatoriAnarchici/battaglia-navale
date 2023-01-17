@@ -39,6 +39,7 @@ bool Cpuplayer::turn(Player &other) {
     return true;
 }
 
+// TODO: FIX
 bool Cpuplayer::place_ship(const Ship::Type ship_type) {
     if (ship_type != Ship::Type::BATTLESHIP && ship_type != Ship::Type::REPAIRSHIP &&
         ship_type != Ship::Type::SUBMARINE)
@@ -71,9 +72,6 @@ bool Cpuplayer::place_ship(const Ship::Type ship_type) {
             direction = Ship::Directions::VERTICAL;
 
         //std::cout << direction << std::endl;
-
-        //  1 2 3 4 5
-        //F C C C C C
 
         if (direction == Ship::Directions::HORIZONTAL) {
             if (!((center.col() + length / 2) > Defenseboard::side_length || center.col() - length / 2 <= 0)) {
