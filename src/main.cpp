@@ -3,7 +3,6 @@
  */
 
 #include <iostream>
-#include <queue>
 
 #include "./../include/board/attackboard.h"
 #include "./../include/board/defenseboard.h"
