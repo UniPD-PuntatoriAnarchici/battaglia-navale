@@ -301,76 +301,76 @@ void test_dev_filippo_tiberio() {
     //    int sizeAfterAfter = board1.num_elements();
 }
 
-void test_dev_matteo_rampin() {
-    cout << "=== dev-matteo-rampin ===" << endl;
-    //Cpuplayer cp;
-    //Humanplayer hp;
-    // hp.place_ship(Ship::Type::BATTLESHIP);
-    // hp.print_boards();
-    // Coordinate a = Coordinate(1,1);
-    // cout<<hp.get_defense_board().is_occupied(a);
-    // hp.place_ship(Ship::Type::BATTLESHIP);
-    /*cp.place_ship(Ship::Type::BATTLESHIP);
-    cp.place_ship(Ship::Type::BATTLESHIP);
-    cp.place_ship(Ship::Type::BATTLESHIP);
-    cp.print_boards_inline();
-    cp.place_ship(Ship::Type::REPAIRSHIP);
-    cp.place_ship(Ship::Type::REPAIRSHIP);
-    cp.place_ship(Ship::Type::REPAIRSHIP);
-    cp.print_boards_inline();
-    cp.place_ship(Ship::Type::SUBMARINE);
-    cp.place_ship(Ship::Type::SUBMARINE);
-    cp.print_boards_inline();*/
-    /*
-    Humanplayer hp;
-    hp.place_ship(Ship::Type::BATTLESHIP);
-    hp.place_ship(Ship::Type::REPAIRSHIP);
-    hp.place_ship(Ship::Type::BATTLESHIP);
-    hp.print_boards_inline();
-    Coordinate a1 = Coordinate("A1");
-    Coordinate a2 = Coordinate("A2");
-    Coordinate a3 = Coordinate("H1");
-    hp.get_defense_board().hit(a1);
-    hp.get_defense_board().hit(a2);
-    hp.get_defense_board().hit(a3);
-    hp.print_boards_inline();
-    hp.get_defense_board().heal(a1);
-    hp.print_boards_inline();*/
-
-    Defenseboard db {};
-    Attackboard ab {};
-    Repairship b4{Coordinate{9, 4}, Ship::Directions::HORIZONTAL};
-    Battleship b3{Coordinate{8, 4}, Ship::Directions::HORIZONTAL};
-    db.place_ship(b4);
-    db.place_ship(b3);
-    Coordinate c {8,4};
-    db.hit(c);
-    std::vector<bool>a = db.ship_at(Coordinate{8, 4})->cells();
-    for (auto i = a.begin(); i != a.end(); i++)
-    {
-        cout<<*i;
-    }
-    cout<<endl;
-    db.ship_at(Coordinate{9, 4})->action(Coordinate{2, 4}, db, ab);
-    std::vector<Coordinate> coordinate = db.ship_at(Coordinate{2, 4})->raw_positions();
-    for (auto i = coordinate.begin(); i != coordinate.end(); i++)
-    {
-        cout<<i->to_string()<<" ";
-    }
-    cout<<endl;
-    db.ship_at(Coordinate{2, 4})->action(Coordinate{9, 4}, db, ab);
-    std::vector<bool>b = db.ship_at(Coordinate{8, 4})->cells();
-    for (auto i = b.begin(); i != b.end(); i++)
-    {
-        cout<<*i;
-    }
-    cout<<endl;
-    std::vector<Coordinate> coordinate2 = db.ship_at(Coordinate{9, 4})->raw_positions();
-    for (auto i = coordinate2.begin(); i != coordinate2.end(); i++)
-    {
-        cout<<i->to_string()<<" ";
-    }
-}
+//void test_dev_matteo_rampin() {
+//    cout << "=== dev-matteo-rampin ===" << endl;
+//    //Cpuplayer cp;
+//    //Humanplayer hp;
+//    // hp.place_ship(Ship::Type::BATTLESHIP);
+//    // hp.print_boards();
+//    // Coordinate a = Coordinate(1,1);
+//    // cout<<hp.get_defense_board().is_occupied(a);
+//    // hp.place_ship(Ship::Type::BATTLESHIP);
+//    /*cp.place_ship(Ship::Type::BATTLESHIP);
+//    cp.place_ship(Ship::Type::BATTLESHIP);
+//    cp.place_ship(Ship::Type::BATTLESHIP);
+//    cp.print_boards_inline();
+//    cp.place_ship(Ship::Type::REPAIRSHIP);
+//    cp.place_ship(Ship::Type::REPAIRSHIP);
+//    cp.place_ship(Ship::Type::REPAIRSHIP);
+//    cp.print_boards_inline();
+//    cp.place_ship(Ship::Type::SUBMARINE);
+//    cp.place_ship(Ship::Type::SUBMARINE);
+//    cp.print_boards_inline();*/
+//    /*
+//    Humanplayer hp;
+//    hp.place_ship(Ship::Type::BATTLESHIP);
+//    hp.place_ship(Ship::Type::REPAIRSHIP);
+//    hp.place_ship(Ship::Type::BATTLESHIP);
+//    hp.print_boards_inline();
+//    Coordinate a1 = Coordinate("A1");
+//    Coordinate a2 = Coordinate("A2");
+//    Coordinate a3 = Coordinate("H1");
+//    hp.get_defense_board().hit(a1);
+//    hp.get_defense_board().hit(a2);
+//    hp.get_defense_board().hit(a3);
+//    hp.print_boards_inline();
+//    hp.get_defense_board().heal(a1);
+//    hp.print_boards_inline();*/
+//
+//    Defenseboard db {};
+//    Attackboard ab {};
+//    Repairship b4{Coordinate{9, 4}, Ship::Directions::HORIZONTAL};
+//    Battleship b3{Coordinate{8, 4}, Ship::Directions::HORIZONTAL};
+//    db.place_ship(b4);
+//    db.place_ship(b3);
+//    Coordinate c {8,4};
+//    db.hit(c);
+//    std::vector<bool>a = db.ship_at(Coordinate{8, 4})->cells();
+//    for (auto i = a.begin(); i != a.end(); i++)
+//    {
+//        cout<<*i;
+//    }
+//    cout<<endl;
+//    db.ship_at(Coordinate{9, 4})->action(Coordinate{2, 4}, db, ab);
+//    std::vector<Coordinate> coordinate = db.ship_at(Coordinate{2, 4})->raw_positions();
+//    for (auto i = coordinate.begin(); i != coordinate.end(); i++)
+//    {
+//        cout<<i->to_string()<<" ";
+//    }
+//    cout<<endl;
+//    db.ship_at(Coordinate{2, 4})->action(Coordinate{9, 4}, db, ab);
+//    std::vector<bool>b = db.ship_at(Coordinate{8, 4})->cells();
+//    for (auto i = b.begin(); i != b.end(); i++)
+//    {
+//        cout<<*i;
+//    }
+//    cout<<endl;
+//    std::vector<Coordinate> coordinate2 = db.ship_at(Coordinate{9, 4})->raw_positions();
+//    for (auto i = coordinate2.begin(); i != coordinate2.end(); i++)
+//    {
+//        cout<<i->to_string()<<" ";
+//    }
+//}
 
 int manager(int argc, char *argv[]) {
     random_device random_device;
@@ -378,7 +378,7 @@ int manager(int argc, char *argv[]) {
 
     bool human_computer_game = false;
     int turn_counter = 0;
-    constexpr int MAX_TURNS = 1000;
+    constexpr int MAX_TURNS = 1500;
 
     uniform_int_distribution<int> starting_player_distribution(0, 1);
 
