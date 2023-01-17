@@ -2,13 +2,9 @@
  * @author Galiazzo Matteo
  */
 
-
 #include "./../../include/player/humanplayer.h"
 
-// returns false if game is lost
-bool Humanplayer::turn(Player &other) {
-    if (defense_board_.is_lost()) return false;
-
+void Humanplayer::turn(Player &other) {
     std::string buffer;
     std::vector<Coordinate> turn_coords;
     bool invalid_coordinates_flag = false;
@@ -17,21 +13,18 @@ bool Humanplayer::turn(Player &other) {
     bool customAction = false;
 
     do {
-        if (customAction) {
+        if (customAction)
             colored_print(std::string("Comando speciale eseguito!"), MESSAGE_TYPE::MSG_INFO) << std::endl;
-        } else if (invalid_coordinates_flag)
+        else if (invalid_coordinates_flag)
             colored_print(std::string("Coordinate non valide! Si prega di re-inserire."), MESSAGE_TYPE::MSG_ERROR)
-                    << std::endl;
-
-        if (invalid_ship_flag) {
+                << std::endl;
+        else if (invalid_ship_flag)
             colored_print(std::string("Nessuna nave presente a queste coordinate! Si prega di re-inserire."),
-                          MESSAGE_TYPE::MSG_ERROR) << std::endl;
-        }
-
-        if (invalid_ship_destination_flag) {
-            colored_print(std::string("Impossibile spostare la nave a questa coordinata"),
-                          MESSAGE_TYPE::MSG_ERROR) << std::endl;
-        }
+                          MESSAGE_TYPE::MSG_ERROR)
+                << std::endl;
+        else if (invalid_ship_destination_flag)
+            colored_print(std::string("Impossibile spostare la nave a questa coordinata"), MESSAGE_TYPE::MSG_ERROR)
+                << std::endl;
 
         invalid_coordinates_flag = false;
         invalid_ship_flag = false;
@@ -69,22 +62,16 @@ bool Humanplayer::turn(Player &other) {
         if (defense_board_.ship_at(turn_coords[0]) == nullptr) {
             invalid_ship_flag = true;
         } else if (!defense_board_.ship_at(turn_coords[0])
-                ->action(turn_coords[1], defense_board_, attack_board_, other.get_defense_board())) {
+                        ->action(turn_coords[1], defense_board_, attack_board_, other.get_defense_board())) {
             invalid_ship_flag = true;
         }
     } while (invalid_coordinates_flag || invalid_ship_flag || customAction);
     add_to_player_history(buffer);
-    return true;
 }
 
-bool Humanplayer::place_ship(const Ship::Type ship_type) {
-    if (ship_type != Ship::Type::BATTLESHIP && ship_type != Ship::Type::REPAIRSHIP &&
-        ship_type != Ship::Type::SUBMARINE)
-        return 0;
-    if (defense_board_.is_full()) {
-        colored_print("La griglia e' piena!", MESSAGE_TYPE::MSG_ERROR) << std::endl;
-        return 0;
-    }
+void Humanplayer::place_ship(const Ship::Type ship_type) {
+    if (ship_type != Ship::Type::BATTLESHIP && ship_type != Ship::Type::REPAIRSHIP && ship_type != Ship::Type::SUBMARINE)
+        throw std::invalid_argument{"Invalid ship type"};
 
     std::string input;
     bool valid_input = false;
@@ -118,8 +105,7 @@ bool Humanplayer::place_ship(const Ship::Type ship_type) {
             direction = Ship::Directions::VERTICAL;
             // if vertical length is in the column (y2-y1)
             if (!check_ship_length(coordinates.at(1).row(), coordinates.at(0).row(), ship_type)) {
-                colored_print("La lunghezza e il tipo di nave non corrispondono!", MESSAGE_TYPE::MSG_ERROR)
-                        << std::endl;
+                colored_print("La lunghezza e il tipo di nave non corrispondono!", MESSAGE_TYPE::MSG_ERROR) << std::endl;
                 continue;
             }
             center = get_ship_center(coordinates.at(0).row(), coordinates.at(0).col(), direction, ship_type);
@@ -128,8 +114,7 @@ bool Humanplayer::place_ship(const Ship::Type ship_type) {
             direction = Ship::Directions::HORIZONTAL;
             // if horizontal length is in the row (x2-x1)
             if (!check_ship_length(coordinates.at(1).col(), coordinates.at(0).col(), ship_type)) {
-                colored_print("La lunghezza e il tipo di nave non corrispondono!", MESSAGE_TYPE::MSG_ERROR)
-                        << std::endl;
+                colored_print("La lunghezza e il tipo di nave non corrispondono!", MESSAGE_TYPE::MSG_ERROR) << std::endl;
                 continue;
             }
             center = get_ship_center(coordinates.at(0).row(), coordinates.at(0).col(), direction, ship_type);
@@ -148,7 +133,6 @@ bool Humanplayer::place_ship(const Ship::Type ship_type) {
         else
             colored_print("Errore nell'inserimento della nave!", MESSAGE_TYPE::MSG_ERROR) << std::endl;
     }
-    return true;
 }
 
 Coordinate Humanplayer::get_ship_center(int row, int col, Ship::Directions direction, Ship::Type ship_type) {
@@ -199,6 +183,4 @@ std::vector<std::string> Humanplayer::split_string(const std::string &s) {
     return strings;
 }
 
-Humanplayer::~Humanplayer() {
-
-}
+Humanplayer::~Humanplayer() {}

@@ -13,8 +13,7 @@ class Submarine : public Ship {
     static constexpr char CHARACTER = 'E';
     static constexpr int LENGTH = 1;
 
-    explicit Submarine(Coordinate center = Coordinate{},
-                       Ship::Directions direction = Ship::Directions::HORIZONTAL);
+    explicit Submarine(Coordinate center = Coordinate{}, Ship::Directions direction = Ship::Directions::HORIZONTAL);
 
     ~Submarine() override;
 
