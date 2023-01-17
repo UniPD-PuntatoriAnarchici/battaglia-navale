@@ -12,8 +12,8 @@ std::ostream &operator<<(std::ostream &os, const Submarine &battleship) {
     os << "Submarine with center in " << battleship.center() << "and direction: " << battleship.direction() << ", has "
        << battleship.armor() << "/" << Submarine::LENGTH << " armor: [";
 
-    for (bool cell: cells) {
-        os << (cell ? Submarine::CHARACTER : (char) (Submarine::CHARACTER + 32));
+    for (bool cell : cells) {
+        os << (cell ? Submarine::CHARACTER : (char)(Submarine::CHARACTER + 32));
     }
 
     os << "]";
@@ -25,8 +25,7 @@ bool Submarine::action(Coordinate dest, Defenseboard &self_defense, Attackboard 
     if (!this->is_alive()) return false;
     if (!dest.is_valid()) return false;
 
-    if (self_defense.is_occupied(dest))
-        return false;
+    if (self_defense.is_occupied(dest)) return false;
 
     // this is because if i can't go up/left a row/col i "lose" and don't have to check the row/col
     // in this way i consider this possibility and adress it
