@@ -42,7 +42,13 @@ bool Cpuplayer::turn(Player &other) {
 bool Cpuplayer::place_ship(const Ship::Type ship_type) {
     if (ship_type != Ship::Type::BATTLESHIP && ship_type != Ship::Type::REPAIRSHIP &&
         ship_type != Ship::Type::SUBMARINE)
-        return 0;
+        return false;
+
+    std::random_device random_device;
+    std::mt19937 random_engine(random_device());
+
+    std::uniform_int_distribution<int> coordinate_distribution(1, 12);
+    std::uniform_int_distribution<int> ship_direction_distribution(0, 1);
 
     int length;
     if (ship_type == Ship::Type::BATTLESHIP) {
@@ -57,64 +63,55 @@ bool Cpuplayer::place_ship(const Ship::Type ship_type) {
 
     Ship::Directions direction;
     while (!valid_input) {
-        Coordinate center{rand() % 12 + 1, rand() % 12 + 1};
-        //std::cout << center;
+        Coordinate center{coordinate_distribution(random_engine), coordinate_distribution(random_engine)};
 
-        int random = rand() % 2;
-        // std::cout << random<<std::endl;
-
-        if (random == 0)
+        if (ship_direction_distribution(random_engine) == 0)
             direction = Ship::Directions::HORIZONTAL;
         else
             direction = Ship::Directions::VERTICAL;
 
         //std::cout << direction << std::endl;
 
-        if (direction == Ship::Directions::HORIZONTAL) {
-            if ((center.col() + length / 2) > defense_board_.side_length || center.col() - length / 2 <= 0) {
-                //std::cout << (center.col() + (int)(length / 2)) << std::endl<< center.col() - length / 2 << std::endl;
+        //  1 2 3 4 5
+        //F C C C C C
 
-            } else {
+        if (direction == Ship::Directions::HORIZONTAL) {
+            if (!((center.col() + length / 2) > Defenseboard::side_length || center.col() - length / 2 <= 0)) {
                 for (int i = center.col() - length / 2; i <= center.col() + length / 2; i++) {
-                    Coordinate coordinate_to_check = Coordinate(center.row(), i);
-                    if (defense_board_.is_occupied(coordinate_to_check) == true) {
+                    Coordinate coordinate_to_check{center.row(), i};
+                    if (defense_board_.is_occupied(coordinate_to_check)) {
+                        valid_input = false;
                         break;
                     } else {
                         valid_input = true;
                     }
                 }
-            }
-        } else {
-            if (center.row() + length / 2 > defense_board_.side_length || center.row() - length / 2 <= 0) {
-                //std::cout <<"limite alto "<< center.row() + length / 2 << std::endl << "limite basso "<< center.row() - length / 2 << std::endl;   
             } else {
-                //std::cout <<"limite alto "<< center.row() + length / 2 << std::endl <<"limite basso "<< center.row() - length / 2 << std::endl;
+                valid_input = false;
+            }
+
+        } else {
+            if (!(center.row() + length / 2 > Defenseboard::side_length || center.row() - length / 2 <= 0)) {
                 for (int i = center.row() - length / 2; i <= center.row() + length / 2; i++) {
                     Coordinate coordinate_to_check = Coordinate(i, center.col());
-                    if (defense_board_.is_occupied(coordinate_to_check) == true) {
+                    if (defense_board_.is_occupied(coordinate_to_check)) {
+                        valid_input = false;
                         break;
                     } else {
                         valid_input = true;
                     }
                 }
-
+            } else {
+                valid_input = false;
             }
         }
-        //std::cout<<valid_input<<std::endl;
-        if (valid_input == true) {
+        if (valid_input) {
             if (ship_type == Ship::Type::BATTLESHIP)
                 defense_board_.place_ship(Battleship(center, direction));
             else if (ship_type == Ship::Type::REPAIRSHIP)
                 defense_board_.place_ship(Repairship(center, direction));
-            else if (ship_type == Ship::Type::SUBMARINE)
-                defense_board_.place_ship(Submarine(center, direction));
+            else defense_board_.place_ship(Submarine(center, direction));
         }
-
-        /*
-         if (valid_input)
-             std::cout << "Nave inserita correttamente" << std::endl;
-         else
-             std::cout << "Errore nell'inserimento della nave" << std::endl;*/
     }
     // TODO: implement this and test turn!
     return false;
