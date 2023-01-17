@@ -11,6 +11,8 @@
 
 class Defenseboard : public Board {
 public:
+    const std::unique_ptr<Ship> NO_SHIP = nullptr;
+
     class FULL_BOARD_EXCEPTION : public std::exception {
         const char *what() const noexcept override { return "Board is full, you can't add more ships"; }
     };
@@ -66,11 +68,13 @@ public:
 
     std::string to_log_format() const;
 
+
+
 private:
     // declaring array of smart pointers (ships_) with 7 ships_:
     // battle (3) repair (3) and submarine (2)
     std::vector<std::unique_ptr<Ship>> ships_;
-    const std::unique_ptr<Ship> NO_SHIP = nullptr;
+
 };
 
 #endif  // DEFENSEBOARD_H

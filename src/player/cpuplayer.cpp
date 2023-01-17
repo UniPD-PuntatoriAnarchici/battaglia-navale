@@ -3,9 +3,6 @@
 bool Cpuplayer::turn(Player &other) {
     if (defense_board_.is_lost()) return false;
 
-    /*
-     * Random device generates random seed for Mersenne Twister that pick random number from distribution
-     */
     std::random_device random_device;
     std::mt19937 random_engine(random_device());
 
@@ -13,52 +10,31 @@ bool Cpuplayer::turn(Player &other) {
     std::uniform_int_distribution<int> ship_distribution(0, 7);
 
     Coordinate source;
-    Coordinate destination{coordinate_distribution(random_engine), coordinate_distribution(random_engine)};
-    int index = ship_distribution(random_engine);
-    while (true) {
-        try {
-//            std::cout << "Extracted " << defense_board_.ship_at_index(index)->center().to_string() << "->"
-//                      << destination.to_string() << std::endl;
+    Coordinate destination;
+    int index;
+    std::vector<Coordinate> def;
 
-//          TODO: FIX THIS! WORKING BUT BRUTTO
-            if (defense_board_.ship_at_index(index)->type() == Ship::Type::SUBMARINE) {
-                if (defense_board_.is_occupied(destination))
-                    throw std::invalid_argument("\"submarine error\"");
-            }
+    bool dead_ship;
 
-            if (defense_board_.ship_at_index(index)->type() == Ship::Type::REPAIRSHIP) {
-                std::vector<Coordinate> current_grid = defense_board_.get_all_but_one_raw(
-                        defense_board_.ship_at_index(index)->center());
+    do {
+        dead_ship = false;
+        def = defense_board_.get_all_raw();
 
-                Repairship tmp{destination,
-                               defense_board_.ship_at_index(index)->direction()};
+        destination = Coordinate{coordinate_distribution(random_engine), coordinate_distribution(random_engine)};
+        index = ship_distribution(random_engine);
 
-                for (auto position: tmp.raw_positions()) {
-                    if (!defense_board_.is_valid(position))
-                        throw std::invalid_argument("\"repairship position error\"");
-                    if (std::find(current_grid.begin(), current_grid.end(), position) != current_grid.end())
-                        throw std::invalid_argument("\"repairship error\"");
-                }
-            }
-
-
-            source = defense_board_.ship_at_index(index)->center();
-
-            defense_board_.ship_at_index(index)->action(destination, other.get_defense_board(),
-                                                        attack_board_);
-
-            break;
-        } catch (const std::exception &e) {
-            std::cout << e.what();
-            index = ship_distribution(random_engine);
-            destination = Coordinate{coordinate_distribution(random_engine), coordinate_distribution(random_engine)};
+        if ((defense_board_.ship_at_index(index)) == nullptr) {
+            dead_ship = true;
+            continue;
         }
-    }
+
+        source = defense_board_.ship_at_index(index)->center();
+
+//        std::cout << source << destination;
+    } while (dead_ship || !defense_board_.ship_at_index(index)->action(destination, defense_board_, attack_board_,
+                                                                       other.get_defense_board()));
 
     std::string action = source.to_string() + " " + destination.to_string();
-
-//    std::cout << "Executed " << action << "==========" << std::endl << std::endl;
-
     add_to_player_history(action);
     return true;
 }
@@ -187,7 +163,7 @@ bool Cpuplayer::replay_turn(Player &other, const std::string &action) {
 
     try {
         defense_board_.ship_at(action_coord[0])
-                ->action(action_coord[1], other.get_defense_board(), attack_board_);
+                ->action(action_coord[1], defense_board_, attack_board_, other.get_defense_board());
 
     } catch (const std::exception &ex) {
         throw INVALID_ACTION{"Wrong coordinates!"};
