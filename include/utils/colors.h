@@ -1,3 +1,7 @@
+/**
+ * @author Rampin Matteo
+ */
+
 #ifndef COLORS_H
 #define COLORS_H
 

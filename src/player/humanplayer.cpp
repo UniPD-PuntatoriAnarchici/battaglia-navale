@@ -1,3 +1,8 @@
+/**
+ * @author Galiazzo Matteo
+ */
+
+
 #include "./../../include/player/humanplayer.h"
 
 // returns false if game is lost

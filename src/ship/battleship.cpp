@@ -1,8 +1,8 @@
-//
-// Created by filip on 25/12/2022.
-//
-#include "./../../include/ship/battleship.h"
+/**
+ * @author Tiberio Filippo
+ */
 
+#include "./../../include/ship/battleship.h"
 #include "./../../include/board/attackboard.h"
 #include "./../../include/board/defenseboard.h"
 

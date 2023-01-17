@@ -1,3 +1,7 @@
+/**
+ * @author Rampin Matteo
+ */
+
 #include "./../../include/player/player.h"
 
 std::vector<std::string> Player::player_history() { return player_history_; }

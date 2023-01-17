@@ -1,3 +1,7 @@
+/**
+ * @author Rampin Matteo
+ */
+
 #ifndef PLAYER_H
 #define PLAYER_H
 

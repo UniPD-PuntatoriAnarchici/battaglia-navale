@@ -1,3 +1,7 @@
+/**
+ * @author Galiazzo Matteo
+ */
+
 #ifndef DEFENSEBOARD_H
 #define DEFENSEBOARD_H
 

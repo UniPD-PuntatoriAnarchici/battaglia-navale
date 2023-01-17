@@ -1,3 +1,6 @@
+/**
+ * @author Matteo Galiazzo
+ */
 #ifndef SUBMARINE_H
 #define SUBMARINE_H
 

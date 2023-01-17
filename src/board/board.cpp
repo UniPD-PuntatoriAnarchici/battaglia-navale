@@ -1,3 +1,7 @@
+/**
+ * @author Tiberio Filippo
+ */
+
 #include "./../../include/board/board.h"
 
 bool Board::is_valid(Coordinate &c){

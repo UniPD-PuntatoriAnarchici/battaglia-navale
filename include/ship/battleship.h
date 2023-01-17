@@ -1,6 +1,6 @@
-//
-// Created by filip on 25/12/2022.
-//
+/**
+ * @author Tiberio Filippo
+ */
 
 #ifndef BATTLESHIP_H
 #define BATTLESHIP_H

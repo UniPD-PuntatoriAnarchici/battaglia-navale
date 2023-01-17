@@ -1,3 +1,7 @@
+/**
+ * @author Rampin Matteo
+ */
+
 #ifndef RAPAIRSHIP_H
 #define RAPAIRSHIP_H
 

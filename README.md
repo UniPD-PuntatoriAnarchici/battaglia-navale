@@ -7,9 +7,10 @@
 - [x] Ship/board --> manage dead boats (FT)
 - [x] Cpu player --> turn
 - [x] Game manager --> Manager, save log files
-- [ ] Change log final folder
-- [ ] Repairhip --> implement action
-- [ ] Cpu --> place_ship
+- [ ] Change log final folder and log files
+- [ ] Repairhip --> check action
+- [x] Cpu --> place_ship
+- [ ] refactoring and docs
 
 Note: log file log-HC/CC-timestamp.txt con questo formato
 ```
