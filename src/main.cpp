@@ -372,6 +372,7 @@ void test_dev_matteo_rampin() {
     // }
 }
 
+
 int manager(int argc, char *argv[]) {
     random_device random_device;
     mt19937 random_engine(random_device());
