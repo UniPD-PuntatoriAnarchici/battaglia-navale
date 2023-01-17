@@ -12,8 +12,8 @@ std::ostream &operator<<(std::ostream &os, const Battleship &battleship) {
     os << "Battleship with center in " << battleship.center() << "and direction: " << battleship.direction() << ", has "
        << battleship.armor() << "/" << Battleship::LENGTH << " armor: [";
 
-    for (bool cell : cells) {
-        os << (cell ? Battleship::CHARACTER : (char)(Battleship::CHARACTER + 32));
+    for (bool cell: cells) {
+        os << (cell ? Battleship::CHARACTER : (char) (Battleship::CHARACTER + 32));
     }
 
     os << "]";
@@ -21,17 +21,17 @@ std::ostream &operator<<(std::ostream &os, const Battleship &battleship) {
     return os;
 }
 
-bool Battleship::action(Coordinate dest, Defenseboard &opponent, Attackboard &self) {
-    if (!this->is_alive()) throw Ship::DEAD_SHIP{};
-    if (!dest.is_valid()) throw Coordinate::INVALID_COORDINATE{};
+bool Battleship::action(Coordinate dest, Defenseboard &self_defense, Attackboard &self_attack, Defenseboard &opponent) {
+    if (!this->is_alive()) return false;
+    if (!dest.is_valid()) return false;
 
     if (!opponent.is_occupied(dest)) {
-        self.miss(dest);
-        return false;
+        self_attack.miss(dest);
+        return true;
     }
 
     opponent.hit(dest);
-    self.hit(dest);
+    self_attack.hit(dest);
 
     return true;
 }

@@ -89,14 +89,14 @@ const std::unique_ptr<Ship> &Defenseboard::ship_at(Coordinate c) const {
             return ship;
         }
     }
-    throw std::exception{};
+//    throw std::exception{};
     return NO_SHIP;
 }
 
 const std::unique_ptr<Ship> &Defenseboard::ship_at_index(int i) const {
     if (i > 7) throw std::invalid_argument("Only 8 ships!");
     if (!ships_.at(i)->is_alive())
-        throw std::exception{};
+        return NO_SHIP;
 
     return ships_.at(i);
 }

@@ -172,7 +172,7 @@ void test_dev_filippo_tiberio() {
 
     cout << b3.armor() << endl;
 
-    db.ship_at(Coordinate{9, 4})->action(Coordinate{9, 4}, db, ab);
+//    db.ship_at(Coordinate{9, 4})->action(Coordinate{9, 4}, db, ab);
 
     Humanplayer hp;
 
@@ -357,7 +357,7 @@ int manager(int argc, char *argv[]) {
 
     bool human_computer_game = false;
     int turn_counter = 0;
-    constexpr int MAX_TURNS = 1500;
+    constexpr int MAX_TURNS = 1000;
 
     uniform_int_distribution<int> starting_player_distribution(0, 1);
 
@@ -418,7 +418,7 @@ int manager(int argc, char *argv[]) {
 
             turn_counter++;
         } catch (const std::exception &e) {
-            std::cerr << e.what();
+            std::cerr << "I'm throwing here" << e.what();
         }
     }
 
