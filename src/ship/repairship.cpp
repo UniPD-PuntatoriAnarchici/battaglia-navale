@@ -17,7 +17,6 @@ std::ostream &operator<<(std::ostream &os, const Repairship &battleship) {
     return os;
 }
 
-
 bool Repairship::action(Coordinate dest, Defenseboard &self_defense, Attackboard &self_attack, Defenseboard &opponent) {
     if (!this->is_alive()) return false;
     if (!dest.is_valid()) return false;
