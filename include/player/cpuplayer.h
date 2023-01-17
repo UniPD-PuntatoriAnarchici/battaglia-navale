@@ -28,11 +28,12 @@ public:
 
     Cpuplayer() = default;
 
-    bool place_ship(const Ship::Type ship_type) override;
+    void place_ship(const Ship::Type ship_type) override;
 
-    bool turn(Player &other) override;
+    void turn(Player &other) override;
 
     bool replay_turn(Player &other, const std::string &action);
+
     bool replay_place_ship(const Ship::Type& ship_type, const std::string &info);
 
 private:

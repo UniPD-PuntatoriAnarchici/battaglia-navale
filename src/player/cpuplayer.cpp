@@ -4,8 +4,7 @@
 
 #include "./../../include/player/cpuplayer.h"
 
-bool Cpuplayer::turn(Player &other) {
-    if (defense_board_.is_lost()) return false;
+void Cpuplayer::turn(Player &other) {
 
     std::random_device random_device;
     std::mt19937 random_engine(random_device());
@@ -40,14 +39,13 @@ bool Cpuplayer::turn(Player &other) {
 
     std::string action = source.to_string() + " " + destination.to_string();
     add_to_player_history(action);
-    return true;
 }
 
 // TODO: FIX
-bool Cpuplayer::place_ship(const Ship::Type ship_type) {
+void  Cpuplayer::place_ship(const Ship::Type ship_type) {
     if (ship_type != Ship::Type::BATTLESHIP && ship_type != Ship::Type::REPAIRSHIP &&
         ship_type != Ship::Type::SUBMARINE)
-        return false;
+        throw std::invalid_argument{"Invalid ship type"};
 
     std::random_device random_device;
     std::mt19937 random_engine(random_device());
@@ -116,7 +114,6 @@ bool Cpuplayer::place_ship(const Ship::Type ship_type) {
         }
     }
     // TODO: implement this and test turn!
-    return false;
 }
 
 bool Cpuplayer::replay_place_ship(const Ship::Type &ship_type, const std::string &info) {

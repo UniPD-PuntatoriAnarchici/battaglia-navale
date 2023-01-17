@@ -19,9 +19,9 @@ public:
 
     void place_all_ships();
 
-    virtual bool turn(Player &other) = 0;
+    virtual void turn(Player &other) = 0;
 
-    virtual bool place_ship(const Ship::Type ship_type) = 0;
+    virtual void place_ship(const Ship::Type ship_type) = 0;
 
     std::vector<std::string> player_history();
 

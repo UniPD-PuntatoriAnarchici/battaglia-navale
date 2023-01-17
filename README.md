@@ -3,13 +3,7 @@
 #### *Puntatori anarchici*
 
 ### 0. TODO
-- [x] what if action destination (where to move) is occupied for a board?
-- [x] Ship/board --> manage dead boats (FT)
-- [x] Cpu player --> turn
-- [x] Game manager --> Manager, save log files
-- [ ] Change log final folder and log files
 - [ ] Repairhip --> check action
-- [x] Cpu --> place_ship
 - [ ] refactoring and docs
 
 Note: log file log-HC/CC-timestamp.txt con questo formato
