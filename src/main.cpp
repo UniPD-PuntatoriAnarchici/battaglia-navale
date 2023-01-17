@@ -1,3 +1,7 @@
+/**
+ * @author Galiazzo Matteo
+ */
+
 #include <iostream>
 #include <queue>
 
@@ -379,7 +383,7 @@ int manager(int argc, char *argv[]) {
 
     bool human_computer_game = false;
     int turn_counter = 0;
-    constexpr int MAX_TURNS = 1500;
+    constexpr int MAX_TURNS = 150;
 
     uniform_int_distribution<int> starting_player_distribution(0, 1);
 
@@ -409,33 +413,41 @@ int manager(int argc, char *argv[]) {
     std::string player1_initial_board = {player1->get_defense_board().to_log_format()};
     std::string player2_initial_board = {player2->get_defense_board().to_log_format()};
 
-    //TODO: delete!
-    cout << player1_initial_board << endl;
-    cout << player2_initial_board << endl;
+
+    colored_print("Initial Player 1 boards:", MESSAGE_TYPE::MSG_SUCCESS, cout) << std::endl;
+    player1->print_boards_inline();
+    cout << std::endl;
+    colored_print("Initial Player 2 boards:", MESSAGE_TYPE::MSG_SUCCESS, cout) << std::endl;
+    player2->print_boards_inline();
+    cout << std::endl;
 
 
     bool last_a = !a_starts;
-    colored_print(a_starts ? "Player 1 starts\n\n" : "Player 2 starts\n\n", MESSAGE_TYPE::MSG_INFO_BOLD);
+    colored_print(a_starts ? "Player 1 starts\n" : "Player 2 starts\n", MESSAGE_TYPE::MSG_INFO_BOLD);
     cout << endl;
     while (player1->is_alive() && player2->is_alive() && turn_counter < MAX_TURNS) {
         try {
             if (!last_a) {
-//                if (!human_computer_game)
-//                    this_thread::sleep_for(chrono::milliseconds(500));
+                if (!human_computer_game)
+                    this_thread::sleep_for(chrono::milliseconds(500));
                 last_a = true;
                 colored_print("Player 1 Turn:", MESSAGE_TYPE::MSG_PLAYER1)
                         << std::endl;
                 player1->turn(*player2);
                 player1->print_boards_inline();
-                cout << "==============================================================================================================" << std::endl;
+                cout
+                        << "=============================================================================================================="
+                        << std::endl;
             } else {
-//                this_thread::sleep_for(chrono::milliseconds(500));
+                this_thread::sleep_for(chrono::milliseconds(500));
                 last_a = false;
                 colored_print("Player 2 Turn:", MESSAGE_TYPE::MSG_PLAYER1)
                         << std::endl;
                 player2->turn(*player1);
                 player2->print_boards_inline();
-                cout << "==============================================================================================================" << std::endl;
+                cout
+                        << "=============================================================================================================="
+                        << std::endl;
             }
 
             turn_counter++;

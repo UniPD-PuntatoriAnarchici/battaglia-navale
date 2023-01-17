@@ -1,3 +1,8 @@
+/**
+ * @author Galiazzo Matteo
+ */
+
+
 #ifndef HUMANPLAYER_H
 #define HUMANPLAYER_H
 

@@ -1,3 +1,7 @@
+/**
+ * @author Rampin Matteo
+ */
+
 #include "./../../include/player/cpuplayer.h"
 
 bool Cpuplayer::turn(Player &other) {

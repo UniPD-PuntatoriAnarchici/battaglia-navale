@@ -1,3 +1,6 @@
+/**
+ * @author Tiberio Filippo
+ */
 #include "./../../include/board/attackboard.h"
 
 Attackboard::Attackboard() = default;
@@ -5,7 +8,7 @@ Attackboard::Attackboard() = default;
 std::vector<std::pair<Coordinate, char>> Attackboard::get_all() const {
     std::vector<std::pair<Coordinate, char>> vector{};
 
-    for (auto el : cells_) {
+    for (auto el: cells_) {
         vector.emplace_back(el.first, el.second);
     }
     return vector;
@@ -14,7 +17,7 @@ std::vector<std::pair<Coordinate, char>> Attackboard::get_all() const {
 std::vector<Coordinate> Attackboard::get_all_raw() const {
     std::vector<Coordinate> vector{};
 
-    for (auto el : cells_) {
+    for (auto el: cells_) {
         vector.push_back(el.first);
     }
     return vector;

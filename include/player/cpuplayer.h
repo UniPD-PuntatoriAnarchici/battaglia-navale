@@ -1,3 +1,7 @@
+/**
+ * @author Rampin Matteo
+ */
+
 #ifndef CPUPLAYER_H
 #define CPUPLAYER_H
 

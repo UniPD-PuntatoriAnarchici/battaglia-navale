@@ -1,3 +1,7 @@
+/**
+ * @author Tiberio Filippo
+ */
+
 #ifndef ATTACKBOARD_H
 #define ATTACKBOARD_H
 

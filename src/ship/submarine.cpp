@@ -1,3 +1,6 @@
+/**
+ * @author Matteo Galiazzo
+ */
 #include "./../../include/ship/submarine.h"
 
 #include "./../../include/board/attackboard.h"

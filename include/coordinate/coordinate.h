@@ -1,6 +1,7 @@
-//
-// Created by Matteo Galiazzo on 25/12/2022
-//
+/**
+ * @author Tiberio Filippo
+ */
+
 #ifndef COORDINATE_H
 #define COORDINATE_H
 

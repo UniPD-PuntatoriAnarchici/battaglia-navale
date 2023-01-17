@@ -1,7 +1,6 @@
-//
-// Created by Matteo Galiazzo on 25/12/2022
-//
-
+/**
+ * @author Tiberio Filippo
+ */
 #ifndef BOARD_H
 #define BOARD_H
 

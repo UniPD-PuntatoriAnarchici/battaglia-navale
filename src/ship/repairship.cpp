@@ -1,3 +1,7 @@
+/**
+ * @author Rampin Matteo
+ */
+
 #include "./../../include/ship/repairship.h"
 
 #include "./../../include/board/defenseboard.h"

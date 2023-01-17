@@ -1,6 +1,7 @@
-//
-// Created by Filippo Tiberio on 24/12/2022.
-//
+/**
+ * @author Tiberio Filippo
+ */
+
 #include "./../../include/ship/ship.h"
 
 Ship::~Ship() {}
@@ -8,7 +9,7 @@ Ship::~Ship() {}
 bool Ship::is_alive() const { return armor_ != 0; }
 
 void Ship::reset_cells() {
-    for (auto &&cell : cells_) {
+    for (auto &&cell: cells_) {
         cell = true;
     }
 }

@@ -1,6 +1,6 @@
-//
-// Created by Filippo Tiberio on 26/12/2022.
-//
+/**
+ * @author Tiberio Filippo
+ */
 
 #include "./../../include/coordinate/coordinate.h"
 
