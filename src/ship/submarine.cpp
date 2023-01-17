@@ -25,20 +25,31 @@ bool Submarine::action(Coordinate dest, Defenseboard &self_defense, Attackboard 
     if (self_defense.is_occupied(dest))
         return false;
 
+    // this is because if i can't go up/left a row/col i "lose" and don't have to check the row/col
+    // in this way i consider this possibility and adress it
+    int cells_left_to_ignore = 0;
+    int cells_up_to_ignore = 0;
+
     // set start row
     int check_start_row = dest.row();
     for (int i = 0; i < 2; i++)
-        if (check_start_row - 1 > 0) check_start_row--;
+        if (check_start_row - 1 > 0)
+            check_start_row--;
+        else
+            cells_up_to_ignore++;
 
     // set start col
     int check_start_col = dest.col();
     for (int i = 0; i < 2; i++)
-        if (check_start_col - 1 > 0) check_start_col--;
+        if (check_start_col - 1 > 0)
+            check_start_col--;
+        else
+            cells_left_to_ignore++;
 
     // set end row
-    int check_end_row = (check_start_row + 4 < 12) ? check_start_row + 4 : 12;
+    int check_end_row = (check_start_row + 4 - cells_up_to_ignore < 12) ? check_start_row + 4 - cells_up_to_ignore : 12;
     // set end col
-    int check_end_col = (check_start_col + 4 < 12) ? check_start_col + 4 : 12;
+    int check_end_col = (check_start_col + 4 - cells_left_to_ignore < 12) ? check_start_col + 4 - cells_left_to_ignore : 12;
 
     // nested for loop on bounds with reveal
     for (int row = check_start_row; row <= check_end_row; row++) {
