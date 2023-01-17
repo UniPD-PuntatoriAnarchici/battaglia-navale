@@ -18,10 +18,12 @@ std::ostream &operator<<(std::ostream &os, const Submarine &battleship) {
     return os;
 }
 
-bool Submarine::action(Coordinate dest, Defenseboard &opponent, Attackboard &self) {
-//    return true;
-    if (!this->is_alive()) throw Ship::DEAD_SHIP{};
-    if (!dest.is_valid()) throw Coordinate::INVALID_COORDINATE{};
+bool Submarine::action(Coordinate dest, Defenseboard &self_defense, Attackboard &self_attack, Defenseboard &opponent) {
+    if (!this->is_alive()) return false;
+    if (!dest.is_valid()) return false;
+
+    if (self_defense.is_occupied(dest))
+        return false;
 
     // set start row
     int check_start_row = dest.row();
@@ -39,17 +41,12 @@ bool Submarine::action(Coordinate dest, Defenseboard &opponent, Attackboard &sel
     int check_end_col = (check_start_col + 4 < 12) ? check_start_col + 4 : 12;
 
     // nested for loop on bounds with reveal
-    try {
-        for (int row = check_start_row; row <= check_end_row; row++) {
-            for (int col = check_start_col; col <= check_end_col; col++) {
-                Coordinate to_check(row, col);
-                self.clear(to_check);
-                if (opponent.is_occupied(to_check)) self.reveal(to_check, opponent.is_alive(to_check));
-            }
+    for (int row = check_start_row; row <= check_end_row; row++) {
+        for (int col = check_start_col; col <= check_end_col; col++) {
+            Coordinate to_check(row, col);
+            self_attack.clear(to_check);
+            if (opponent.is_occupied(to_check)) self_attack.reveal(to_check, opponent.is_alive(to_check));
         }
-    } catch (const std::exception &ex) {
-        std::cerr << "Sto throwando in submarine QUI!";
-        throw ex;
     }
 
     // move submarine to destination

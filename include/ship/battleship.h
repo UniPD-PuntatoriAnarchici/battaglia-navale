@@ -19,7 +19,7 @@ public:
     explicit Battleship(Coordinate center = Coordinate{},
                         Ship::Directions direction = Ship::Directions::HORIZONTAL);
 
-    bool action(Coordinate dest, Defenseboard &opponent, Attackboard &self) override;
+    bool action(Coordinate dest, Defenseboard &self_defense, Attackboard &self_attack, Defenseboard &opponent) override;
 
     Ship *clone() const override { return new Battleship{*this}; }
 };

@@ -72,7 +72,8 @@ public:
 
     virtual Ship *clone() const = 0;
 
-    virtual bool action(Coordinate dest, Defenseboard &opponent, Attackboard &self) = 0;
+    virtual bool
+    action(Coordinate dest, Defenseboard &self_defense, Attackboard &self_attack, Defenseboard &opponent) = 0;
 
 protected:
     static constexpr char CHARACTER = ' ';

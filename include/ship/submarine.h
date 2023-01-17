@@ -15,7 +15,7 @@ class Submarine : public Ship {
 
     ~Submarine() override;
 
-    bool action(Coordinate dest, Defenseboard &opponent, Attackboard &self) override;
+    bool action(Coordinate dest, Defenseboard &self_defense, Attackboard &self_attack, Defenseboard &opponent) override;
 
     Ship *clone() const override { return new Submarine{*this}; }
 };

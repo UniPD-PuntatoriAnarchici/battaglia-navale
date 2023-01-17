@@ -61,40 +61,13 @@ bool Humanplayer::turn(Player &other) {
             continue;
         }
 
-        try {
-//            std::cerr << turn_coords[0] << " " << turn_coords[1] << std::endl;
-            if (defense_board_.ship_at(turn_coords[0])->type() == Ship::Type::SUBMARINE) {
-                if (defense_board_.is_occupied(turn_coords[1])) {
-                    invalid_ship_destination_flag = true;
-                    continue;
-                }
-            }
-
-            if (defense_board_.ship_at(turn_coords[0])->type() == Ship::Type::REPAIRSHIP) {
-                std::vector<Coordinate> current_grid = defense_board_.get_all_but_one_raw(
-                        defense_board_.ship_at(turn_coords[0])->center());
-
-                Repairship tmp{turn_coords[1], defense_board_.ship_at(turn_coords[0])->direction()};
-
-                for (auto position: tmp.raw_positions()) {
-                    if (!defense_board_.is_valid(position)) {
-                        invalid_ship_destination_flag = true;
-                        continue;
-                    }
-                    if (std::find(current_grid.begin(), current_grid.end(), position) != current_grid.end()) {
-                        invalid_ship_destination_flag = true;
-                        continue;
-                    }
-                }
-            }
-
-            defense_board_.ship_at(turn_coords[0])
-                    ->action(turn_coords[1], other.get_defense_board(), attack_board_);
-
-        } catch (const std::exception &ex) {
+        if (defense_board_.ship_at(turn_coords[0]) == nullptr) {
+            invalid_ship_flag = true;
+        } else if (!defense_board_.ship_at(turn_coords[0])
+                ->action(turn_coords[1], defense_board_, attack_board_, other.get_defense_board())) {
             invalid_ship_flag = true;
         }
-    } while (invalid_coordinates_flag || invalid_ship_flag || customAction || invalid_ship_destination_flag);
+    } while (invalid_coordinates_flag || invalid_ship_flag || customAction);
     add_to_player_history(buffer);
     return true;
 }
