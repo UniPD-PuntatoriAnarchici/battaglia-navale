@@ -114,8 +114,8 @@ bool Humanplayer::valid_ship_length(int n1, int n2, const Ship::Type ship_type) 
 
 /**
  * Calculates the center coordinate of a ship
- * @param c1
- * @param c2
+ * @param c1 Coordinate 1 of the ship
+ * @param c2 Coordinate 2 of the ship
  * @param direction used to know if the center is on a different row or a different column
  * @param ship_type used to identify the ship length
  * @return [Coordinate] the center coordinate of a ship
@@ -157,7 +157,7 @@ void Humanplayer::turn(Player &other) {
 
     do {
         if (customAction)
-            colored_print(std::string("Comando speciale eseguito!"), MESSAGE_TYPE::MSG_INFO) << std::endl;
+            colored_print(std::string("Comando speciale eseguito!"), MESSAGE_TYPE::MSG_INFO_BLUE) << std::endl;
         else if (invalid_coordinates_flag)
             colored_print(std::string("Coordinate non valide! Si prega di re-inserire."), MESSAGE_TYPE::MSG_ERROR)
                 << std::endl;

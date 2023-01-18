@@ -71,7 +71,7 @@ void Player::print_boards_inline(std::ostream &os) {
         atk_buffer.push_back(line_buffer);
     }
 
-    colored_print("DEFENSE\t\t\t\t\t\t\tATTACK", MESSAGE_TYPE::MSG_INFO_BOLD, os) << std::endl;
+    colored_print("DEFENSE\t\t\t\t\t\t\tATTACK", MESSAGE_TYPE::MSG_INFO_BOLD_BLUE, os) << std::endl;
 
     for (int i = 1; i <= 12; i++) {
         os << (char)(i < 10 ? '@' + i : '@' + i + 2) << " |";

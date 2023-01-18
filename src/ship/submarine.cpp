@@ -6,21 +6,42 @@
 #include "./../../include/board/attackboard.h"
 #include "./../../include/board/defenseboard.h"
 
-std::ostream &operator<<(std::ostream &os, const Submarine &battleship) {
-    std::vector<bool> cells = battleship.cells();
+/**
+ * @Override virtual destrucctor
+ * @details
+ * We use an array of smart pointer in defenseboard.
+ * In order to prevent problems with implicit destructors and implicit calls to the destructors we chose to completely
+ * define destructors and define the ship's one as pure virtual. In this way we ensure the correct execution of the
+ * destroying chain.
+ */
+Submarine::~Submarine() {}
 
-    os << "Submarine with center in " << battleship.center() << "and direction: " << battleship.direction() << ", has "
-       << battleship.armor() << "/" << Submarine::LENGTH << " armor: [";
-
-    for (bool cell: cells) {
-        os << (cell ? Submarine::CHARACTER : (char) (Submarine::CHARACTER + 32));
-    }
-
-    os << "]";
-
-    return os;
+/**
+ * @Override virtual destrucctor
+ * @details
+ * We use an array of smart pointer in defenseboard.
+ * In order to prevent problems with implicit destructors and implicit calls to the destructors we chose to completely
+ * define destructors and define the ship's one as pure virtual. In this way we ensure the correct execution of the
+ * destroying chain.
+ */
+Submarine::Submarine(Coordinate center, Ship::Directions direction) {
+    cells_ = std::vector<bool>(LENGTH);
+    center_ = center;
+    direction_ = direction;
+    armor_ = LENGTH;
+    type_ = Type::SUBMARINE;
+    reset_cells();
 }
 
+/**
+ * Action of the submarine
+ * @details moves the submarine and scans the surrounding cells in a 5x5
+ * @param dest Coordinate where the submarine will move and scan
+ * @param self_defense Defenseboard the board where the submarine is in
+ * @param self_attack Attackboard where the submarine will show the scanning results
+ * @param opponent Defenseboard where the submarine will perform the scan
+ * @return [bool] true if the action finished succesfully
+ */
 bool Submarine::action(Coordinate dest, Defenseboard &self_defense, Attackboard &self_attack, Defenseboard &opponent) {
     if (!this->is_alive()) return false;
     if (!dest.is_valid()) return false;
@@ -51,8 +72,7 @@ bool Submarine::action(Coordinate dest, Defenseboard &self_defense, Attackboard 
     // set end row
     int check_end_row = (check_start_row + 4 - cells_up_to_ignore < 12) ? check_start_row + 4 - cells_up_to_ignore : 12;
     // set end col
-    int check_end_col = (check_start_col + 4 - cells_left_to_ignore < 12) ? check_start_col + 4 - cells_left_to_ignore
-                                                                          : 12;
+    int check_end_col = (check_start_col + 4 - cells_left_to_ignore < 12) ? check_start_col + 4 - cells_left_to_ignore : 12;
 
     // nested for loop on bounds with reveal
     for (int row = check_start_row; row <= check_end_row; row++) {
@@ -69,13 +89,24 @@ bool Submarine::action(Coordinate dest, Defenseboard &self_defense, Attackboard 
     return true;
 }
 
-Submarine::~Submarine() {}
+/**
+ * Print of the submarine
+ * @details detailed submarine print
+ * @param os output stream
+ * @param submarine to print
+ * @return [std::ostream] reference of the output stream
+ */
+std::ostream &operator<<(std::ostream &os, const Submarine &battleship) {
+    std::vector<bool> cells = battleship.cells();
 
-Submarine::Submarine(Coordinate center, Ship::Directions direction) {
-    cells_ = std::vector<bool>(LENGTH);
-    center_ = center;
-    direction_ = direction;
-    armor_ = LENGTH;
-    type_ = Type::SUBMARINE;
-    reset_cells();
+    os << "Submarine with center in " << battleship.center() << "and direction: " << battleship.direction() << ", has "
+       << battleship.armor() << "/" << Submarine::LENGTH << " armor: [";
+
+    for (bool cell : cells) {
+        os << (cell ? Submarine::CHARACTER : (char)(Submarine::CHARACTER + 32));
+    }
+
+    os << "]";
+
+    return os;
 }

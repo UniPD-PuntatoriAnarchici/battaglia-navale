@@ -184,7 +184,7 @@ const std::unique_ptr<Ship> &Defenseboard::ship_at_index(int i) const {
 }
 
 /**
- * returns the ships in the log format
+ * Returns the ships in the log format
  * @details the log format is direction + center [horizontal/vertical] + [Coordinate center]
  * @return std::string with all the ships in the log format
  */
@@ -197,6 +197,11 @@ std::string Defenseboard::to_log_format() const {
     return buffer;
 }
 
+/**
+ * Removes a ship from the defenseboard
+ * @details calls erase() on the vector of smart pointers at the ship's index
+ * @return [bool] true if a ship has been found, false if it hasn't
+*/
 bool Defenseboard::remove_ship(Ship &ship) {
     int c = 0;
     for (auto i = ships_.begin(); i != ships_.end(); i++) {
