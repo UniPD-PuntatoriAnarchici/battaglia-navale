@@ -133,3 +133,16 @@ std::vector<Coordinate> Defenseboard::get_all_but_one_raw(Coordinate exluded_shi
 
     return occupied_positions;
 }
+
+bool Defenseboard::remove_ship(Ship &ship){
+    int c=0;
+    for (auto i = ships_.begin(); i != ships_.end(); i++){
+        if (ships_.at(c)->center()==ship.center()){
+            ships_.erase(i);
+            return true;
+        }
+        c++;
+    }
+    return false;
+    
+}
