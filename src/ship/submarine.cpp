@@ -17,12 +17,9 @@
 Submarine::~Submarine() {}
 
 /**
- * @Override virtual destrucctor
- * @details
- * We use an array of smart pointer in defenseboard.
- * In order to prevent problems with implicit destructors and implicit calls to the destructors we chose to completely
- * define destructors and define the ship's one as pure virtual. In this way we ensure the correct execution of the
- * destroying chain.
+ * Explicit default constructor
+ * @param center [Coordinate] default value is invalid
+ * @param direction not useful in submarine but required since it extends ship
  */
 Submarine::Submarine(Coordinate center, Ship::Directions direction) {
     cells_ = std::vector<bool>(LENGTH);
