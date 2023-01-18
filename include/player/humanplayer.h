@@ -46,8 +46,8 @@ public:
 
     /**
      * Calculates the center coordinate of a ship
-     * @param c1
-     * @param c2
+     * @param c1 Coordinate 1 of the ship
+     * @param c2 Coordinate 2 of the ship
      * @param direction used to know if the center is on a different row or a different column
      * @param ship_type used to identify the ship length
      * @return [Coordinate] the center coordinate of a ship

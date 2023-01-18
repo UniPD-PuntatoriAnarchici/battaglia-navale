@@ -31,7 +31,7 @@ int manager(int argc, char *argv[]) {
 
     bool human_computer_game = false;
     int turn_counter = 0;
-//    constexpr int MAX_TURNS = 150;
+    //    constexpr int MAX_TURNS = 150;
 
     std::uniform_int_distribution<int> starting_player_distribution(0, 1);
 
@@ -51,8 +51,8 @@ int manager(int argc, char *argv[]) {
     bool set_turns_flag = false;
 
     try {
-        if (argc >= 4 && (std::string{argv[2]} == "-n" ||
-            std::string{argv[2]} == "n") && std::stoi(std::string{argv[3]})>0) {
+        if (argc >= 4 && (std::string{argv[2]} == "-n" || std::string{argv[2]} == "n") &&
+            std::stoi(std::string{argv[3]}) > 0) {
             set_turns_flag = true;
         }
     } catch (const std::exception &stoi_exception) {
@@ -84,7 +84,7 @@ int manager(int argc, char *argv[]) {
     std::cout << std::endl;
 
     bool last_player_action_turn_flag = !player1_starts;  // true -> player 1 did last move, false -> player 2 did last move
-    colored_print(player1_starts ? "Player 1 starts\n" : "Player 2 starts\n", MESSAGE_TYPE::MSG_INFO_BOLD);
+    colored_print(player1_starts ? "Player 1 starts\n" : "Player 2 starts\n", MESSAGE_TYPE::MSG_INFO_BOLD_BLUE);
     std::cout << std::endl;
 
     while (player1->is_alive() && player2->is_alive() && turn_counter < MAX_TURNS) {
@@ -106,11 +106,11 @@ int manager(int argc, char *argv[]) {
 
     // win check
     if (last_player_action_turn_flag && turn_counter < MAX_TURNS) {
-        colored_print("Player 1 WIN!\n", MESSAGE_TYPE::MSG_INFO_BOLD);
+        colored_print("Player 1 WIN!", MESSAGE_TYPE::MSG_INFO_BOLD_BLUE) << std::endl;
     } else if (turn_counter < MAX_TURNS) {
-        colored_print("Player 2 WIN!\n", MESSAGE_TYPE::MSG_INFO_BOLD);
+        colored_print("Player 2 WIN!", MESSAGE_TYPE::MSG_INFO_BOLD_BLUE) << std::endl;
     } else {
-        colored_print("DRAW!\n", MESSAGE_TYPE::MSG_INFO_BOLD);
+        colored_print("DRAW!", MESSAGE_TYPE::MSG_INFO_BOLD_BLUE) << std::endl;
     }
 
     /**
@@ -125,7 +125,7 @@ int manager(int argc, char *argv[]) {
     s >> date_string;
 
     std::string file_name =
-            std::string{"log-"} + (human_computer_game ? "PC" : "CC") + "-" + date_string + std::string{".txt"};
+        std::string{"log-"} + (human_computer_game ? "PC" : "CC") + "-" + date_string + std::string{".txt"};
 
 #if defined(__linux__) || defined(__APPLE__)
     file_name.insert(0, "./");

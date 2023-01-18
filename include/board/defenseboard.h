@@ -149,12 +149,17 @@ class Defenseboard : public Board {
     const std::unique_ptr<Ship> &ship_at_index(int i) const;
 
     /**
-     * returns the ships in the log format
+     * Returns the ships in the log format
      * @details the log format is direction + center [horizontal/vertical] + [Coordinate center]
      * @return std::string with all the ships in the log format
      */
     std::string to_log_format() const;
 
+    /**
+     * Removes a ship from the defenseboard
+     * @details calls erase() on the vector of smart pointers at the ship's index
+     * @return [bool] true if a ship has been found, false if it hasn't
+     */
     bool remove_ship(Ship &ship);
 
    private:
