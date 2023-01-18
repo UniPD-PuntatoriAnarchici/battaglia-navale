@@ -53,6 +53,8 @@ class Defenseboard : public Board {
 
     std::string to_log_format() const;
 
+    bool remove_ship(Ship &ship);
+
    private:
     // declaring array of smart pointers (ships_) with 7 ships_:
     // battle (3) repair (3) and submarine (2)
