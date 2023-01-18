@@ -25,41 +25,28 @@ bool Repairship::action(Coordinate dest, Defenseboard &self_defense, Attackboard
     if (!this->is_alive()) return false;
     if (!dest.is_valid()) return false;
     if (self_defense.is_occupied(dest)) return false;
-    
-    if (this->direction_==Ship::Directions::HORIZONTAL){
-        if (dest.col()+1>12||dest.col()-1<1) return false; 
-    }else{
-        if (dest.row()+1>12||dest.row()-1<1) return false;
-    }
-    
 
-        std::vector<Coordinate> current_grid = self_defense.get_all_but_one_raw(this->center());
-        Repairship tmp{dest, this->direction()};
-        //tmp.set_armor(this->armor());
-        
-        for (auto position: tmp.raw_positions()) {
-           
-            if (!self_defense.is_valid(position)){
-                return false;
-            }
-            if (std::find(current_grid.begin(), current_grid.end(), position) != current_grid.end()){
-                return false;
-            }
+    if (this->direction_ == Ship::Directions::HORIZONTAL) {
+        if (dest.col() + 1 > 12 || dest.col() - 1 < 1) return false;
+    } else {
+        if (dest.row() + 1 > 12 || dest.row() - 1 < 1) return false;
+    }
+
+
+    std::vector<Coordinate> current_grid = self_defense.get_all_but_one_raw(this->center());
+    Repairship tmp{dest, this->direction()};
+
+    for (auto position: tmp.raw_positions()) {
+
+        if (!self_defense.is_valid(position)) {
+            return false;
         }
-        if (this->armor()!=3){
-            
-            int c=0;
-            for (auto i = cells_.begin(); i != cells_.end(); i++)
-            {
-                tmp.cells_.at(c)=this->cells_.at(c);
-                c++;
-            }  
+        if (std::find(current_grid.begin(), current_grid.end(), position) != current_grid.end()) {
+            return false;
         }
-        
-        if (self_defense.remove_ship(*this)){
-            self_defense.place_ship(tmp);
-        }    
-    
+    }
+
+    this->set_center(dest);
 
     if (direction() == Ship::Directions::HORIZONTAL) {
         int start_col = dest.col();
@@ -87,7 +74,7 @@ bool Repairship::action(Coordinate dest, Defenseboard &self_defense, Attackboard
         int end_row = dest.col();
         if (end_row + 1 <= 12) end_row++;
 
-        for (int i = start_row; i <= end_row ; i++) {
+        for (int i = start_row; i <= end_row; i++) {
             if (dest.col() - 1 > 0) {
                 Coordinate to_check_1(dest.row() - 1, i);
                 if (self_defense.is_occupied(to_check_1) && self_defense.is_alive(to_check_1)) {
@@ -105,12 +92,6 @@ bool Repairship::action(Coordinate dest, Defenseboard &self_defense, Attackboard
     return true;
 }
 
-//bool Repairship::action(Coordinate dest, Defenseboard &opponent, Attackboard &self) {
-//    if (!this->is_alive()) throw Ship::DEAD_SHIP{};
-//    if (!dest.is_valid()) throw Coordinate::INVALID_COORDINATE{};
-//
-//    return true;
-//}
 
 Repairship::~Repairship() {}
 

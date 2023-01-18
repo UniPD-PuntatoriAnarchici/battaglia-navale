@@ -97,13 +97,13 @@ void test_dev_matteo_rampin() {
 }
 
 int main(int argc, char *argv[]) {
-    test_dev_matteo_rampin();
-    /*
+//    test_dev_matteo_rampin();
+
     try {
         manager(argc, argv);
     } catch (const std::exception &ex) {
         std::cerr << ex.what();
-    }*/
+    }
     return 0;
 }
 
