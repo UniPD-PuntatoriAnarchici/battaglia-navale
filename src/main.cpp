@@ -31,7 +31,7 @@ int manager(int argc, char *argv[]) {
 
     bool human_computer_game = false;
     int turn_counter = 0;
-    constexpr int MAX_TURNS = 150;
+//    constexpr int MAX_TURNS = 150;
 
     std::uniform_int_distribution<int> starting_player_distribution(0, 1);
 
@@ -47,6 +47,19 @@ int manager(int argc, char *argv[]) {
 
     if (!human_computer_game && (std::string{argv[1]} != "-cc" && std::string{argv[1]} != "cc"))
         throw std::invalid_argument("Invalid arguments no pc/-pc or cc/-cc found!");
+
+    bool set_turns_flag = false;
+
+    try {
+        if (argc >= 4 && (std::string{argv[2]} == "-n" ||
+            std::string{argv[2]} == "n") && std::stoi(std::string{argv[3]})>0) {
+            set_turns_flag = true;
+        }
+    } catch (const std::exception &stoi_exception) {
+        set_turns_flag = false;
+    }
+
+    const int MAX_TURNS = (set_turns_flag ? std::stoi(std::string{argv[3]}) : 150);
 
     const bool player1_starts = starting_player_distribution(random_engine) == 0;
 
@@ -76,13 +89,13 @@ int manager(int argc, char *argv[]) {
 
     while (player1->is_alive() && player2->is_alive() && turn_counter < MAX_TURNS) {
         if (!last_player_action_turn_flag) {
-            // if (!human_computer_game) std::this_thread::sleep_for(std::chrono::milliseconds(500));
+            if (!human_computer_game) std::this_thread::sleep_for(std::chrono::milliseconds(500));
             last_player_action_turn_flag = true;
             colored_print("Player 1 Turn:", MESSAGE_TYPE::MSG_PLAYER1) << std::endl;
             player1->turn(*player2);
             player1->print_boards_inline();
         } else {
-            // std::this_thread::sleep_for(std::chrono::milliseconds(500));
+            std::this_thread::sleep_for(std::chrono::milliseconds(500));
             last_player_action_turn_flag = false;
             colored_print("Player 2 Turn:", MESSAGE_TYPE::MSG_PLAYER1) << std::endl;
             player2->turn(*player1);
@@ -93,11 +106,11 @@ int manager(int argc, char *argv[]) {
 
     // win check
     if (last_player_action_turn_flag && turn_counter < MAX_TURNS) {
-        colored_print("Player 1 WIN!", MESSAGE_TYPE::MSG_INFO_BOLD);
+        colored_print("Player 1 WIN!\n", MESSAGE_TYPE::MSG_INFO_BOLD);
     } else if (turn_counter < MAX_TURNS) {
-        colored_print("Player 2 WIN!", MESSAGE_TYPE::MSG_INFO_BOLD);
+        colored_print("Player 2 WIN!\n", MESSAGE_TYPE::MSG_INFO_BOLD);
     } else {
-        colored_print("DRAW!", MESSAGE_TYPE::MSG_INFO_BOLD);
+        colored_print("DRAW!\n", MESSAGE_TYPE::MSG_INFO_BOLD);
     }
 
     /**
@@ -112,7 +125,7 @@ int manager(int argc, char *argv[]) {
     s >> date_string;
 
     std::string file_name =
-        std::string{"log-"} + (human_computer_game ? "PC" : "CC") + "-" + date_string + std::string{".txt"};
+            std::string{"log-"} + (human_computer_game ? "PC" : "CC") + "-" + date_string + std::string{".txt"};
 
 #if defined(__linux__) || defined(__APPLE__)
     file_name.insert(0, "./");
