@@ -51,9 +51,8 @@ int manager(int argc, char *argv[]) {
     bool set_turns_flag = false;
 
     try {
-        if (argc >= 4 && (std::string{argv[2]} == "-n") ||
-            std::string{argv[2]} == "n") {
-            std::stoi(std::string{argv[3]});
+        if (argc >= 4 && (std::string{argv[2]} == "-n" ||
+            std::string{argv[2]} == "n") && std::stoi(std::string{argv[3]})>0) {
             set_turns_flag = true;
         }
     } catch (const std::exception &stoi_exception) {
@@ -61,8 +60,6 @@ int manager(int argc, char *argv[]) {
     }
 
     const int MAX_TURNS = (set_turns_flag ? std::stoi(std::string{argv[3]}) : 150);
-
-    std::cout << MAX_TURNS << std::endl;
 
     const bool player1_starts = starting_player_distribution(random_engine) == 0;
 
