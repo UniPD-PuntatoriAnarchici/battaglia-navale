@@ -5,7 +5,6 @@
 #include "./../../include/player/cpuplayer.h"
 
 void Cpuplayer::turn(Player &other) {
-
     std::random_device random_device;
     std::mt19937 random_engine(random_device());
 
@@ -33,7 +32,7 @@ void Cpuplayer::turn(Player &other) {
 
         source = defense_board_.ship_at_index(index)->center();
 
-//        std::cout << source << destination;
+        //        std::cout << source << destination;
     } while (dead_ship || !defense_board_.ship_at_index(index)->action(destination, defense_board_, attack_board_,
                                                                        other.get_defense_board()));
 
@@ -42,9 +41,8 @@ void Cpuplayer::turn(Player &other) {
 }
 
 // TODO: FIX
-void  Cpuplayer::place_ship(const Ship::Type ship_type) {
-    if (ship_type != Ship::Type::BATTLESHIP && ship_type != Ship::Type::REPAIRSHIP &&
-        ship_type != Ship::Type::SUBMARINE)
+void Cpuplayer::place_ship(const Ship::Type ship_type) {
+    if (ship_type != Ship::Type::BATTLESHIP && ship_type != Ship::Type::REPAIRSHIP && ship_type != Ship::Type::SUBMARINE)
         throw std::invalid_argument{"Invalid ship type"};
 
     std::random_device random_device;
@@ -73,52 +71,22 @@ void  Cpuplayer::place_ship(const Ship::Type ship_type) {
         else
             direction = Ship::Directions::VERTICAL;
 
-        //std::cout << direction << std::endl;
+        valid_input = valid_ship_placement(center, length, direction);
 
-        if (direction == Ship::Directions::HORIZONTAL) {
-            if (!((center.col() + length / 2) > Defenseboard::side_length || center.col() - length / 2 <= 0)) {
-                for (int i = center.col() - length / 2; i <= center.col() + length / 2; i++) {
-                    Coordinate coordinate_to_check{center.row(), i};
-                    if (defense_board_.is_occupied(coordinate_to_check)) {
-                        valid_input = false;
-                        break;
-                    } else {
-                        valid_input = true;
-                    }
-                }
-            } else {
-                valid_input = false;
-            }
-
-        } else {
-            if (!(center.row() + length / 2 > Defenseboard::side_length || center.row() - length / 2 <= 0)) {
-                for (int i = center.row() - length / 2; i <= center.row() + length / 2; i++) {
-                    Coordinate coordinate_to_check = Coordinate(i, center.col());
-                    if (defense_board_.is_occupied(coordinate_to_check)) {
-                        valid_input = false;
-                        break;
-                    } else {
-                        valid_input = true;
-                    }
-                }
-            } else {
-                valid_input = false;
-            }
-        }
         if (valid_input) {
             if (ship_type == Ship::Type::BATTLESHIP)
                 defense_board_.place_ship(Battleship(center, direction));
             else if (ship_type == Ship::Type::REPAIRSHIP)
                 defense_board_.place_ship(Repairship(center, direction));
-            else defense_board_.place_ship(Submarine(center, direction));
+            else
+                defense_board_.place_ship(Submarine(center, direction));
         }
     }
     // TODO: implement this and test turn!
 }
 
 bool Cpuplayer::replay_place_ship(const Ship::Type &ship_type, const std::string &info) {
-    if (ship_type != Ship::Type::BATTLESHIP && ship_type != Ship::Type::REPAIRSHIP &&
-        ship_type != Ship::Type::SUBMARINE)
+    if (ship_type != Ship::Type::BATTLESHIP && ship_type != Ship::Type::REPAIRSHIP && ship_type != Ship::Type::SUBMARINE)
         return false;
 
     if (defense_board_.is_full()) {
@@ -154,12 +122,11 @@ bool Cpuplayer::replay_turn(Player &other, const std::string &action) {
 
     std::vector<Coordinate> action_coord = Coordinate::split_coordinates(action);
 
-    if (action_coord.size() != 2)
-        throw INVALID_ACTION{"Action must contain XYOrigin and XYTarget"};
+    if (action_coord.size() != 2) throw INVALID_ACTION{"Action must contain XYOrigin and XYTarget"};
 
     try {
         defense_board_.ship_at(action_coord[0])
-                ->action(action_coord[1], defense_board_, attack_board_, other.get_defense_board());
+            ->action(action_coord[1], defense_board_, attack_board_, other.get_defense_board());
 
     } catch (const std::exception &ex) {
         throw INVALID_ACTION{"Wrong coordinates!"};
@@ -168,6 +135,4 @@ bool Cpuplayer::replay_turn(Player &other, const std::string &action) {
     return true;
 }
 
-Cpuplayer::~Cpuplayer() {
-
-}
+Cpuplayer::~Cpuplayer() {}

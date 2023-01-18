@@ -43,15 +43,16 @@ void Humanplayer::place_ship(const Ship::Type ship_type) {
         direction =
             (coordinates.at(0).col() == coordinates.at(1).col()) ? Ship::Directions::VERTICAL : Ship::Directions::HORIZONTAL;
 
+        // ship length check
         if (direction == Ship::Directions::VERTICAL) {
             // if vertical length is in the column (y2-y1)
-            if (!check_ship_length(coordinates.at(1).row(), coordinates.at(0).row(), ship_type)) {
+            if (!valid_ship_length(coordinates.at(1).row(), coordinates.at(0).row(), ship_type)) {
                 colored_print("La lunghezza e il tipo di nave non corrispondono!", MESSAGE_TYPE::MSG_ERROR) << std::endl;
                 continue;
             }
         } else {
             // if horizontal length is in the row (x2-x1)
-            if (!check_ship_length(coordinates.at(1).col(), coordinates.at(0).col(), ship_type)) {
+            if (!valid_ship_length(coordinates.at(1).col(), coordinates.at(0).col(), ship_type)) {
                 colored_print("La lunghezza e il tipo di nave non corrispondono!", MESSAGE_TYPE::MSG_ERROR) << std::endl;
                 continue;
             }
@@ -69,34 +70,9 @@ void Humanplayer::place_ship(const Ship::Type ship_type) {
         }
 
         // check that all coordinates of ship don't collide with all coordinates of ship
-        if (direction == Ship::Directions::HORIZONTAL) {
-            if (!((center.col() + length / 2) > Defenseboard::side_length || center.col() - length / 2 <= 0)) {
-                for (int i = center.col() - length / 2; i <= center.col() + length / 2; i++) {
-                    Coordinate coordinate_to_check{center.row(), i};
-                    if (defense_board_.is_occupied(coordinate_to_check)) {
-                        valid_input = false;
-                        break;
-                    } else {
-                        valid_input = true;
-                    }
-                }
-            } else {
-                valid_input = false;
-            }
-        } else {
-            if (!(center.row() + length / 2 > Defenseboard::side_length || center.row() - length / 2 <= 0)) {
-                for (int i = center.row() - length / 2; i <= center.row() + length / 2; i++) {
-                    Coordinate coordinate_to_check = Coordinate(i, center.col());
-                    if (defense_board_.is_occupied(coordinate_to_check)) {
-                        valid_input = false;
-                        break;
-                    } else {
-                        valid_input = true;
-                    }
-                }
-            } else {
-                valid_input = false;
-            }
+        if (!valid_ship_placement(center, length, direction)) {
+            colored_print("La nave si sovrappone ad altre navi!", MESSAGE_TYPE::MSG_ERROR) << std::endl;
+            continue;
         }
 
         // push Battleship(center, direction)
@@ -121,7 +97,7 @@ void Humanplayer::place_ship(const Ship::Type ship_type) {
  * @param ship_type used to identify the ship length
  * @return [bool] true if the length is the same as the ship type length, false if it's not
  */
-bool Humanplayer::check_ship_length(int n1, int n2, const Ship::Type ship_type) {
+bool Humanplayer::valid_ship_length(int n1, int n2, const Ship::Type ship_type) {
     if (n1 > n2) {
         int temp = n2;
         n2 = n1;
@@ -186,9 +162,7 @@ void Humanplayer::turn(Player &other) {
             colored_print(std::string("Coordinate non valide! Si prega di re-inserire."), MESSAGE_TYPE::MSG_ERROR)
                 << std::endl;
         else if (invalid_action_flag)
-            colored_print(std::string("Azione non valida! Si prega di re-inserire."),
-                          MESSAGE_TYPE::MSG_ERROR)
-                << std::endl;
+            colored_print(std::string("Azione non valida! Si prega di re-inserire."), MESSAGE_TYPE::MSG_ERROR) << std::endl;
         else if (invalid_ship_destination_flag)
             colored_print(std::string("Impossibile spostare la nave a questa coordinata"), MESSAGE_TYPE::MSG_ERROR)
                 << std::endl;
