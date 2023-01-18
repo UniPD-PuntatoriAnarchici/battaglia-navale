@@ -13,11 +13,11 @@
  * @param   repairship              : repairship to print
  * @return {std::ostream}           : reference of the output stream
  */
-std::ostream &operator<<(std::ostream &os, const Repairship &battleship) {
-    std::vector<bool> cells = battleship.cells();
+std::ostream &operator<<(std::ostream &os, const Repairship &repairship) {
+    std::vector<bool> cells = repairship.cells();
 
-    os << "Repairship with center in " << battleship.center() << "and direction: " << battleship.direction() << ", has "
-       << battleship.armor() << "/" << Repairship::LENGTH << " armor: [";
+    os << "Repairship with center in " << repairship.center() << "and direction: " << repairship.direction() << ", has "
+       << repairship.armor() << "/" << Repairship::LENGTH << " armor: [";
 
     for (bool cell: cells) {
         os << (cell ? Repairship::CHARACTER : (char) (Repairship::CHARACTER + 32));
