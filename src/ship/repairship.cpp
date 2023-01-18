@@ -24,15 +24,21 @@ std::ostream &operator<<(std::ostream &os, const Repairship &battleship) {
 bool Repairship::action(Coordinate dest, Defenseboard &self_defense, Attackboard &self_attack, Defenseboard &opponent) {
     if (!this->is_alive()) return false;
     if (!dest.is_valid()) return false;
-    if (self_defense.is_occupied(dest))
-        return false;
+    if (self_defense.is_occupied(dest)) return false;
+    
+    if (this->direction_==Ship::Directions::HORIZONTAL){
+        if (dest.col()+1>12||dest.col()-1<1) return false; 
+    }else{
+        if (dest.row()+1>12||dest.row()-1<1) return false;
+    }
+    
 
         std::vector<Coordinate> current_grid = self_defense.get_all_but_one_raw(this->center());
         Repairship tmp{dest, this->direction()};
         //tmp.set_armor(this->armor());
         
         for (auto position: tmp.raw_positions()) {
-            
+           
             if (!self_defense.is_valid(position)){
                 return false;
             }
@@ -40,6 +46,16 @@ bool Repairship::action(Coordinate dest, Defenseboard &self_defense, Attackboard
                 return false;
             }
         }
+        if (this->armor()!=3){
+            
+            int c=0;
+            for (auto i = cells_.begin(); i != cells_.end(); i++)
+            {
+                tmp.cells_.at(c)=this->cells_.at(c);
+                c++;
+            }  
+        }
+        
         if (self_defense.remove_ship(*this)){
             self_defense.place_ship(tmp);
         }    
