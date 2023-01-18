@@ -15,6 +15,15 @@
 
 class Player {
    public:
+
+    /**
+     * Pure virtual destructor
+     * @details
+     * We use 2 smart pointer of Player type in replay.
+     * To avoid problems with destruction of object we decided to implement all the destructors
+     *
+     * @related Replay, HumanPlayer, CpuPlayer
+     */
     virtual ~Player() = 0;
 
     void place_all_ships();

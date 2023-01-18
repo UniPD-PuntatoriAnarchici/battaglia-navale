@@ -152,6 +152,9 @@ public:
      */
     void hit(Coordinate c);
 
+    /**
+     * Reset armor and cells of the ship
+     */
     void heal();
 
     /**
