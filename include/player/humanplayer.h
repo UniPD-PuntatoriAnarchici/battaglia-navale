@@ -8,7 +8,18 @@
 #include "player.h"
 
 class Humanplayer : public Player {
-   public:
+public:
+
+    /**
+     * @override
+     *  Player pure virtual distructor
+     * @related
+     *  Player::~Player()
+     *
+     * @see documentation of pure virtual method
+     *
+     * @related Replay, Player, CpuPlayer
+     */
     ~Humanplayer() override;
 
     /**
@@ -64,7 +75,7 @@ class Humanplayer : public Player {
      */
     std::vector<std::string> split_string(const std::string &s);
 
-   private:
+private:
 };
 
 #endif  // HUMANPLAYER_H

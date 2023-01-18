@@ -50,6 +50,9 @@ void Ship::hit(Coordinate c) {
     cells_[found - ship_positions.begin()] = false; //and set cell
 }
 
+/**
+ * Reset armor and cells of the ship
+ */
 void Ship::heal() {
     armor_ = static_cast<int>(type_);
     reset_cells();
