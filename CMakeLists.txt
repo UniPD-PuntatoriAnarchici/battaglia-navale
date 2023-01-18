@@ -13,7 +13,7 @@ add_library(player src/player/player.cpp src/player/cpuplayer.cpp src/player/hum
 add_library(coordinate src/coordinate/coordinate.cpp)
 
 add_executable(battaglia_navale
-        src/main.cpp
+        src/battaglia_navale.cpp
         )
 
 add_executable(replay
