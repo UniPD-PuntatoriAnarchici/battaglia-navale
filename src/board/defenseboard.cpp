@@ -13,7 +13,7 @@
 std::vector<std::pair<Coordinate, char>> Defenseboard::get_all() const {
     std::vector<std::pair<Coordinate, char>> occupied_positions;
 
-    for (auto &ship : ships_) {
+    for (auto &ship: ships_) {
         auto tmp = ship->positions();
         if (ship->is_alive()) occupied_positions.insert(occupied_positions.end(), tmp.begin(), tmp.end());
     }
@@ -32,7 +32,7 @@ std::vector<std::pair<Coordinate, char>> Defenseboard::get_all() const {
 std::vector<Coordinate> Defenseboard::get_all_raw() const {
     std::vector<Coordinate> occupied_positions;
 
-    for (auto &ship : ships_) {
+    for (auto &ship: ships_) {
         auto tmp = ship->raw_positions();
         if (ship->is_alive()) {
             occupied_positions.insert(occupied_positions.end(), tmp.begin(), tmp.end());
@@ -56,7 +56,7 @@ std::vector<Coordinate> Defenseboard::get_all_raw() const {
 std::vector<Coordinate> Defenseboard::get_all_but_one_raw(Coordinate excluded_ship_center) const {
     std::vector<Coordinate> occupied_positions;
 
-    for (auto &ship : ships_) {
+    for (auto &ship: ships_) {
         auto tmp = ship->raw_positions();
         if (ship->is_alive() && ship->center() != excluded_ship_center) {
             occupied_positions.insert(occupied_positions.end(), tmp.begin(), tmp.end());
@@ -74,7 +74,7 @@ std::vector<Coordinate> Defenseboard::get_all_but_one_raw(Coordinate excluded_sh
  * @return [bool] true if all ships are at 0 armor, false if there are some ships with alive armor
  */
 bool Defenseboard::is_lost() const {
-    for (auto &ship : ships_) {
+    for (auto &ship: ships_) {
         int current_armor = ship->armor();
         if (current_armor > 0) return false;
     }
@@ -109,9 +109,9 @@ bool Defenseboard::is_occupied(Coordinate &c) const {
  * @return true if it's alive, false if it's not
  */
 bool Defenseboard::is_alive(Coordinate &c) const {
-    for (auto &ship : ships_) {
+    for (auto &ship: ships_) {
         std::vector<std::pair<Coordinate, char>> tmp = ship->positions();
-        for (auto &pair : tmp) {
+        for (auto &pair: tmp) {
             if (pair.first == c && (pair.second == 'c' || pair.second == 'e' || pair.second == 's')) return false;
         }
     }
@@ -126,7 +126,7 @@ bool Defenseboard::is_alive(Coordinate &c) const {
 bool Defenseboard::hit(Coordinate &c) {
     if (!is_occupied(c)) return false;
 
-    for (auto &ship : ships_) {
+    for (auto &ship: ships_) {
         std::vector<Coordinate> positions = ship->raw_positions();
         std::vector<Coordinate>::iterator cell = std::find(positions.begin(), positions.end(), c);
         if (!(cell == positions.end())) {
@@ -145,11 +145,11 @@ bool Defenseboard::hit(Coordinate &c) {
 bool Defenseboard::heal(Coordinate &c) {
     if (!is_occupied(c)) return false;
 
-    for (auto &ship : ships_) {
+    for (auto &ship: ships_) {
         std::vector<Coordinate> positions = ship->raw_positions();
         auto cell = std::find(positions.begin(), positions.end(), c);
         if (!(cell == positions.end())) {
-            ship->reset_cells();
+            ship->heal();
             return true;
         }
     }
@@ -163,7 +163,7 @@ bool Defenseboard::heal(Coordinate &c) {
  * @return [std::unique_ptr<Ship>] of the ship if it has been found, [NO_SHIP] (nullptr) if the ship hasn't been found
  */
 const std::unique_ptr<Ship> &Defenseboard::ship_at(Coordinate c) const {
-    for (auto &ship : ships_) {
+    for (auto &ship: ships_) {
         if (ship->center() == c && ship->is_alive()) {
             return ship;
         }
@@ -190,22 +190,22 @@ const std::unique_ptr<Ship> &Defenseboard::ship_at_index(int i) const {
  */
 std::string Defenseboard::to_log_format() const {
     std::string buffer;
-    for (auto &ship : ships_) {
+    for (auto &ship: ships_) {
         buffer += (ship->direction() == Ship::Directions::HORIZONTAL) ? "H" : "V";
         buffer += ship->center().to_string() + " ";
     }
     return buffer;
 }
 
-bool Defenseboard::remove_ship(Ship &ship){
-    int c=0;
-    for (auto i = ships_.begin(); i != ships_.end(); i++){
-        if (ships_.at(c)->center()==ship.center()){
+bool Defenseboard::remove_ship(Ship &ship) {
+    int c = 0;
+    for (auto i = ships_.begin(); i != ships_.end(); i++) {
+        if (ships_.at(c)->center() == ship.center()) {
             ships_.erase(i);
             return true;
         }
         c++;
     }
     return false;
-    
+
 }

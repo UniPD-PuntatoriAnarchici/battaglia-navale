@@ -8,7 +8,7 @@ void Humanplayer::turn(Player &other) {
     std::string buffer;
     std::vector<Coordinate> turn_coords;
     bool invalid_coordinates_flag = false;
-    bool invalid_ship_flag = false;
+    bool invalid_action_flag = false;
     bool invalid_ship_destination_flag = false;
     bool customAction = false;
 
@@ -18,8 +18,8 @@ void Humanplayer::turn(Player &other) {
         else if (invalid_coordinates_flag)
             colored_print(std::string("Coordinate non valide! Si prega di re-inserire."), MESSAGE_TYPE::MSG_ERROR)
                 << std::endl;
-        else if (invalid_ship_flag)
-            colored_print(std::string("Nessuna nave presente a queste coordinate! Si prega di re-inserire."),
+        else if (invalid_action_flag)
+            colored_print(std::string("Azione non valida! Si prega di re-inserire."),
                           MESSAGE_TYPE::MSG_ERROR)
                 << std::endl;
         else if (invalid_ship_destination_flag)
@@ -27,7 +27,7 @@ void Humanplayer::turn(Player &other) {
                 << std::endl;
 
         invalid_coordinates_flag = false;
-        invalid_ship_flag = false;
+        invalid_action_flag = false;
         invalid_ship_destination_flag = false;
 
         std::cout << "Inserisci le coordinate: XYOrigin XYTarget\n\tInserimento: ";
@@ -60,12 +60,12 @@ void Humanplayer::turn(Player &other) {
         }
 
         if (defense_board_.ship_at(turn_coords[0]) == nullptr) {
-            invalid_ship_flag = true;
+            invalid_action_flag = true;
         } else if (!defense_board_.ship_at(turn_coords[0])
                         ->action(turn_coords[1], defense_board_, attack_board_, other.get_defense_board())) {
-            invalid_ship_flag = true;
+            invalid_action_flag = true;
         }
-    } while (invalid_coordinates_flag || invalid_ship_flag || customAction);
+    } while (invalid_coordinates_flag || invalid_action_flag || customAction);
     add_to_player_history(buffer);
 }
 

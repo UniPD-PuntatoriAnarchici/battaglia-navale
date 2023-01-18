@@ -9,13 +9,33 @@
 
 #include "ship.h"
 
+/**
+ * Battleship Class
+ *
+ * @action shoots at a Coordinate of the opponent's defense grid
+ *
+ * @extends Ship
+ * @author Tiberio Filippo
+ */
 class Battleship : public Ship {
 public:
     static constexpr char CHARACTER = 'C';
     static constexpr int LENGTH = 5;
 
+    /**
+     * @Override virtual destructor
+     * @details
+     * We use an array of smart pointer in defenseboard.
+     * In order to prevent problems with implicit destructors and implicit calls to these, we opted to completely define destructors
+     * and define the ship's one as pure virtual. In this way we ensure the correct execution of the destroying chain.
+     */
     ~Battleship() override;
 
+    /**
+     * Explicit default constructor
+     * @param center [Coordinate] default value is invalid.
+     * @param direction
+     */
     explicit Battleship(Coordinate center = Coordinate{},
                         Ship::Directions direction = Ship::Directions::HORIZONTAL);
 

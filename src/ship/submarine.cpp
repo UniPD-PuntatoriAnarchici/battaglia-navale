@@ -12,8 +12,8 @@ std::ostream &operator<<(std::ostream &os, const Submarine &battleship) {
     os << "Submarine with center in " << battleship.center() << "and direction: " << battleship.direction() << ", has "
        << battleship.armor() << "/" << Submarine::LENGTH << " armor: [";
 
-    for (bool cell : cells) {
-        os << (cell ? Submarine::CHARACTER : (char)(Submarine::CHARACTER + 32));
+    for (bool cell: cells) {
+        os << (cell ? Submarine::CHARACTER : (char) (Submarine::CHARACTER + 32));
     }
 
     os << "]";
@@ -51,7 +51,8 @@ bool Submarine::action(Coordinate dest, Defenseboard &self_defense, Attackboard 
     // set end row
     int check_end_row = (check_start_row + 4 - cells_up_to_ignore < 12) ? check_start_row + 4 - cells_up_to_ignore : 12;
     // set end col
-    int check_end_col = (check_start_col + 4 - cells_left_to_ignore < 12) ? check_start_col + 4 - cells_left_to_ignore : 12;
+    int check_end_col = (check_start_col + 4 - cells_left_to_ignore < 12) ? check_start_col + 4 - cells_left_to_ignore
+                                                                          : 12;
 
     // nested for loop on bounds with reveal
     for (int row = check_start_row; row <= check_end_row; row++) {
@@ -63,7 +64,7 @@ bool Submarine::action(Coordinate dest, Defenseboard &self_defense, Attackboard 
     }
 
     // move submarine to destination
-    this->center_ = dest;
+    this->set_center(dest);
 
     return true;
 }

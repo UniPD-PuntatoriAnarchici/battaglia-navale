@@ -24,7 +24,7 @@ Attackboard::Attackboard() = default;
 std::vector<std::pair<Coordinate, char>> Attackboard::get_all() const {
     std::vector<std::pair<Coordinate, char>> vector{};
 
-    for (auto el: cells_) {
+    for (auto el: cells_) { //Uses iterator and emplace_back to linearize map
         vector.emplace_back(el.first, el.second);
     }
     return vector;
