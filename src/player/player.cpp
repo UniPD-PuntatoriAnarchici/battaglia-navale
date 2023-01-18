@@ -4,14 +4,27 @@
 
 #include "./../../include/player/player.h"
 
+/**
+ * Function that return historical moves
+ * @return {std::vector<std::string>}  : history of the invoking player 
+ */
 std::vector<std::string> Player::player_history() { return player_history_; }
 
+ /**
+ * 
+ * @param  {std::string} action : add to player_history_ the action
+ * @return {int}                : Returns the number of elements in the vector
+ */
 int Player::add_to_player_history(const std::string &action) {
     player_history_.push_back(action);
     // conversion from size_t to int, can't overflow because we have a maximum number of moves lower than int
     return static_cast<int>(player_history_.size());
 }
 
+/**
+ * print the boards side by side
+ * @param  {std::ostream} os : output stream object to print output operations
+ */
 void Player::print_boards_inline(std::ostream &os) {
     int atk_coordinate_counter = 0;
     int def_coordinate_counter = 0;
@@ -96,11 +109,19 @@ void Player::print_boards_inline(std::ostream &os) {
     os << std::endl;
 }
 
+/**
+ * Prints Defenseboard and Attackboard
+ */
 void Player::print_boards() {
     print_board(Board::Type::DEFENSEBOARD);
     print_board(Board::Type::ATTACKBOARD);
 }
 
+/**
+ * print the board passed as parameter
+ * @param  {Board::Type} boardtype : Type of board to be printed (DefenseBoard/Attackboard)
+ * @param  {std::ostream} os       : Output stream object
+ */
 void Player::print_board(const Board::Type boardtype, std::ostream &os) {
     int coordinate_counter = 0;
     std::pair<Coordinate, char> to_print;
@@ -148,10 +169,25 @@ void Player::print_board(const Board::Type boardtype, std::ostream &os) {
     os << std::endl;
 }
 
+/**
+ * Pure virtual destructor
+ * @details
+ * We use 2 smart pointer of Player type in replay.
+ * To avoid problems with destruction of object we decided to implement all the destructors
+ *
+ * @related Replay, HumanPlayer, CpuPlayer
+ */
 Player::~Player() {}
 
+/**
+ * checks if there are live ships
+ * @return {bool}  : true if there are live ships,false otherwise
+ */
 bool Player::is_alive() const { return !defense_board_.is_lost(); }
 
+/**
+ * Function that place all ships
+ */
 void Player::place_all_ships() {
     place_ship(Ship::Type::BATTLESHIP);
     place_ship(Ship::Type::BATTLESHIP);
@@ -165,6 +201,13 @@ void Player::place_all_ships() {
     place_ship(Ship::Type::SUBMARINE);
 }
 
+/**
+ * check if a ship goes beyond the board,check if the positions where the ship should be placed are occupied
+ * @param  {Coordinate} center          : Ship's center
+ * @param  {int} length                 : Ship's length
+ * @param  {Ship::Directions} direction : Ship's direction (vertical/horizontal)
+ * @return {bool}                       : true if it can be placed,false otherwise
+ */
 bool Player::valid_ship_placement(Coordinate center, int length, Ship::Directions direction) {
     bool valid_input = true;
     if (direction == Ship::Directions::HORIZONTAL) {

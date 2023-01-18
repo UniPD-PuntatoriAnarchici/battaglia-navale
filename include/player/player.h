@@ -84,7 +84,7 @@ class Player {
     void print_boards_inline(std::ostream &os = std::cout);
 
     /**
-     * 
+     * checks if there are live ships
      * @return {bool}  : true if there are live ships,false otherwise
      */
     bool is_alive() const;
