@@ -31,7 +31,7 @@ class Humanplayer : public Player {
      * @param ship_type used to identify the ship length
      * @return [bool] true if the length is the same as the ship type length, false if it's not
      */
-    bool check_ship_length(int n1, int n2, const Ship::Type ship_type);
+    bool valid_ship_length(int n1, int n2, const Ship::Type ship_type);
 
     /**
      * Calculates the center coordinate of a ship

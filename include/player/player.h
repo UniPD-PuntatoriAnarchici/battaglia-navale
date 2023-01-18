@@ -14,7 +14,7 @@
 #include "./../utils/colors.h"
 
 class Player {
-public:
+   public:
     virtual ~Player() = 0;
 
     void place_all_ships();
@@ -37,13 +37,15 @@ public:
 
     Defenseboard &get_defense_board() { return defense_board_; }  // NON può essere const: devo colpirla.
 
-protected:
+    bool valid_ship_placement(Coordinate center, int length, Ship::Directions direction);
+
+   protected:
     Defenseboard defense_board_;
     Attackboard attack_board_;
 
     std::vector<std::string> player_history_;
 
-private:
+   private:
 };
 
 #endif  // PLAYER_H
