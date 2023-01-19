@@ -97,7 +97,7 @@ int manager(int argc, char *argv[]) {
         } else {
             std::this_thread::sleep_for(std::chrono::milliseconds(500));
             last_player_action_turn_flag = false;
-            colored_print("Player 2 Turn:", MESSAGE_TYPE::MSG_PLAYER1) << std::endl;
+            colored_print("Player 2 Turn:", MESSAGE_TYPE::MSG_PLAYER2) << std::endl;
             player2->turn(*player1);
             player2->print_boards_inline();
         }

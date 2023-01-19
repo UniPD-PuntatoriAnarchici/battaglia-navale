@@ -74,6 +74,7 @@ void Attackboard::miss(Coordinate c) {
     if (!c.is_valid()) throw Coordinate::INVALID_COORDINATE{};
 
     cells_[c] = 'O';
+    return;
 }
 
 /**

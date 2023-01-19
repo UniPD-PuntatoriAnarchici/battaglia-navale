@@ -1,7 +1,7 @@
 /**
  * @author Rampin Matteo
  */
- 
+
 #include <chrono>
 #include <fstream>
 #include <iostream>
@@ -126,6 +126,14 @@ int main(int argc, char *argv[]) {
             std::vector<Coordinate> coord = player1.get_defense_board().get_all_raw();
             throw;
         }
+    }
+
+    if (player1.is_alive() && !player2.is_alive()) {
+        colored_print("Player 1 WIN!", MESSAGE_TYPE::MSG_PLAYER1);
+    } else if (!player1.is_alive() && player2.is_alive()) {
+        colored_print("Player 2 WIN!", MESSAGE_TYPE::MSG_PLAYER2);
+    } else {
+        colored_print("DRAW!", MESSAGE_TYPE::MSG_SUCCESS);
     }
 
     return 0;
