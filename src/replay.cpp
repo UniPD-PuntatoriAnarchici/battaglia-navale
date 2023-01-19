@@ -9,11 +9,23 @@
 #include <thread>
 
 #include "player/cpuplayer.h"
-
+/**
+ * Splits a string in 2 strings
+ * @param  {std::string} string        : string to split
+ * @param  {char} delimiter            : delimiter for splitting of string
+ * @return {std::vector<std::string>} with the strings 
+ */
 std::vector<std::string> split_strings(const std::string &string, char delimiter = ' ');
-
+/**
+ * fill the player with ships
+ * @param  {Cpuplayer} player  : player to fill
+ * @param  {std::string} ships : coordinate and orientation ships
+ */
 void fill_player(Cpuplayer &player, const std::string &ships);
-
+/**
+ * INVALID_FILE_FORMAT [Exception]
+ * throwen when starting player is undefined
+ */
 class INVALID_FILE_FORMAT : public std::exception {
 private:
     std::string message_;
@@ -139,6 +151,11 @@ int main(int argc, char *argv[]) {
     return 0;
 }
 
+/**
+ * fill the player with ships
+ * @param  {Cpuplayer} player  : player to fill
+ * @param  {std::string} ships : coordinate and orientation ships
+ */
 void fill_player(Cpuplayer &player, const std::string &ships) {
     std::vector<std::string> ships_info = split_strings(ships);
     for (int i = 0; i < 3; i++) {
@@ -154,6 +171,12 @@ void fill_player(Cpuplayer &player, const std::string &ships) {
     }
 }
 
+/**
+ * Splits a string in 2 strings
+ * @param  {std::string} string        : string to split
+ * @param  {char} delimiter            : delimiter for splitting of string
+ * @return {std::vector<std::string>} with the strings 
+ */
 std::vector<std::string> split_strings(const std::string &string, char delimiter) {
     std::vector<std::string> strings;
     std::istringstream iss(string);
