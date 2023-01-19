@@ -52,7 +52,7 @@ bool Repairship::action(Coordinate dest, Defenseboard &self_defense, Attackboard
 
     std::vector<Coordinate> current_grid = self_defense.get_all_but_one_raw(this->center());
     Repairship tmp{dest, this->direction()};
-    
+
     for (auto position: tmp.raw_positions()) {
 
         if (!self_defense.is_valid(position)) {
@@ -79,13 +79,13 @@ bool Repairship::action(Coordinate dest, Defenseboard &self_defense, Attackboard
         for (int i = start_col; i <= end_col; i++) {
             if (dest.row() - 1 > 0) {
                 Coordinate to_check_1(dest.row() - 1, i);
-                if (self_defense.is_occupied(to_check_1) && self_defense.is_alive(to_check_1)) {
+                if (self_defense.is_occupied(to_check_1)) {
                     self_defense.heal(to_check_1);
                 }
             }
             if (dest.row() + 1 <= 12) {
                 Coordinate to_check_2(dest.row() + 1, i);
-                if (self_defense.is_occupied(to_check_2) && self_defense.is_alive(to_check_2)) {
+                if (self_defense.is_occupied(to_check_2) ) {
                     self_defense.heal(to_check_2);
                 }
             }
@@ -95,20 +95,20 @@ bool Repairship::action(Coordinate dest, Defenseboard &self_defense, Attackboard
         int start_row = dest.row();
         if (start_row - 1 > 0) start_row--;
         //set end row
-        int end_row = dest.col();
+        int end_row = dest.row();
         if (end_row + 1 <= 12) end_row++;
 
         //heal the ships in a 3x3 excluding itself
         for (int i = start_row; i <= end_row; i++) {
             if (dest.col() - 1 > 0) {
-                Coordinate to_check_1(dest.row() - 1, i);
-                if (self_defense.is_occupied(to_check_1) && self_defense.is_alive(to_check_1)) {
+                Coordinate to_check_1(i, dest.col() - 1);
+                if (self_defense.is_occupied(to_check_1)) {
                     self_defense.heal(to_check_1);
                 }
             }
             if (dest.col() + 1 <= 12) {
-                Coordinate to_check_2(dest.row() + 1, i);
-                if (self_defense.is_occupied(to_check_2) && self_defense.is_alive(to_check_2)) {
+                Coordinate to_check_2(i, dest.col()+1);
+                if (self_defense.is_occupied(to_check_2)) {
                     self_defense.heal(to_check_2);
                 }
             }

@@ -112,7 +112,7 @@ class Defenseboard : public Board {
     bool is_occupied(Coordinate &c) const;
 
     /**
-     * Checks if a Ship is alive
+     * Checks if a cell is alive
      * @param c Coordinate of the ship to check
      * @return true if it's alive, false if it's not
      */

@@ -104,7 +104,7 @@ bool Defenseboard::is_occupied(Coordinate &c) const {
 }
 
 /**
- * Checks if a Ship is alive
+ * Checks if a cell is alive
  * @param c Coordinate of the ship to check
  * @return true if it's alive, false if it's not
  */
@@ -128,7 +128,7 @@ bool Defenseboard::hit(Coordinate &c) {
 
     for (auto &ship: ships_) {
         std::vector<Coordinate> positions = ship->raw_positions();
-        std::vector<Coordinate>::iterator cell = std::find(positions.begin(), positions.end(), c);
+        auto cell = std::find(positions.begin(), positions.end(), c);
         if (!(cell == positions.end())) {
             ship->hit(c);
             return true;
